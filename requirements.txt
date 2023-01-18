@@ -2,5 +2,5 @@ flask
 gunicorn
 scikit-learn
 scipy
-matplotlib
+sklearn
 pandas
