@@ -1,1 +1,0 @@
-{"id":"323aa76f-a7da-4af0-a1ae-ab663719c1c3","space":46268,"runtime":"python3.9","name":"movie-recommender-system","path":"sxj5yq","project":"d0r3t3rr","account":"144798365827","region":"ap-south-1","deps":["flask","sklearn","pandas"],"envs":null,"public":true,"log_level":"off","cron":""}
