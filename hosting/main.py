@@ -1,10 +1,9 @@
-import flask
-import difflib
+from flask import Flask, render_template, request
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-app = flask.Flask(__name__, template_folder='templates')
+app = Flask(__name__, template_folder='templates')
 
 df2 = pd.read_csv('./model/tmdb.csv')
 
@@ -35,15 +34,15 @@ def get_recommendations(title):
 @app.route('/', methods=['GET', 'POST'])
 
 def main():
-    if flask.request.method == 'GET':
-        return(flask.render_template('index.html'))
+    if request.method == 'GET':
+        return(render_template('index.html'))
             
-    if flask.request.method == 'POST':
-        m_name = flask.request.form['movie_name']
+    if request.method == 'POST':
+        m_name = request.form['movie_name']
         m_name = m_name.title()
-#        check = difflib.get_close_matches(m_name,all_titles,cutout=0.50,n=1)
+
         if m_name not in all_titles:
-            return(flask.render_template('negative.html',name=m_name))
+            return(render_template('negative.html',name=m_name))
         else:
             result_final = get_recommendations(m_name)
             names = []
@@ -52,7 +51,7 @@ def main():
                 names.append(result_final.iloc[i][0])
                 dates.append(result_final.iloc[i][1])
 
-            return flask.render_template('positive.html',movie_names=names,movie_date=dates,search_name=m_name)
+            return render_template('positive.html',movie_names=names,movie_date=dates,search_name=m_name)
 
 if __name__ == '__main__':
     app.run()
