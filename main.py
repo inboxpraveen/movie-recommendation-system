@@ -7,6 +7,8 @@ app = Flask(__name__, template_folder='templates')
 ## need to move this to render somehow
 df2 = pd.read_csv('./model/tmdb.csv')
 
+
+
 count = CountVectorizer(stop_words='english')
 count_matrix = count.fit_transform(df2['soup'])
 
