@@ -1,3 +1,3 @@
-# recommendation-system
+## new django deployable
 
-DEMO : https://movie-recommender-29hr.onrender.com/
+trying to push as django webapp

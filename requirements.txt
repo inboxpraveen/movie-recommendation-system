@@ -1,6 +1,0 @@
-flask
-gunicorn
-scikit-learn
-scipy
-sklearn
-pandas
