@@ -1,7 +1,7 @@
 from django.shortcuts import render
 import pandas as pd
 
-def index(request):
+def main(request):
     df = pd.read_csv('static/data.csv')
     if request.method == 'GET':
         print(df.head())
