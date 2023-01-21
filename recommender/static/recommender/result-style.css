@@ -8,7 +8,7 @@ table {
 }
 
 table caption {
-    font-size: 1.5em;
+    font-size: 2.25em;
     margin: .5em 0 .75em;
 }
 
@@ -22,10 +22,11 @@ table th,
 table td {
     padding: .625em;
     text-align: center;
+    font-size: 1.5em;
 }
 
 table th {
-    font-size: .85em;
+    font-size: 1.75em;
     letter-spacing: .1em;
     text-transform: uppercase;
 }
@@ -36,7 +37,7 @@ table th {
     }
 
     table caption {
-        font-size: 1.3em;
+        font-size: 2em;
     }
 
     table thead {
@@ -54,20 +55,17 @@ table th {
         border-bottom: 3px solid #ddd;
         display: block;
         margin-bottom: .625em;
+        font-size: 1.2em;
     }
 
     table td {
         border-bottom: 1px solid #ddd;
         display: block;
-        font-size: .8em;
-        text-align: right;
+        font-size: 1.2em;
+        text-align: center;
     }
 
     table td::before {
-        /*
-      * aria-label has no advantage, it won't be read inside a table
-      content: attr(aria-label);
-      */
         content: attr(data-label);
         float: left;
         font-weight: bold;
