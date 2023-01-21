@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Poppins:300,500&amp;display=swap'>
-    <link rel="stylesheet" href='{% static "recommender/positive-style.css" %}'>
+    <link rel="stylesheet" href="{% static 'recommender/positive-style.css' %}">
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 </head>
 
@@ -94,46 +94,12 @@
                 <th>Release Date</th>
             </tr>
             <tbody class="table_body">
-                <tr>
-                    <td>{{ movie_names[0] }}</td>
-                    <td>{{ movie_date[0] }}</td>
-                </tr>
-                <tr>
-                    <td>{{ movie_names[1] }}</td>
-                    <td>{{ movie_date[1] }}</td>
-                </tr>
-                <tr>
-                    <td>{{ movie_names[2] }}</td>
-                    <td>{{ movie_date[2] }}</td>
-                </tr>
-                <tr>
-                    <td>{{ movie_names[3] }}</td>
-                    <td>{{ movie_date[3] }}</td>
-                </tr>
-                <tr>
-                    <td>{{ movie_names[4] }}</td>
-                    <td>{{ movie_date[4] }}</td>
-                </tr>
-                <tr>
-                    <td>{{ movie_names[5] }}</td>
-                    <td>{{ movie_date[5] }}</td>
-                </tr>
-                <tr>
-                    <td>{{ movie_names[6] }}</td>
-                    <td>{{ movie_date[6] }}</td>
-                </tr>
-                <tr>
-                    <td>{{ movie_names[7] }}</td>
-                    <td>{{ movie_date[7] }}</td>
-                </tr>
-                <tr>
-                    <td>{{ movie_names[8] }}</td>
-                    <td>{{ movie_date[8] }}</td>
-                </tr>
-                <tr>
-                    <td>{{ movie_names[9] }}</td>
-                    <td>{{ movie_date[9] }}</td>
-                </tr>
+                {% for each_movie_name in movie_names %}
+                    <tr>
+                        <td>{{ each_movie_name }}</td>
+                        <td>sample date</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
         <br>
