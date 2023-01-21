@@ -1,6 +1,7 @@
 django
 pandas
 numpy
+gunicorn
 scikit-learn
 scikit-learn
 sklearn
