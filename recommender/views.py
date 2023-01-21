@@ -25,6 +25,7 @@ def main(request):
             unable_to_find = True
         
         if unable_to_find:
+            ...
         result_final = get_recommendations(mn,count_matrix,indices,df)
         res = {}
         for i in range(len(result_final)):
@@ -32,4 +33,4 @@ def main(request):
                 result_final.iloc[i][0]:result_final.iloc[i][1]
             })
 
-        return render(request, 'recommender/positive.html',{'movie_details':res,'search_name':mn})
+        return render(request, 'recommender/result.html',{'movie_details':res,'search_name':mn})
