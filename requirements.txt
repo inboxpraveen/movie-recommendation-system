@@ -1,7 +1,7 @@
+wheel
 django
 pandas
-numpy
 gunicorn
-dj-database-url
+whitenoise
 scikit-learn
 sklearn

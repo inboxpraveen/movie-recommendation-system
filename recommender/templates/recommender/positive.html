@@ -1,1 +1,289 @@
-<h1>hello from positive html - {{ movie_name }} </h1>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Recommender - Praveen Kumar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Poppins:300,500&amp;display=swap'>
+    <link rel="stylesheet" href='{% static "recommender/positive-style.css" %}'>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</head>
+
+<body>
+    <div class="hamburger">
+        <div class="hamburger__container">
+            <span class="hamburger__top"></span>
+            <span class="hamburger__middle"></span>
+            <span class="hamburger__bottom"></span>
+        </div>
+    </div>
+
+    <!-- Menu -->
+    <div class="menu">
+        <div class="menu__container bg-white">
+            <nav class="menu__nav">
+                <ul class="menu__list">
+                    <li class="menu__item js-span">Follow me on:</li>
+                    <li class="menu__item">
+                        <a class="menu__link" href="https://www.linkedin.com/in/praveen-kumar-inbox/"
+                            target="_blank">LinkedIn</a>
+                    </li>
+                    <li class="menu__item">
+                        <a class="menu__link" href="https://github.com/inboxpraveen" target="_blank">Github</a>
+                    </li>
+                    <li class="menu__item">
+                        <a class="menu__link" href="https://twitter.com/InboxPraveen" target="_blank">Twitter</a>
+                    </li>
+                    <li class="menu__item">
+                        <a class="menu__link" href="https://medium.com/@pklappy21" target="_blank">Medium</a>
+                    </li>
+                </ul>
+            </nav>
+            <nav class="menu__nav">
+                <ul class="menu__list">
+                    <li class="menu__item js-span">Other Links</li>
+                    <!--
+        <li class="menu__item">
+          <a class="menu__link" href="#" target="_blank">All Heroku Projects</a>
+        </li>
+-->
+                    <li class="menu__item">
+                        <a class="menu__link" href="https://inboxpraveen.github.io" target="_blank">Portfolio</a>
+                    </li>
+                    <li class="menu__item">
+                        <a class="menu__link" href="https://medium.com/hitchhikers-guide-to-deep-learning"
+                            target="_blank">My Blogs</a>
+                    </li>
+                    <li class="menu__item menu__item--contact">
+                        <span>Contact</span>
+                        <div class="menu__info">
+                            <span>Bengaluru, IN</span>
+                            <span>
+                                <a class="menu__external" href="mailto:inbox.praveen.kumar17@gmail.com">Click here to
+                                    mail</a>
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+            <div class="menu__sidebar">
+                <div class="menu__flip">
+                    <div class="menu__copy">
+                        <span>Checkout my portfolio website:</span>
+                        <span><a class="menu__external" href="https://inboxpraveen.github.io" target="_blank"
+                                rel="noopener noreferrer">inboxpraveen.github.io</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="menu__img bg-black">
+            <figure class="absolute-bg"
+                style="background-image: url('https://source.unsplash.com/t2Sai-AqIpI/900x1600');"></figure>
+        </div>
+    </div>
+
+    <div class="movie">
+        <h2><u>Recommendations:</u></h2>
+        <p>Showing results for: {{ search_name }}</p>
+        <table class="movie_table" align="center">
+            <tr>
+                <th>Movie Title</th>
+                <th>Release Date</th>
+            </tr>
+            <tbody class="table_body">
+                <tr>
+                    <td>{{ movie_names[0] }}</td>
+                    <td>{{ movie_date[0] }}</td>
+                </tr>
+                <tr>
+                    <td>{{ movie_names[1] }}</td>
+                    <td>{{ movie_date[1] }}</td>
+                </tr>
+                <tr>
+                    <td>{{ movie_names[2] }}</td>
+                    <td>{{ movie_date[2] }}</td>
+                </tr>
+                <tr>
+                    <td>{{ movie_names[3] }}</td>
+                    <td>{{ movie_date[3] }}</td>
+                </tr>
+                <tr>
+                    <td>{{ movie_names[4] }}</td>
+                    <td>{{ movie_date[4] }}</td>
+                </tr>
+                <tr>
+                    <td>{{ movie_names[5] }}</td>
+                    <td>{{ movie_date[5] }}</td>
+                </tr>
+                <tr>
+                    <td>{{ movie_names[6] }}</td>
+                    <td>{{ movie_date[6] }}</td>
+                </tr>
+                <tr>
+                    <td>{{ movie_names[7] }}</td>
+                    <td>{{ movie_date[7] }}</td>
+                </tr>
+                <tr>
+                    <td>{{ movie_names[8] }}</td>
+                    <td>{{ movie_date[8] }}</td>
+                </tr>
+                <tr>
+                    <td>{{ movie_names[9] }}</td>
+                    <td>{{ movie_date[9] }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <p style="margin-top:3em;">
+            Liked it? Spend a moment from you precious time to provide us valuable feedback. <i
+                class="fas fa-smile"></i> Thank you <i class="fas fa-heart"></i>
+        </p>
+        <p style="color: #919191;">Feedback: <a href="https://forms.gle/7NGyYAvSe7Fepm68A">Google Form Link</a></p>
+        <p style="margin-bottom: 2em; border: 1px solid grey;">Read more on recommendation systems on <a
+                href="https://developers.google.com/machine-learning/recommendation" target="_blank">Google Developers
+                Machine Learning Blogs</a>.</p>
+    </div>
+    <!-- partial -->
+    <script src='https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js'></script>
+    <script>
+
+
+        // Menu
+        const Menu = (() => {
+            let s;
+
+            return {
+                settings() {
+                    return {
+                        body: $('body'),
+                        hamburger: $('.hamburger'),
+                        open: 'js-menu-open',
+                        visible: 'js-menu-visible',
+                        overflow: 'js-overflow',
+                        width: $(window).width(),
+                        prevWidth: $(window).width()
+                    };
+
+                },
+
+                init() {
+                    s = this.settings();
+                    this.bindEvents();
+                },
+
+                bindEvents() {
+                    let menuContainerWidth;
+
+                    if (s.width < 864) {
+                        menuContainerWidth = 100;
+                    } else if (s.width < 1456) {
+                        menuContainerWidth = 50;
+                    } else {
+                        menuContainerWidth = 45;
+                    }
+
+                    $(window).on('resize', () => {
+                        s.width = $(window).width();
+
+                        if (s.width < 864) {
+                            menuContainerWidth = 100;
+                        } else if (s.width < 1456) {
+                            menuContainerWidth = 50;
+                        } else {
+                            menuContainerWidth = 45;
+                        }
+                    });
+
+                    s.hamburger.on('click', () => {
+                        Menu.toggleMenu(menuContainerWidth);
+                    });
+
+                    s.body.on('keyup', e => {
+                        if (s.body.hasClass(s.open) && e.which === 27) {
+                            Menu.toggleMenu(menuContainerWidth);
+                        }
+                    });
+                },
+
+                toggleMenu(width) {
+                    s.hamburger.toggleClass('js-hamburger');
+                    s.body.toggleClass(s.open);
+                    s.body.toggleClass(s.overflow);
+
+                    // Opening transition
+                    if (s.body.hasClass(s.open)) {
+                        s.prevWidth = width;
+
+                        anime.timeline({
+                            easing: 'easeOutQuart',
+                            duration: 600,
+                            begin() {
+                                $('.menu__img').css('left', `${width}%`);
+                                s.body.addClass(s.visible);
+                            }
+                        }).
+
+                            add({
+                                targets: '.menu__container',
+                                width: [0, `${width}%`]
+                            }).
+
+                            add({
+                                targets: '.menu__img',
+                                width: [0, `${100 - width}%`]
+                            },
+                                0);
+                    }
+
+                    // Closing transition
+                    if (!s.body.hasClass(s.open)) {
+                        anime.timeline({
+                            easing: 'easeInQuart',
+                            duration: 600,
+                            delay: 200,
+                            complete() {
+                                s.body.removeClass(s.visible);
+                            }
+                        }).
+
+                            add({
+                                targets: '.menu__container',
+                                width: [`${s.prevWidth}%`, 0]
+                            }).
+
+                            add({
+                                targets: '.menu__img',
+                                width: [`${100 - s.prevWidth}%`, 0]
+                            },
+                                0);
+                    }
+                }
+            };
+
+        })();
+
+        // Inits
+        $(() => {
+            // Spanize
+            const span = $('.js-span');
+            let $ele, words;
+
+            for (let i = 0; i < span.length; i++) {
+                $ele = $(span).eq(i);
+                words = $ele.html();
+
+                $ele.html(words.replace(/([A-z0-9'@+-<>.,'"“”‘’?!*&/]+)/g, '<span>$&</span>'));
+            }
+
+            Menu.init();
+        });    
+    </script>
+
+</body>
+
+</html>
