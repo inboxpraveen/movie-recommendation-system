@@ -6,7 +6,7 @@ from .utils import *
 df = pd.read_csv('static/data.csv')
 count_matrix = CountVectorizer(stop_words='english').fit_transform(df['soup'])
 df = df.reset_index()
-all_titles = [df['title'][i] for i in range(len(df['title']))]
+all_titles = df["title"].to_list()
 indices = pd.Series(df.index, index=df['title'])
 
 
@@ -16,13 +16,15 @@ def main(request):
         return render(request, 'recommender/index.html', {})
     
     if request.method == 'POST':
-        print("inside post method")
+
         data = request.POST
         mn = data.get('movie_name').title()
         
+        unable_to_find = False
         if mn not in all_titles:
-            return render(request, 'recommender/negative.html', {'movie_name': mn})
+            unable_to_find = True
         
+        if unable_to_find:
         result_final = get_recommendations(mn,count_matrix,indices,df)
         res = {}
         for i in range(len(result_final)):

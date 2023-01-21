@@ -1,0 +1,33 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Result</title>
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+  <link rel="stylesheet" href="{% static 'recommender/result-style.css' %}">
+
+</head>
+<body>
+
+<table>
+  <caption>You May Also Like</caption>
+  <thead>
+    <tr>
+      <th scope="col">Release Date</th>
+      <th scope="col">Movie Title</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for each_movie_name, release_date in movie_details.items %}
+        <tr>
+            <td>{{ each_movie_name }}</td>
+            <td>{{ release_date }}</td>
+        </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+</body>
+</html>
