@@ -1,3 +1,3 @@
 ## new django deployable
 
-trying to push as django webapp
+DEMO: https://movie-recommender-29hr.onrender.com/
