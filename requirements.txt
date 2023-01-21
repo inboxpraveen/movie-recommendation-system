@@ -2,6 +2,6 @@ django
 pandas
 numpy
 gunicorn
-scikit-learn
+dj-database-url
 scikit-learn
 sklearn
