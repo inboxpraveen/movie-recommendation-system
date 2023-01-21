@@ -45,11 +45,7 @@
             <nav class="menu__nav">
                 <ul class="menu__list">
                     <li class="menu__item js-span">Other Links</li>
-                    <!--
-        <li class="menu__item">
-          <a class="menu__link" href="#" target="_blank">All Heroku Projects</a>
-        </li>
--->
+
                     <li class="menu__item">
                         <a class="menu__link" href="https://inboxpraveen.github.io" target="_blank">Portfolio</a>
                     </li>
@@ -94,10 +90,10 @@
                 <th>Release Date</th>
             </tr>
             <tbody class="table_body">
-                {% for each_movie_name in movie_names %}
+                {% for each_movie_name, release_date in movie_details.items %}
                     <tr>
                         <td>{{ each_movie_name }}</td>
-                        <td>sample date</td>
+                        <td>{{ release_date }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
