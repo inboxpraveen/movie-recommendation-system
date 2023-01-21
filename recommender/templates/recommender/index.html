@@ -90,7 +90,8 @@
     <!-- Demo -->
     <div class="movie">
         <h2><u>Movie Recommendation System</u></h2>
-        <form action="{{ url_for('main') }}" method="POST">
+        <form method="POST">
+            {% csrf_token %}
             <input type="text" id="movie_name" name="movie_name" placeholder="Enter a full movie name" required />
             <input type="submit" id="submission_button" value="Submit" />
         </form>
