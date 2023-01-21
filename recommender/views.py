@@ -16,16 +16,17 @@ def main(request):
         print("inside post method")
         data = request.POST
         mn = data.get('movie_name').title()
+        
+        count_matrix = CountVectorizer(stop_words='english').fit_transform(df['soup'])
+        df = df.reset_index()
+        all_titles = [df['title'][i] for i in range(len(df['title']))]
 
-        all_titles = [df2['title'][i] for i in range(len(df2['title']))]        
         if mn not in all_titles:
             return render(request, 'recommender/negative.html', {'movie_name': mn})
 
-        count_matrix = CountVectorizer(stop_words='english').fit_transform(df2['soup'])
-        df2 = df2.reset_index()
-        indices = pd.Series(df2.index, index=df2['title'])
+        indices = pd.Series(df.index, index=df['title'])
         
-        result_final = get_recommendations(mn,count_matrix,indices,df2)
+        result_final = get_recommendations(mn,count_matrix,indices,df)
         names = []
         dates = []
         for i in range(len(result_final)):
