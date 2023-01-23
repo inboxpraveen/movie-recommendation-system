@@ -9,24 +9,22 @@
   <link rel="stylesheet" href="{% static 'recommender/result-style.css' %}">
 </head>
 <body>
-
-<table>
-  <caption>Similar Movies you may like</caption>
-  <thead>
-    <tr>
-      <th scope="col">Release Date</th>
-      <th scope="col">Movie Title</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for each_movie_name, release_date in movie_details.items %}
-        <tr>
-            <td>{{ each_movie_name }}</td>
-            <td>{{ release_date }}</td>
-        </tr>
-    {% endfor %}
-  </tbody>
-</table>
-
+  <table>
+    <caption>Similar Movies you may like</caption>
+    <thead>
+      <tr>
+        <th scope="col">Release Date</th>
+        <th scope="col">Movie Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for each_movie_name, release_date in movie_details.items %}
+          <tr>
+              <td>{{ each_movie_name }}</td>
+              <td>{{ release_date }}</td>
+          </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </body>
 </html>
