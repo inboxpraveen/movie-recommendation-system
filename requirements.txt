@@ -3,5 +3,5 @@ django
 pandas
 gunicorn
 whitenoise
-scikit-learn
-sklearn
+fastparquet
+pickle

@@ -1,219 +1,102 @@
 {% load static %}
+<!doctype html>
+<html lang="en-us">
 
-<!DOCTYPE html>
-<html lang="en">
+    <head>
 
-<head>
-    <meta charset="UTF-8">
-    <title>Movie Recommendation System - Praveen Kumar</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Poppins:300,500&amp;display=swap'>
-    <link rel='stylesheet' href="{% static 'recommender/index-style.css' %}">
-</head>
+        <!-- Meta -->
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<body>
-    <!-- partial:index.partial.html -->
-    <!-- Hamburger -->
-    <div class="hamburger">
-        <div class="hamburger__container">
-            <span class="hamburger__top"></span>
-            <span class="hamburger__middle"></span>
-            <span class="hamburger__bottom"></span>
+        <title>Movie Recommendation System</title>
+        <meta name="description" content="">
+
+        <!-- The compiled CSS file -->
+        <link rel="stylesheet" href="{% static 'recommender/index-style.css' %}">
+
+        <!-- Web fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700|Source+Serif+Pro:700" rel="stylesheet"> 
+
+        <!-- favicon.ico. Place these in the root directory. -->
+        <link rel="shortcut icon" href="{% static 'favicon.png' %}">
+
+    </head>
+
+    <body class="has-animations">
+
+    <!-- Header -->
+    <header class="align--center pt3">
+        <div class="container--lg border--bottom pb3">
+            <h1 class="mb2">AI for Movie Recommendation</h1>
+            <form method="POST" class="form-control">
+                {% csrf_token %}
+                <input type="text" id="movie_name" class="btn full-width" style="margin-bottom:1em;" name="movie_name" placeholder="Enter a movie name" required />
+                <input type="submit" id="submission_button" class="btn" value="Recommend Me" />
+            </form>
         </div>
-    </div>
+    </header>
 
-    <!-- Menu -->
-    <div class="menu">
-        <div class="menu__container bg-white">
-            <nav class="menu__nav">
-                <ul class="menu__list">
-                    <li class="menu__item js-span">Follow me on:</li>
-                    <li class="menu__item">
-                        <a class="menu__link" href="https://www.linkedin.com/in/praveen-kumar-inbox/"
-                            target="_blank">LinkedIn</a>
-                    </li>
-                    <li class="menu__item">
-                        <a class="menu__link" href="https://github.com/inboxpraveen" target="_blank">Github</a>
-                    </li>
-                    <li class="menu__item">
-                        <a class="menu__link" href="https://twitter.com/InboxPraveen" target="_blank">Twitter</a>
-                    </li>
-                    <li class="menu__item">
-                        <a class="menu__link" href="https://medium.com/@pklappy21" target="_blank">Medium</a>
-                    </li>
-                </ul>
-            </nav>
-            <nav class="menu__nav">
-                <ul class="menu__list">
-                    <li class="menu__item">
-                        <a class="menu__link" href="https://inboxpraveen.github.io" target="_blank">Portfolio</a>
-                    </li>
-                    <li class="menu__item">
-                        <a class="menu__link" href="https://medium.com/hitchhikers-guide-to-deep-learning"
-                            target="_blank">My Blogs</a>
-                    </li>
-                </ul>
-            </nav>
+    <main>
+        <!-- Feature list -->
+        <!-- <div class="container pt3 mt2 text--gray align--center">
+            <h1 class="mb3">About me</h1>
+            <div class="grid-row">
+                <div class="grid-column span-one-third mb3 reveal-on-scroll is-revealing">
+                    <img class="illustration--small mb1" src="/img/assign.svg" alt="Assign to others">
+                    <p>Assign to others</p>
+                </div>
+                <div class="grid-column span-one-third mb3 reveal-on-scroll is-revealing">
+                    <img class="illustration--small mb1" src="/img/connected.svg" alt="Stay connected">
+                    <p>Stay connected</p>
+                </div>
+                <div class="grid-column span-one-third mb3 reveal-on-scroll is-revealing">
+                    <img class="illustration--small mb1" src="/img/search.svg" alt="Powerful search">
+                    <p>Powerful search</p>
+                </div>
+                <div class="grid-column span-one-third mb3 reveal-on-scroll is-revealing">
+                    <img class="illustration--small mb1" src="/img/vault.svg" alt="Put in a vault">
+                    <p>Put in a vault</p>
+                </div>
+                <div class="grid-column span-one-third mb3 reveal-on-scroll is-revealing">
+                    <img class="illustration--small mb1" src="/img/messaging.svg" alt="Fast messaging">
+                    <p>Fast messaging</p>
+                </div>
+                <div class="grid-column span-one-third mb3 reveal-on-scroll is-revealing">
+                    <img class="illustration--small mb1" src="/img/mail.svg" alt="Share with others">
+                    <p>Share with others</p>
+                </div>
+            </div>
+        </div> -->
+
+        <!-- Focus -->
+        <div class="container--lg pt1 pb1">
+
+            <div class="grid-row grid-row--center">
+                <div class="grid-column mt3 mb2 order-1 reveal-on-scroll is-revealing">
+                    <img src="./img/E15.png" alt="Usage data">
+                </div>
+                <div class="grid-column span-1"></div>
+                <div class="grid-column mt3 mb2 order-2">
+                    <div class="border--bottom pb2 mb2">
+                        <h2>About me</h2>
+                        <p>As an AI Engineer with 3 years of experience, I specialize in building efficient and effective ML pipelines that power cutting-edge AI solutions. From data preprocessing to model deployment, I have the skills and expertise to take your project from idea to reality. With a keen eye for detail and a passion for staying up-to-date with the latest trends and technologies in the field, I am dedicated to delivering high-quality results that exceed expectations. I also love connecting with professionals in a fun and unique way, and I am also a content creator. So, if you're ready to take your AI game to the next level, let's build something great together!</p>
+                    </div>
+                    <p class="italic text--gray mb1">Building ML Pipelines like a Pro, One Algorithm at a Time!</p>
+                    <p class="bold">AI Engineer at&nbsp;TrellisSoft</p>
+                </div>
+            </div>
+
         </div>
-        <div class="menu__img bg-black">
-            <figure class="absolute-bg"
-                style="background-image: url('https://source.unsplash.com/t2Sai-AqIpI/900x1600');"></figure>
-        </div>
-    </div>
 
-    <!-- Demo -->
-    <div class="movie">
-        <h2><u>Movie Recommendation System</u></h2>
-        <form method="POST">
-            {% csrf_token %}
-            <input type="text" id="movie_name" name="movie_name" placeholder="Enter a full movie name" required />
-            <input type="submit" id="submission_button" value="Submit" />
-        </form>
-        <p style="color: #919191; padding: 1em;">The model uses <b>Content Based Recommendations</b> to find similar
-            movies. Intuitive idea behind is <i>"If a person likes a particular item, he/she will also like an item that
-                is similar to it."</i> The dataset is taken from <a href="https://www.kaggle.com/"
-                target="_blank">Kaggle.com</a>.</p>
-        <br>
-        <p>Read more on recommendation systems on <a
-                href="https://developers.google.com/machine-learning/recommendation" target="_blank">Google Developers
-                Machine Learning Blogs</a>.</p>
-    </div>
-    <!-- partial -->
-    <script src='https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js'></script>
-    <script src='https://cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js'></script>
-    <script>
-        // Menu
-        const Menu = (() => {
-            let s;
+    </main>
 
-            return {
-                settings() {
-                    return {
-                        body: $('body'),
-                        hamburger: $('.hamburger'),
-                        open: 'js-menu-open',
-                        visible: 'js-menu-visible',
-                        overflow: 'js-overflow',
-                        width: $(window).width(),
-                        prevWidth: $(window).width()
-                    };
+    <!-- Scroll reveal -->
+    <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
 
-                },
+    <!-- The compiled JavaScript file -->
+    <script src="{% static 'recommender/production.js' %}"></script>
 
-                init() {
-                    s = this.settings();
-                    this.bindEvents();
-                },
-
-                bindEvents() {
-                    let menuContainerWidth;
-
-                    if (s.width < 864) {
-                        menuContainerWidth = 100;
-                    } else if (s.width < 1456) {
-                        menuContainerWidth = 50;
-                    } else {
-                        menuContainerWidth = 45;
-                    }
-
-                    $(window).on('resize', () => {
-                        s.width = $(window).width();
-
-                        if (s.width < 864) {
-                            menuContainerWidth = 100;
-                        } else if (s.width < 1456) {
-                            menuContainerWidth = 50;
-                        } else {
-                            menuContainerWidth = 45;
-                        }
-                    });
-
-                    s.hamburger.on('click', () => {
-                        Menu.toggleMenu(menuContainerWidth);
-                    });
-
-                    s.body.on('keyup', e => {
-                        if (s.body.hasClass(s.open) && e.which === 27) {
-                            Menu.toggleMenu(menuContainerWidth);
-                        }
-                    });
-                },
-
-                toggleMenu(width) {
-                    s.hamburger.toggleClass('js-hamburger');
-                    s.body.toggleClass(s.open);
-                    s.body.toggleClass(s.overflow);
-
-                    // Opening transition
-                    if (s.body.hasClass(s.open)) {
-                        s.prevWidth = width;
-
-                        anime.timeline({
-                            easing: 'easeOutQuart',
-                            duration: 600,
-                            begin() {
-                                $('.menu__img').css('left', `${width}%`);
-                                s.body.addClass(s.visible);
-                            }
-                        }).
-
-                            add({
-                                targets: '.menu__container',
-                                width: [0, `${width}%`]
-                            }).
-
-                            add({
-                                targets: '.menu__img',
-                                width: [0, `${100 - width}%`]
-                            },
-                                0);
-                    }
-
-                    // Closing transition
-                    if (!s.body.hasClass(s.open)) {
-                        anime.timeline({
-                            easing: 'easeInQuart',
-                            duration: 600,
-                            delay: 200,
-                            complete() {
-                                s.body.removeClass(s.visible);
-                            }
-                        }).
-
-                            add({
-                                targets: '.menu__container',
-                                width: [`${s.prevWidth}%`, 0]
-                            }).
-
-                            add({
-                                targets: '.menu__img',
-                                width: [`${100 - s.prevWidth}%`, 0]
-                            },
-                                0);
-                    }
-                }
-            };
-
-        })();
-
-        // Inits
-        $(() => {
-            // Spanize
-            const span = $('.js-span');
-            let $ele, words;
-
-            for (let i = 0; i < span.length; i++) {
-                $ele = $(span).eq(i);
-                words = $ele.html();
-
-                $ele.html(words.replace(/([A-z0-9'@+-<>.,'"“”‘’?!*&/]+)/g, '<span>$&</span>'));
-            }
-
-            Menu.init();
-        });    
-    </script>
-
-</body>
-
+    </body>
 </html>
+

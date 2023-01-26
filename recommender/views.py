@@ -1,14 +1,9 @@
 from django.shortcuts import render
 import pandas as pd
-from sklearn.feature_extraction.text import CountVectorizer
-from .utils import *
+import pickle
 
-df = pd.read_csv('static/data.csv')
-count_matrix = CountVectorizer(stop_words='english').fit_transform(df['soup'])
-df = df.reset_index()
-all_titles = df["title"].to_list()
-indices = pd.Series(df.index, index=df['title'])
-
+features = pd.read_parquet("/static/features.parquet")
+knn_model = pickle.load(open('/static/model.pkl', 'rb'))
 
 def main(request):
  
@@ -18,15 +13,11 @@ def main(request):
     if request.method == 'POST':
 
         data = request.POST
-        mn = data.get('movie_name').title()
+        movie_name = data.get('movie_name').title()
+        final_recommendations = []
         
-        unable_to_find = False
-        if mn not in all_titles:
-            unable_to_find = True
         
-        if unable_to_find:
-            ...
-        result_final = get_recommendations(mn,count_matrix,indices,df)
+        
         res = {}
         for i in range(len(result_final)):
             res.update({
