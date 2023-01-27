@@ -18,10 +18,9 @@
       </tr>
     </thead>
     <tbody>
-      {% for each_movie_name, release_date in movie_details.items %}
+      {% for each_movie_name, release_date in movie_details %}
           <tr>
               <td>{{ each_movie_name }}</td>
-              <td>{{ release_date }}</td>
           </tr>
       {% endfor %}
     </tbody>
