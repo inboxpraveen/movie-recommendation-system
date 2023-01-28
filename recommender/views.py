@@ -45,10 +45,10 @@ def main(request):
                 df = pa.parquet.read_table('static/model_03.parquet').to_pandas()
                 print("loaded model 3")
 
-            final_recommendations.append(get_recommendations(idx,df,offset))
+            final_recommendations.extend(get_recommendations(idx,df,offset).to_list())
         else:
             print("movie name not found in dbbbbbbbbbbbbbbbbbbbbbb")
 
         print("final recommendations: ",final_recommendations)
-            
+
         return render(request, 'recommender/result.html',{'movie_details':final_recommendations,'search_name':movie_name})

@@ -13,12 +13,11 @@
     <caption>Similar Movies you may like</caption>
     <thead>
       <tr>
-        <th scope="col">Release Date</th>
         <th scope="col">Movie Title</th>
       </tr>
     </thead>
     <tbody>
-      {% for each_movie_name, release_date in movie_details %}
+      {% for each_movie_name in movie_details %}
           <tr>
               <td>{{ each_movie_name }}</td>
           </tr>
