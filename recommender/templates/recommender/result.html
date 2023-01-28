@@ -17,11 +17,15 @@
       </tr>
     </thead>
     <tbody>
-      {% for each_movie_name in movie_details %}
-          <tr>
-              <td>{{ each_movie_name }}</td>
-          </tr>
-      {% endfor %}
+      {% if not empty %}
+        {% for each_movie_name in movie_details %}
+            <tr>
+                <td>{{ each_movie_name }}</td>
+            </tr>
+        {% endfor %}
+      {% else %}
+        <p>You entered a wrong movie name or we may not have it in our model of 45K movies.</p>
+      {% endif %}
     </tbody>
   </table>
 </body>

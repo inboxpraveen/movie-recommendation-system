@@ -11,7 +11,7 @@ indices = pd.Series(movies_data.index, index=movies_data['title'])
 def get_recommendations(idx,df,offset):
     sim_scores = list(enumerate(df[idx-offset]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-    sim_scores = sim_scores[1:11]
+    sim_scores = sim_scores[1:25]
     movie_indices = [i[0] for i in sim_scores]
     output = titles.iloc[movie_indices]
     output.reset_index(inplace=True, drop=True)
@@ -26,13 +26,15 @@ def main(request):
     if request.method == 'POST':
 
         data = request.POST
-        movie_name = data.get('movie_name').title()
-
+        movie_name = data.get('movie_name').lower()
+        global titles_list
         final_recommendations = []
-        print("titles: ",titles_list[:10])
+        titles_list = [word.lower() for word in titles_list if word]
+
         if movie_name in titles_list:
             idx = titles_list.index(movie_name)
             offset = 0
+            df = None
             if idx < 15000:
                 df = pa.parquet.read_table('static/model_01.parquet').to_pandas()
                 print("loaded model 1")
@@ -45,10 +47,11 @@ def main(request):
                 df = pa.parquet.read_table('static/model_03.parquet').to_pandas()
                 print("loaded model 3")
 
-            final_recommendations.extend(get_recommendations(idx,df,offset).to_list())
-        else:
-            print("movie name not found in dbbbbbbbbbbbbbbbbbbbbbb")
+            if df is not None:
+                final_recommendations.extend(get_recommendations(idx,df,offset).to_list())
 
         print("final recommendations: ",final_recommendations)
-
-        return render(request, 'recommender/result.html',{'movie_details':final_recommendations,'search_name':movie_name})
+        if final_recommendations:
+            return render(request, 'recommender/result.html',{'movie_details':final_recommendations,'search_name':movie_name,'empty':''})
+        else:
+            return render(request, 'recommender/result.html',{'movie_details':final_recommendations,'search_name':movie_name,'empty':'yes'})
