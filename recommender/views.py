@@ -17,13 +17,5 @@ def main(request):
         movie_name = data.get('movie_name').title()
 
         final_recommendations = []
-        word_set = first_substring(all_titles,movie_name)
-        print("word_set: ",word_set)
-        distances, indices = knn_model.kneighbors(features.iloc[word_set,:].values.reshape(1,-1),n_neighbors=11)
-
-        for i in range(0, len(distances.flatten())):
-            final_recommendations.append(features.index[indices.flatten()[i]])
-
-        print(final_recommendations)
 
         return render(request, 'recommender/result.html',{'movie_details':final_recommendations,'search_name':movie_name})
