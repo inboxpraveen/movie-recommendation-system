@@ -4,3 +4,4 @@ pandas
 gunicorn
 whitenoise
 fastparquet
+pyarrow

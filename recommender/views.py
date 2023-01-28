@@ -1,26 +1,10 @@
 from django.shortcuts import render
 import pandas as pd
-import pickle
-import re
+import pyarrow as pa
 
-features = pd.read_parquet("static/features.parquet")
-print("loaded par")
-knn_model = pickle.load(open('static/model.pkl', 'rb'))
-print("loadded model")
-all_titles = set(features.index.values.tolist())
-
-def preprocess_all_titles(one):
-    output = re.sub("([0-9][0-9][0-9][0-9])","",one).replace("()","").replace(",","").replace(".","").replace("'","")
-    new_output = " ".join([word.strip().title() for word in output.split()])
-    return new_output.strip()
-
-all_titles = set(features.index.map(preprocess_all_titles).values.tolist())
-
-def first_substring(substring):
-    for i, title in enumerate(all_titles):
-        if substring in title or set(substring.split())==set(title.split()):
-            return i
-    return None
+movies_data = pd.read_parquet("static/movie_db.parquet")
+titles = movies_data['title']
+indices = pd.Series(movies_data.index, index=movies_data['title'])
 
 def main(request):
  
@@ -31,7 +15,7 @@ def main(request):
 
         data = request.POST
         movie_name = data.get('movie_name').title()
-        
+
         final_recommendations = []
         word_set = first_substring(all_titles,movie_name)
         print("word_set: ",word_set)
