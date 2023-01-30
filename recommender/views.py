@@ -47,7 +47,6 @@ def main(request):
             if df is not None:
                 final_recommendations.extend(get_recommendations(idx,df,offset).to_list())
 
-        print("final recommendations: ",final_recommendations)
         if final_recommendations:
             return render(request, 'recommender/result.html',{'movie_details':final_recommendations,'search_name':movie_name,'empty':''})
         else:
