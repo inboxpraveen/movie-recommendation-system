@@ -37,7 +37,6 @@ def main(request):
             df = None
             if idx < 15000:
                 df = pa.parquet.read_table('static/model_01.parquet').to_pandas()
-                print("loaded model 1")
             elif idx > 15000 and idx < 30000:
                 offset = 15000
                 df = pa.parquet.read_table('static/model_02.parquet').to_pandas()
