@@ -45,7 +45,6 @@ def main(request):
             elif idx > 30000:
                 offset = 30000
                 df = pa.parquet.read_table('static/model_03.parquet').to_pandas()
-                print("loaded model 3")
 
             if df is not None:
                 final_recommendations.extend(get_recommendations(idx,df,offset).to_list())
