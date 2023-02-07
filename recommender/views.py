@@ -2,8 +2,13 @@ from django.shortcuts import render
 import pandas as pd
 import pyarrow as pa
 
+movies_data = pd.read_parquet("static/movie_db.parquet")
+titles = movies_data['title']
+titles_list = titles.to_list()
+indices = pd.Series(movies_data.index, index=movies_data['title'])
 
-def get_recommendations(idx,df,titles,offset):
+
+def get_recommendations(idx,df,offset):
     sim_scores = list(enumerate(df[idx-offset]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
     sim_scores = sim_scores[1:25]
@@ -14,23 +19,15 @@ def get_recommendations(idx,df,titles,offset):
 
 
 def main(request):
-    
-    titles,titles_list, indices = None, None, None
-    
+ 
     if request.method == 'GET':
-        try:
-            return render(request, 'recommender/index.html', {})
-        except:
-            pass
-        finally:
-            movies_data = pd.read_parquet("static/movie_db.parquet")
-            titles = movies_data['title']
-            titles_list = titles.to_list()
-
-
+        return render(request, 'recommender/index.html', {})
+    
     if request.method == 'POST':
+
         data = request.POST
         movie_name = data.get('movie_name').lower()
+        global titles_list
         final_recommendations = []
         titles_list = [word.lower() for word in titles_list if word]
 
@@ -48,7 +45,7 @@ def main(request):
                 df = pa.parquet.read_table('static/model_03.parquet').to_pandas()
 
             if df is not None:
-                final_recommendations.extend(get_recommendations(idx,df,titles,offset).to_list())
+                final_recommendations.extend(get_recommendations(idx,df,offset).to_list())
 
         if final_recommendations:
             return render(request, 'recommender/result.html',{'movie_details':final_recommendations,'search_name':movie_name,'empty':''})
