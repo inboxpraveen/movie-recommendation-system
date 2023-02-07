@@ -39,7 +39,8 @@
                             {% endfor %}
                         ];
                         $("#movie_name").autocomplete({
-                        source: availableTags
+                        source: availableTags,
+                        minLength: 4
                         });
                     } );
                 </script>

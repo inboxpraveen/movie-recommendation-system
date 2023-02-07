@@ -25,9 +25,8 @@ def main(request):
     if request.method == 'POST':
 
         data = request.POST
-        movie_name = data.get('movie_name').lower()
+        movie_name = data.get('movie_name')
         final_recommendations = []
-        titles_list = [word.lower() for word in titles_list if word]
 
         if movie_name in titles_list:
             idx = titles_list.index(movie_name)
