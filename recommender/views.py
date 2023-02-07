@@ -5,7 +5,6 @@ import pyarrow as pa
 movies_data = pd.read_parquet("static/movie_db.parquet")
 titles = movies_data['title']
 titles_list = titles.to_list()
-indices = pd.Series(movies_data.index, index=movies_data['title'])
 
 
 def get_recommendations(idx,df,offset):
@@ -19,15 +18,14 @@ def get_recommendations(idx,df,offset):
 
 
 def main(request):
- 
+    global titles_list
     if request.method == 'GET':
-        return render(request, 'recommender/index.html', {})
+        return render(request, 'recommender/index.html', {'all_movie_names':titles_list})
     
     if request.method == 'POST':
 
         data = request.POST
         movie_name = data.get('movie_name').lower()
-        global titles_list
         final_recommendations = []
         titles_list = [word.lower() for word in titles_list if word]
 

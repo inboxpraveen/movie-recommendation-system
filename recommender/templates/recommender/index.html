@@ -16,6 +16,9 @@
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700|Source+Serif+Pro:700" rel="stylesheet"> 
 
         <link rel="shortcut icon" href="{% static 'favicon.png' %}">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet">
+        <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
 
     </head>
 
@@ -27,13 +30,25 @@
             <form method="POST" class="form-control">
                 {% csrf_token %}
                 <input type="text" id="movie_name" class="btn full-width" style="margin-bottom:1em;" name="movie_name" placeholder="Enter a movie name" required />
+                <script>
+                    $( function() {
+                        var availableTags = [
+                            {% for mmm in all_movie_names %}
+                                "{{ mmm }}",
+                            {% endfor %}
+                        ];
+                        $("#movie_name").autocomplete({
+                        source: availableTags
+                        });
+                    } );
+                </script>
                 <input type="submit" id="submission_button" class="btn" value="Recommend Me" />
             </form>
         </div>
     </header>
 
     <main>
-        ## Feature list
+        <!-- ## Feature list -->
         <!-- <div class="container pt3 mt2 text--gray align--center">
             <h1 class="mb3">About me</h1>
             <div class="grid-row">
