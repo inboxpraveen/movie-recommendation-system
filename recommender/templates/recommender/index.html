@@ -24,100 +24,99 @@
 </head>
 
 <body>
-
-  <div class="main-container">
-    <div class="heading">
-        <h1 class="heading__title">Movie Recommendation Demo</h1>
-        <p class="heading__credits"><a class="heading__link" target="_blank" href="https://github.com/inboxpraveen">Made with &#x2665; by Praveen Kumar</a></p>
-        <br>
-        <form method="POST">
-            {% csrf_token %}
-            <input type="text" id="movie_name" name="movie_name" placeholder="Start typing to see movie suggestions..."
-                required />
-            <script>
-                $(function () {
-                    var availableTags = [
-                        {% for mmm in all_movie_names %}
-                            "{{ mmm }}",
-                    {% endfor %}
-                    ];
-                $("#movie_name").autocomplete({
-                    source: availableTags,
-                    minLength: 4
-                });
-                } );
-            </script>
-            <input type="submit" class="fa fa-search" value="Search" />
-        </form>
-    </div>
-
-    <div class="container">
-        {% if input_provided %}
-            <p class="heading__credits">Showing Results for: <b>{{ input_movie_name }}</b></p>
-            {% if not movie_found %}
-                <p>Oops! We can not match your movie in our database. As this is a demo model, only top 10K movies based on IMBD are present.</p>
-            {% endif %}
-        {% endif %}
-    </div>
-
-    {% if recomendation_found %}
-    <div class="cards">
-        {% if recomendation_found %}
-            {% for each_movie_dictionary in recommended_movies %}
-                <div class="card card-1">
-                    <div class="card__icon"><i class="fas fa-bolt"></i></div>
-                    <p class="card__exit"><i class="fas fa-times"></i>Release Year: {{ each_movie_dictionary.movie_release_date }}</p>
-                    <h2 class="card__title">Title: {{ each_movie_dictionary.movie_title }}</h2>
-                    <h3>Director: {{ each_movie_dictionary.movie_director }}</h3>
-                    <p class="card__apply">
-                        <a class="card__link" href="#">Search on Google <i class="fas fa-arrow-right"></i></a>
-                    </p>
-                </div>
-            {% endfor %}
-        {% endif %}
-    </div>
-    {% endif %}
-
-    </div>
-
     <div id="overlay">
         <div id="progstat"></div>
         <div id="progress"></div>
     </div>
 
-  <script>
-    ;(function(){
-      function id(v){ return document.getElementById(v); }
-        function loadbar() {
-            var ovrl = id("overlay"),
-                prog = id("progress"),
-                stat = id("progstat"),
-                img = document.images,
-                c = 0,
-                tot = img.length;
-            if(tot == 0) return doneLoading();
+    <div class="main-container">
+        <div class="heading">
+            <h1 class="heading__title">Movie Recommendation Demo</h1>
+            <p class="heading__credits"><a class="heading__link" target="_blank"
+                    href="https://github.com/inboxpraveen">Made with &#x2665; by Praveen Kumar</a></p>
+            <br>
+            <form method="POST">
+                {% csrf_token %}
+                <input type="text" id="movie_name" name="movie_name"
+                    placeholder="Start typing to see movie suggestions..." required />
+                <script>
+                    $(function () {
+                        var availableTags = [
+                            {% for mmm in all_movie_names %}
+                            "{{ mmm }}",
+                        {% endfor %}
+                    ];
+                    $("#movie_name").autocomplete({
+                        source: availableTags,
+                        minLength: 4
+                    });
+                } );
+                </script>
+                <input type="submit" class="fa fa-search" value="Search" />
+            </form>
+        </div>
 
-            function imgLoaded(){
-            c += 1;
-            var perc = ((100/tot*c) << 0) +"%";
-            prog.style.width = perc;
-            stat.innerHTML = "Generating Recommendations... "+ perc;
-            if(c===tot) return doneLoading();
+        <div class="container">
+            {% if input_provided %}
+            <p class="heading__credits">Showing Results for: <b>{{ input_movie_name }}</b></p>
+            {% if not movie_found %}
+            <p>Oops! We can not match your movie in our database. As this is a demo model, only top 10K movies based on
+                IMBD are present.</p>
+            {% endif %}
+            {% endif %}
+        </div>
+
+        {% if recomendation_found %}
+        <div class="cards">
+            {% if recomendation_found %}
+                {% for each_movie_dictionary in recommended_movies %}
+                <div class="card card-1">
+                    <div class="card__icon"><i class="fa fa-film"></i> {{ each_movie_dictionary.movie_title }}</div>
+                    <h2 class="card__title">Directed by - {{ each_movie_dictionary.movie_director }}</h2>
+                    <p class="card__apply">
+                        <a class="card__link" target="_blank" href="{{ each_movie_dictionary.google_link }}">Search on Google <i class="fa fa-arrow-right"></i></a>
+                    </p>
+                </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        {% endif %}
+
+    </div>
+
+    <script>
+        ; (function () {
+            function id(v) { return document.getElementById(v); }
+            function loadbar() {
+                var ovrl = id("overlay"),
+                    prog = id("progress"),
+                    stat = id("progstat"),
+                    img = document.images,
+                    c = 0,
+                    tot = img.length;
+                if (tot == 0) return doneLoading();
+
+                function imgLoaded() {
+                    c += 1;
+                    var perc = ((100 / tot * c) << 0) + "%";
+                    prog.style.width = perc;
+                    stat.innerHTML = "Loading... " + perc;
+                    if (c === tot) return doneLoading();
+                }
+                function doneLoading() {
+                    ovrl.style.opacity = 0;
+                    setTimeout(function () {
+                        ovrl.style.display = "none";
+                    }, 1200);
+                }
+                for (var i = 0; i < tot; i++) {
+                    var tImg = new Image();
+                    tImg.onload = imgLoaded;
+                    tImg.onerror = imgLoaded;
+                    tImg.src = img[i].src;
+                }
             }
-            function doneLoading(){
-            ovrl.style.opacity = 0;
-            setTimeout(function(){ 
-                ovrl.style.display = "none";
-            }, 1200);
-            }
-            for(var i=0; i<tot; i++) {
-            var tImg     = new Image();
-            tImg.onload  = imgLoaded;
-            tImg.onerror = imgLoaded;
-            tImg.src     = img[i].src;
-            }    
-        }
-        document.addEventListener('DOMContentLoaded', loadbar, false);
+            document.addEventListener('DOMContentLoaded', loadbar, false);
         }());
     </script>
 

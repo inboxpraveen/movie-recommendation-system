@@ -24,7 +24,8 @@ def get_recommendations(movie_id_from_db,movie_db):
             response.append({
                 'movie_title':output['title'].iloc[i],
                 'movie_release_date':output['release_date'].iloc[i],
-                'movie_director':output['main_director'].iloc[i]
+                'movie_director':output['main_director'].iloc[i],
+                'google_link':"https://www.google.com/search?q=" + '+'.join(output['title'].iloc[i].strip().split())
             })
         return response
     except Exception as e:
@@ -72,7 +73,6 @@ def main(request):
             )
 
         final_recommendations = get_recommendations(idx,model)
-
         if final_recommendations:
             return render(
                 request,
