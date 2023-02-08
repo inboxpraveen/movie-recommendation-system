@@ -3,7 +3,7 @@
 --------------------------------------------------------------*/
 @media screen and (max-width: 768px) {
     [data-aos-delay] {
-      transition-delay: 0 !important;
+        transition-delay: 0 !important;
     }
 }
 
@@ -114,8 +114,8 @@ p {
 .card {
     margin: 20px;
     padding: 10px;
-    width: 500px;
-    min-height: 200px;
+    width: 400px;
+    min-height: 150px;
     display: grid;
     grid-template-rows: 20px 50px 1fr 50px;
     border-radius: 10px;
@@ -125,7 +125,7 @@ p {
 
 .card:hover {
     box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.4);
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 .card__link,
@@ -158,12 +158,12 @@ p {
 
 .card__icon {
     grid-row: 2/3;
-    font-size: 30px;
+    font-size: 1.5em;
 }
 
 .card__title {
+    font-size: 1em;
     grid-row: 3/4;
-    font-weight: 400;
     color: #ffffff;
 }
 
@@ -186,31 +186,41 @@ p {
 }
 
 
-#overlay{
-    position:fixed;
-    z-index:99999;
-    top:0;
-    left:0;
-    bottom:0;
-    right:0;
-    background:rgba(0,0,0,0.9);
+#overlay {
+    position: fixed;
+    z-index: 99999;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.9);
     transition: 1s 0.4s;
-  }
-  #progress{
-    height:1px;
-    background:#fff;
-    position:absolute;
-    width:0;
-    top:50%;
+}
+
+#progress {
+    height: 1px;
+    background: #fff;
+    position: absolute;
+    width: 0;
+    top: 50%;
     transition: 1s;
-  }
-  #progstat{
-    font-size:0.7em;
+}
+
+#progstat {
+    font-size: 0.7em;
     letter-spacing: 3px;
-    position:absolute;
-    top:50%;
-    margin-top:-40px;
-    width:100%;
-    text-align:center;
-    color:#fff;
-  }
+    position: absolute;
+    top: 50%;
+    margin-top: -40px;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+}
+
+.container {
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    text-align: center;
+    align-self: center;
+}
