@@ -1,9 +1,9 @@
 {% load static %}
-<!doctype html>
-<html lang="en-us">
+
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -12,17 +12,24 @@
     <title>Movie Recommendation System</title>
     <meta name="description" content="">
 
-    <link rel="stylesheet" href="{% static 'recommender/index-style.css' %}">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700|Source+Serif+Pro:700" rel="stylesheet">
     <link rel="shortcut icon" href="{% static 'logo.png' %}">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700|Source+Serif+Pro:700" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'recommender/index-style.css' %}">
+    <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet">
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet">
     <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+    
 
 </head>
 
-<body class="has-animations">
+<body>
+
+  <div class="main-container">
+    <div class="heading">
+      <h1 class="heading__title">Movie Recommendation Demo</h1>
+      <p class="heading__credits"><a class="heading__link" target="_blank" href="https://github.com/inboxpraveen">Made with &#x2665; by Praveen Kumar</a></p>
+    </div>
 
     <form method="POST">
         {% csrf_token %}
@@ -45,21 +52,76 @@
     </form>
 
     {% if input_provided %}
-    <p>you searched for {{ input_movie_name }}</p>
-    {% if movie_found %}
-    <p>we found movies too</p>
-    {% if recomendation_found %}
-    <p>we found Recommendation as well</p>
-    <p>{{ recommended_movies }}</p>
-    {% else %}
-    <p>we did not find any Recommendations</p>
-    {% endif %}
-    {% else %}
-    <p>we did not find movies... looks like you entered wrong name</p>
-    {% endif %}
+        <p>you searched for {{ input_movie_name }}</p>
+        {% if movie_found %}
+            <p>we found movies too</p>
+            {% if recomendation_found %}
+                <p>we found Recommendation as well</p>
+                {% for each_movie_dictionary in recommended_movies %}
+                    <p>{{ each_movie_dictionary.movie_title }}</p>
+                    <p>{{ each_movie_dictionary.movie_director }}</p>
+                    <p>{{ each_movie_dictionary.movie_release_date }}</p>
+                    <br>
+                {% endfor %}
+            {% else %}
+                <p>we did not find any Recommendations</p>
+            {% endif %}
+        {% else %}
+            <p>we did not find movies... looks like you entered wrong name</p>
+        {% endif %}
     {% endif %}
 
-    <script src="{% static 'recommender/production.js' %}"></script>
+    <div class="cards">
+      <div class="card card-1">
+        <div class="card__icon"><i class="fas fa-bolt"></i></div>
+        <p class="card__exit"><i class="fas fa-times"></i></p>
+        <h2 class="card__title">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
+        <p class="card__apply">
+          <a class="card__link" href="#">Apply Now <i class="fas fa-arrow-right"></i></a>
+        </p>
+      </div>
+      <div class="card card-2">
+        <div class="card__icon"><i class="fas fa-bolt"></i></div>
+        <p class="card__exit"><i class="fas fa-times"></i></p>
+        <h2 class="card__title">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</h2>
+        <p class="card__apply">
+          <a class="card__link" href="#">Apply Now <i class="fas fa-arrow-right"></i></a>
+        </p>
+      </div>
+      <div class="card card-3">
+        <div class="card__icon"><i class="fas fa-bolt"></i></div>
+        <p class="card__exit"><i class="fas fa-times"></i></p>
+        <h2 class="card__title">Ut enim ad minim veniam.</h2>
+        <p class="card__apply">
+          <a class="card__link" href="#">Apply Now <i class="fas fa-arrow-right"></i></a>
+        </p>
+      </div>
+      <div class="card card-4">
+        <div class="card__icon"><i class="fas fa-bolt"></i></div>
+        <p class="card__exit"><i class="fas fa-times"></i></p>
+        <h2 class="card__title">Quis nostrud exercitation ullamco laboris nisi.</h2>
+        <p class="card__apply">
+          <a class="card__link" href="#">Apply Now <i class="fas fa-arrow-right"></i></a>
+        </p>
+      </div>
+      <div class="card card-5">
+        <div class="card__icon"><i class="fas fa-bolt"></i></div>
+        <p class="card__exit"><i class="fas fa-times"></i></p>
+        <h2 class="card__title">Ut aliquip ex ea commodo consequat. Duis aute irure dolor.</h2>
+        <p class="card__apply">
+          <a class="card__link" href="#">Apply Now <i class="fas fa-arrow-right"></i></a>
+        </p>
+      </div>
+      <div class="card card-1">
+        <div class="card__icon"><i class="fas fa-bolt"></i></div>
+        <p class="card__exit"><i class="fas fa-times"></i></p>
+        <h2 class="card__title">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
+        <p class="card__apply">
+          <a class="card__link" href="#">Apply Now <i class="fas fa-arrow-right"></i></a>
+        </p>
+      </div>
+    </div>
+  </div>
 
 </body>
 

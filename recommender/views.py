@@ -16,7 +16,7 @@ def get_recommendations(movie_id_from_db,movie_db):
         movie_indices = [i[0] for i in sim_scores]
         output = movies_data.iloc[movie_indices]
         output.reset_index(inplace=True, drop=True)
-        print(output.head())
+
         response = []
         for i in range(len(output)):
             response.append({
@@ -71,7 +71,7 @@ def main(request):
             )
 
         final_recommendations = get_recommendations(idx,df)
-        print("final recommendations: ",final_recommendations)
+
         if final_recommendations:
             return render(
                 request,
