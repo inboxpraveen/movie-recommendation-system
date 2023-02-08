@@ -7,16 +7,15 @@
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 
         <title>Movie Recommendation System</title>
         <meta name="description" content="">
 
         <link rel="stylesheet" href="{% static 'recommender/index-style.css' %}">
-
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700|Source+Serif+Pro:700" rel="stylesheet"> 
+        <link rel="shortcut icon" href="{% static 'logo.png' %}">
 
-        <link rel="shortcut icon" href="{% static 'favicon.png' %}">
-        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet">
         <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
@@ -25,84 +24,46 @@
 
     <body class="has-animations">
 
-    <header class="align--center pt3">
+    <!-- <header class="align--center pt3">
         <div class="container--lg border--bottom pb3">
             <h1 class="mb2">AI for Movie Recommendation</h1>
-            <form method="POST" class="form-control">
-                {% csrf_token %}
-                <input type="text" id="movie_name" class="btn full-width" style="margin-bottom:1em;" name="movie_name" placeholder="Enter a movie name" required />
-                <script>
-                    $( function() {
-                        var availableTags = [
-                            {% for mmm in all_movie_names %}
-                                "{{ mmm }}",
-                            {% endfor %}
-                        ];
-                        $("#movie_name").autocomplete({
-                        source: availableTags,
-                        minLength: 4
-                        });
-                    } );
-                </script>
-                <input type="submit" id="submission_button" class="btn" value="Recommend Me" />
-            </form>
+            
         </div>
-    </header>
+    </header> -->
 
-    <main>
-        <!-- ## Feature list -->
-        <!-- <div class="container pt3 mt2 text--gray align--center">
-            <h1 class="mb3">About me</h1>
-            <div class="grid-row">
-                <div class="grid-column span-one-third mb3 reveal-on-scroll is-revealing">
-                    <img class="illustration--small mb1" src="/img/assign.svg" alt="Assign to others">
-                    <p>Assign to others</p>
-                </div>
-                <div class="grid-column span-one-third mb3 reveal-on-scroll is-revealing">
-                    <img class="illustration--small mb1" src="/img/connected.svg" alt="Stay connected">
-                    <p>Stay connected</p>
-                </div>
-                <div class="grid-column span-one-third mb3 reveal-on-scroll is-revealing">
-                    <img class="illustration--small mb1" src="/img/search.svg" alt="Powerful search">
-                    <p>Powerful search</p>
-                </div>
-                <div class="grid-column span-one-third mb3 reveal-on-scroll is-revealing">
-                    <img class="illustration--small mb1" src="/img/vault.svg" alt="Put in a vault">
-                    <p>Put in a vault</p>
-                </div>
-                <div class="grid-column span-one-third mb3 reveal-on-scroll is-revealing">
-                    <img class="illustration--small mb1" src="/img/messaging.svg" alt="Fast messaging">
-                    <p>Fast messaging</p>
-                </div>
-                <div class="grid-column span-one-third mb3 reveal-on-scroll is-revealing">
-                    <img class="illustration--small mb1" src="/img/mail.svg" alt="Share with others">
-                    <p>Share with others</p>
-                </div>
-            </div>
-        </div> -->
+    <form method="POST" class="form-control">
+        {% csrf_token %}
+        <input type="text" id="movie_name" class="btn full-width" style="margin-bottom:1em;" name="movie_name" placeholder="Enter a movie name" required />
+        <script>
+            $( function() {
+                var availableTags = [
+                    {% for mmm in all_movie_names %}
+                        "{{ mmm }}",
+                    {% endfor %}
+                ];
+                $("#movie_name").autocomplete({
+                source: availableTags,
+                minLength: 4
+                });
+            } );
+        </script>
+        <input type="submit" id="submission_button" class="btn" value="Recommend Me" />
+    </form>
 
-        <div class="container--lg pt1 pb1">
-
-            <div class="grid-row grid-row--center">
-                <div class="grid-column mt3 mb2 order-1 reveal-on-scroll is-revealing">
-                    <img src="{% static 'E15.png' %}" alt="Usage data">
-                </div>
-                <div class="grid-column span-1"></div>
-                <div class="grid-column mt3 mb2 order-2">
-                    <div class="border--bottom pb2 mb2">
-                        <h2>About me</h2>
-                        <p>As an AI Engineer with 3 years of experience, I specialize in building efficient and effective ML pipelines that power cutting-edge AI solutions. From data preprocessing to model deployment, I have the skills and expertise to take your project from idea to reality. With a keen eye for detail and a passion for staying up-to-date with the latest trends and technologies in the field, I am dedicated to delivering high-quality results that exceed expectations. I also love connecting with professionals in a fun and unique way, and I am also a content creator. So, if you're ready to take your AI game to the next level, let's build something great together!</p>
-                    </div>
-                    <p class="italic text--gray mb1">Building ML Pipelines like a Pro, One Algorithm at a Time!</p>
-                    <p class="bold">AI Engineer at&nbsp;TrellisSoft</p>
-                </div>
-            </div>
-
-        </div>
-
-    </main>
-
-    <script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+    {% if input_provided %}
+        <p>you searched for {{ input_movie_name }}</p>
+        {% if movie_found %}
+            <p>we found movies too</p>
+            {% if recomendation_found %}
+                <p>we found Recommendation as well</p>
+                <p>{{ recommended_movies }}</p>
+            {% else %}
+                <p>we did not find any Recommendations</p>
+            {% endif %}
+        {% else %}
+            <p>we did not find movies... looks like you entered wrong name</p>
+        {% endif %}
+    {% endif %}
 
     <script src="{% static 'recommender/production.js' %}"></script>
 
