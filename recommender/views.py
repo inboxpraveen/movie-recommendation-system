@@ -1,10 +1,12 @@
 from django.shortcuts import render
 import pandas as pd
 import pyarrow as pa
+import time
 
 movies_data = pd.read_parquet("static/top_10k_movie_data.parquet")
 titles = movies_data['title']
 titles_list = titles.to_list()
+model = pa.parquet.read_table('static/demo_model.parquet').to_pandas()
 
 def get_recommendations(movie_id_from_db,movie_db):
 
@@ -32,7 +34,7 @@ def get_recommendations(movie_id_from_db,movie_db):
 
 def main(request):
 
-    global titles_list
+    global titles_list, model
 
     if request.method == 'GET':
         return render(
@@ -55,7 +57,6 @@ def main(request):
 
         if movie_name in titles_list:
             idx = titles_list.index(movie_name)
-            df = pa.parquet.read_table('static/demo_model.parquet').to_pandas()
         else:
             return render(
                 request,
@@ -70,7 +71,7 @@ def main(request):
                 }
             )
 
-        final_recommendations = get_recommendations(idx,df)
+        final_recommendations = get_recommendations(idx,model)
 
         if final_recommendations:
             return render(

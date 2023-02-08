@@ -19,7 +19,6 @@
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
-    
 
 </head>
 
@@ -27,100 +26,61 @@
 
   <div class="main-container">
     <div class="heading">
-      <h1 class="heading__title">Movie Recommendation Demo</h1>
-      <p class="heading__credits"><a class="heading__link" target="_blank" href="https://github.com/inboxpraveen">Made with &#x2665; by Praveen Kumar</a></p>
+        <h1 class="heading__title">Movie Recommendation Demo</h1>
+        <p class="heading__credits"><a class="heading__link" target="_blank" href="https://github.com/inboxpraveen">Made with &#x2665; by Praveen Kumar</a></p>
+        <br>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" id="movie_name" name="movie_name" placeholder="Start typing to see movie suggestions..."
+                required />
+            <script>
+                $(function () {
+                    var availableTags = [
+                        {% for mmm in all_movie_names %}
+                            "{{ mmm }}",
+                    {% endfor %}
+                    ];
+                $("#movie_name").autocomplete({
+                    source: availableTags,
+                    minLength: 4
+                });
+                } );
+            </script>
+            <input type="submit" id="submission_button" value="Search" />
+        </form>
     </div>
 
-    <form method="POST">
-        {% csrf_token %}
-        <input type="text" id="movie_name" name="movie_name" placeholder="Start typing to see movie suggestions..."
-            required />
-        <script>
-            $(function () {
-                var availableTags = [
-                    {% for mmm in all_movie_names %}
-                        "{{ mmm }}",
-                {% endfor %}
-                ];
-            $("#movie_name").autocomplete({
-                source: availableTags,
-                minLength: 4
-            });
-            } );
-        </script>
-        <input type="submit" id="submission_button" value="Search" />
-    </form>
-
-    {% if input_provided %}
-        <p>you searched for {{ input_movie_name }}</p>
-        {% if movie_found %}
-            <p>we found movies too</p>
-            {% if recomendation_found %}
-                <p>we found Recommendation as well</p>
-                {% for each_movie_dictionary in recommended_movies %}
-                    <p>{{ each_movie_dictionary.movie_title }}</p>
-                    <p>{{ each_movie_dictionary.movie_director }}</p>
-                    <p>{{ each_movie_dictionary.movie_release_date }}</p>
-                    <br>
-                {% endfor %}
+    <div>
+        {% if input_provided %}
+            <p>Showing Results for: {{ input_movie_name }}</p>
+            {% if movie_found %}
+                {% if not recomendation_found %}
+                    <p>we did not find any Recommendations</p>
+                {% endif %}
             {% else %}
-                <p>we did not find any Recommendations</p>
+                <p>we did not find movies... looks like you entered wrong name</p>
             {% endif %}
-        {% else %}
-            <p>we did not find movies... looks like you entered wrong name</p>
         {% endif %}
+    </div>
+
+    {% if recomendation_found %}
+    <div class="cards">
+        {% if recomendation_found %}
+            {% for each_movie_dictionary in recommended_movies %}
+                <div class="card card-1">
+                    <div class="card__icon"><i class="fas fa-bolt"></i></div>
+                    <p class="card__exit"><i class="fas fa-times"></i>Release Year: {{ each_movie_dictionary.movie_release_date }}</p>
+                    <h2 class="card__title">Title: {{ each_movie_dictionary.movie_title }}</h2>
+                    <h3>Director: {{ each_movie_dictionary.movie_director }}</h3>
+                    <p class="card__apply">
+                        <a class="card__link" href="#">Search on Google <i class="fas fa-arrow-right"></i></a>
+                    </p>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
     {% endif %}
 
-    <div class="cards">
-      <div class="card card-1">
-        <div class="card__icon"><i class="fas fa-bolt"></i></div>
-        <p class="card__exit"><i class="fas fa-times"></i></p>
-        <h2 class="card__title">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
-        <p class="card__apply">
-          <a class="card__link" href="#">Apply Now <i class="fas fa-arrow-right"></i></a>
-        </p>
-      </div>
-      <div class="card card-2">
-        <div class="card__icon"><i class="fas fa-bolt"></i></div>
-        <p class="card__exit"><i class="fas fa-times"></i></p>
-        <h2 class="card__title">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</h2>
-        <p class="card__apply">
-          <a class="card__link" href="#">Apply Now <i class="fas fa-arrow-right"></i></a>
-        </p>
-      </div>
-      <div class="card card-3">
-        <div class="card__icon"><i class="fas fa-bolt"></i></div>
-        <p class="card__exit"><i class="fas fa-times"></i></p>
-        <h2 class="card__title">Ut enim ad minim veniam.</h2>
-        <p class="card__apply">
-          <a class="card__link" href="#">Apply Now <i class="fas fa-arrow-right"></i></a>
-        </p>
-      </div>
-      <div class="card card-4">
-        <div class="card__icon"><i class="fas fa-bolt"></i></div>
-        <p class="card__exit"><i class="fas fa-times"></i></p>
-        <h2 class="card__title">Quis nostrud exercitation ullamco laboris nisi.</h2>
-        <p class="card__apply">
-          <a class="card__link" href="#">Apply Now <i class="fas fa-arrow-right"></i></a>
-        </p>
-      </div>
-      <div class="card card-5">
-        <div class="card__icon"><i class="fas fa-bolt"></i></div>
-        <p class="card__exit"><i class="fas fa-times"></i></p>
-        <h2 class="card__title">Ut aliquip ex ea commodo consequat. Duis aute irure dolor.</h2>
-        <p class="card__apply">
-          <a class="card__link" href="#">Apply Now <i class="fas fa-arrow-right"></i></a>
-        </p>
-      </div>
-      <div class="card card-1">
-        <div class="card__icon"><i class="fas fa-bolt"></i></div>
-        <p class="card__exit"><i class="fas fa-times"></i></p>
-        <h2 class="card__title">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
-        <p class="card__apply">
-          <a class="card__link" href="#">Apply Now <i class="fas fa-arrow-right"></i></a>
-        </p>
-      </div>
-    </div>
   </div>
 
 </body>

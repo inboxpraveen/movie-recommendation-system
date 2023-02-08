@@ -48,7 +48,7 @@
   
   .card {
     margin: 20px;
-    padding: 20px;
+    padding: 10px;
     width: 500px;
     min-height: 200px;
     display: grid;
@@ -60,7 +60,7 @@
   
   .card:hover {
     box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.4);
-    transform: scale(1.01);
+    transform: scale(1.1);
   }
   
   .card__link,
@@ -110,23 +110,7 @@
   /* CARD BACKGROUNDS */
   
   .card-1 {
-    background: radial-gradient(#1fe4f5, #3fbafe);
-  }
-  
-  .card-2 {
-    background: radial-gradient(#fbc1cc, #fa99b2);
-  }
-  
-  .card-3 {
-    background: radial-gradient(#76b2fe, #b69efe);
-  }
-  
-  .card-4 {
-    background: radial-gradient(#60efbc, #58d5c9);
-  }
-  
-  .card-5 {
-    background: radial-gradient(#f588d8, #c0a3e5);
+    background: radial-gradient(#686868, #000000);
   }
   
   /* RESPONSIVE */
