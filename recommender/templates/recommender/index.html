@@ -2,71 +2,65 @@
 <!doctype html>
 <html lang="en-us">
 
-    <head>
+<head>
 
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <meta name="viewport" content="width=device-width,initial-scale=1">
-        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 
-        <title>Movie Recommendation System</title>
-        <meta name="description" content="">
+    <title>Movie Recommendation System</title>
+    <meta name="description" content="">
 
-        <link rel="stylesheet" href="{% static 'recommender/index-style.css' %}">
-        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700|Source+Serif+Pro:700" rel="stylesheet"> 
-        <link rel="shortcut icon" href="{% static 'logo.png' %}">
+    <link rel="stylesheet" href="{% static 'recommender/index-style.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700|Source+Serif+Pro:700" rel="stylesheet">
+    <link rel="shortcut icon" href="{% static 'logo.png' %}">
 
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-        <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet">
-        <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet">
+    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
 
-    </head>
+</head>
 
-    <body class="has-animations">
+<body class="has-animations">
 
-    <!-- <header class="align--center pt3">
-        <div class="container--lg border--bottom pb3">
-            <h1 class="mb2">AI for Movie Recommendation</h1>
-            
-        </div>
-    </header> -->
-
-    <form method="POST" class="form-control">
+    <form method="POST">
         {% csrf_token %}
-        <input type="text" id="movie_name" class="btn full-width" style="margin-bottom:1em;" name="movie_name" placeholder="Enter a movie name" required />
+        <input type="text" id="movie_name" name="movie_name" placeholder="Start typing to see movie suggestions..."
+            required />
         <script>
-            $( function() {
+            $(function () {
                 var availableTags = [
                     {% for mmm in all_movie_names %}
                         "{{ mmm }}",
-                    {% endfor %}
+                {% endfor %}
                 ];
-                $("#movie_name").autocomplete({
+            $("#movie_name").autocomplete({
                 source: availableTags,
                 minLength: 4
-                });
+            });
             } );
         </script>
-        <input type="submit" id="submission_button" class="btn" value="Recommend Me" />
+        <input type="submit" id="submission_button" value="Search" />
     </form>
 
     {% if input_provided %}
-        <p>you searched for {{ input_movie_name }}</p>
-        {% if movie_found %}
-            <p>we found movies too</p>
-            {% if recomendation_found %}
-                <p>we found Recommendation as well</p>
-                <p>{{ recommended_movies }}</p>
-            {% else %}
-                <p>we did not find any Recommendations</p>
-            {% endif %}
-        {% else %}
-            <p>we did not find movies... looks like you entered wrong name</p>
-        {% endif %}
+    <p>you searched for {{ input_movie_name }}</p>
+    {% if movie_found %}
+    <p>we found movies too</p>
+    {% if recomendation_found %}
+    <p>we found Recommendation as well</p>
+    <p>{{ recommended_movies }}</p>
+    {% else %}
+    <p>we did not find any Recommendations</p>
+    {% endif %}
+    {% else %}
+    <p>we did not find movies... looks like you entered wrong name</p>
+    {% endif %}
     {% endif %}
 
     <script src="{% static 'recommender/production.js' %}"></script>
 
-    </body>
-</html>
+</body>
 
+</html>
