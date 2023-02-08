@@ -16,6 +16,7 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700|Source+Serif+Pro:700" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'recommender/index-style.css' %}">
     <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
@@ -46,19 +47,15 @@
                 });
                 } );
             </script>
-            <input type="submit" id="submission_button" value="Search" />
+            <input type="submit" class="fa fa-search" value="Search" />
         </form>
     </div>
 
-    <div>
+    <div class="container">
         {% if input_provided %}
-            <p>Showing Results for: {{ input_movie_name }}</p>
-            {% if movie_found %}
-                {% if not recomendation_found %}
-                    <p>we did not find any Recommendations</p>
-                {% endif %}
-            {% else %}
-                <p>we did not find movies... looks like you entered wrong name</p>
+            <p class="heading__credits">Showing Results for: <b>{{ input_movie_name }}</b></p>
+            {% if not movie_found %}
+                <p>Oops! We can not match your movie in our database. As this is a demo model, only top 10K movies based on IMBD are present.</p>
             {% endif %}
         {% endif %}
     </div>
@@ -81,7 +78,48 @@
     </div>
     {% endif %}
 
-  </div>
+    </div>
+
+    <div id="overlay">
+        <div id="progstat"></div>
+        <div id="progress"></div>
+    </div>
+
+  <script>
+    ;(function(){
+      function id(v){ return document.getElementById(v); }
+        function loadbar() {
+            var ovrl = id("overlay"),
+                prog = id("progress"),
+                stat = id("progstat"),
+                img = document.images,
+                c = 0,
+                tot = img.length;
+            if(tot == 0) return doneLoading();
+
+            function imgLoaded(){
+            c += 1;
+            var perc = ((100/tot*c) << 0) +"%";
+            prog.style.width = perc;
+            stat.innerHTML = "Generating Recommendations... "+ perc;
+            if(c===tot) return doneLoading();
+            }
+            function doneLoading(){
+            ovrl.style.opacity = 0;
+            setTimeout(function(){ 
+                ovrl.style.display = "none";
+            }, 1200);
+            }
+            for(var i=0; i<tot; i++) {
+            var tImg     = new Image();
+            tImg.onload  = imgLoaded;
+            tImg.onerror = imgLoaded;
+            tImg.src     = img[i].src;
+            }    
+        }
+        document.addEventListener('DOMContentLoaded', loadbar, false);
+        }());
+    </script>
 
 </body>
 
