@@ -2,13 +2,13 @@
 
 This repository contains all the project files and necessary details about applications required to run the project on your local machine as well as host it as a Django Application on your Server/Domain.
 
-| Title                                    | Description                                                                                                         | Link                                                                                                            |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| Demo :movie_camera:                      | Sample Demo of MRS Hosted on free cloud PaaS                                                                        | [:point_down: Refer](https://github.com/inboxpraveen/FIFA-18-Management-System#1-demo-movie_camera)             |
-| Requirements :heavy_check_mark:          | Requirements and essential links to get started with the project locally                                            | [:point_down: Refer](https://github.com/inboxpraveen/FIFA-18-Management-System#2-requirements-heavy_check_mark) |
-| Model Training :small_red_triangle_down: | How the MRS was trained for Demo as well as on Large Movie Dataset from Kaggle                                      | [:point_down: Refer](https://github.com/inboxpraveen/FIFA-18-Management-System#3-setup-small_red_triangle_down) |
-| Project Versatility :page_with_curl:     | Reference documentation of how to plug in any general recommendation model into this project and host it on servers | [:point_down:Refer](https://github.com/inboxpraveen/FIFA-18-Management-System#4-project-guide)                  |
-| Troubleshooting Issues :muscle:          | Guide to resolve errors faced during reproducibility                                                                | To be Updated                                                                                                   |
+| Title                                    | Description                                                                                                         | Link                                                                                                              |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| Demo :movie_camera:                      | Sample Demo of MRS Hosted on free cloud PaaS                                                                        | [:point_down: Refer](https://github.com/inboxpraveen/movie-recommendation-system/tree/master#1-demo-movie_camera) |
+| Requirements :heavy_check_mark:          | Requirements and essential links to get started with the project locally                                            | [:point_down: Refer](https://github.com/inboxpraveen/FIFA-18-Management-System#2-requirements-heavy_check_mark)   |
+| Model Training :small_red_triangle_down: | How the MRS was trained for Demo as well as on Large Movie Dataset from Kaggle                                      | [:point_down: Refer](https://github.com/inboxpraveen/FIFA-18-Management-System#3-setup-small_red_triangle_down)   |
+| Project Versatility :page_with_curl:     | Reference documentation of how to plug in any general recommendation model into this project and host it on servers | [:point_down:Refer](https://github.com/inboxpraveen/FIFA-18-Management-System#4-project-guide)                    |
+| Troubleshooting Issues :muscle:          | Guide to resolve errors faced during reproducibility                                                                | To be Updated                                                                                                     |
 
 Do you like it? :heart: Follow me on [Twitter](https://twitter.com/InboxPraveen), [GitHub](https://github.com/inboxpraveen), & [LinkedIn](https://www.linkedin.com/in/praveen-kumar-inbox/) to say Hi :wave:
 
@@ -16,31 +16,7 @@ Do you like it? :heart: Follow me on [Twitter](https://twitter.com/InboxPraveen)
 
 ## 1. Demo :movie_camera:
 
-In this section, we try to understand through video demo to play around the project and what all can be achieved through it.
-
-1. Movie Recommendation Demo Application
-
-2. Demo Video - To be updated
-
-3. Creating/Deleting Database Triggers - To be updated# FIFA-18-Management-System (FMS)
-   
-   This repository contains all the project files and necessary details about applications required to run the project on your local machine.
-   
-   | Title                           | Description                                                                                        | Link                                                                                                            |
-   | ------------------------------- | -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-   | Demo :movie_camera:             | Demo and showcase of major highlights in the project                                               | [:point_down: Refer](https://github.com/inboxpraveen/FIFA-18-Management-System#1-demo-movie_camera)             |
-   | Requirements :heavy_check_mark: | Requirements and essential links to get started with the project                                   | [:point_down: Refer](https://github.com/inboxpraveen/FIFA-18-Management-System#2-requirements-heavy_check_mark) |
-   | Setup :small_red_triangle_down: | How to setup complete project inside your local system - Windows 10                                | [:point_down: Refer](https://github.com/inboxpraveen/FIFA-18-Management-System#3-setup-small_red_triangle_down) |
-   | Project Guide :page_with_curl:  | Reference documentation of overall project, it's application, and how to present and showcase demo | [:point_down:Refer](https://github.com/inboxpraveen/FIFA-18-Management-System#4-project-guide)                  |
-   | Troubleshooting Issues :muscle: | Guide to resolve errors faced during reproducibility                                               | To be Updated                                                                                                   |
-   
-   Do you like it? :heart: Follow me on [Twitter](https://twitter.com/InboxPraveen), [GitHub](https://github.com/inboxpraveen), & [LinkedIn](https://www.linkedin.com/in/praveen-kumar-inbox/) to say Hi :wave:
-   
-   <hr>
-   
-   ## 1. Demo :movie_camera:
-   
-   In this section, we try to understand through video demo to play around the project and what all can be achieved through it.
+1. In this section, we try to understand through video demo to play around the project and what all can be achieved through it.
    
    1. [Movie Recommendation System Hosted Application Demo](https://movie-recommender-29hr.onrender.com/)
    
