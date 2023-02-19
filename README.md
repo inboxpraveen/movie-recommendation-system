@@ -32,15 +32,9 @@ ____
 
 To build this project without any errors/issues, the following requirements needs to be satisfied
 
-1. Windows Operating System (Win 10 is preferred)
+1. Create a Virtual Environment using python>=3.8 (Tested on 3.9.16)
 
-2. Google Chrome Browser (v80 or Higher)
-
-3. WAMP Web Server (v3.0 or higher)
-
-4. Code Editor (Visual Studio Code - Preferred)
-
-If you are not aware if you have the right versions or you need to install them, fret not. Continue to the installation section at next.
+2. Install the dependencies from the requirements text file from the repository.
 
 <hr>
 
