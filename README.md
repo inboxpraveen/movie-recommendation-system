@@ -44,10 +44,20 @@ To build this project without any errors/issues, the following requirements need
 
 For complete guide to training your model and inference using the trained model, refer to "[Movie Recommendation System Python Notebook](https://github.com/inboxpraveen/movie-recommendation-system/blob/master/Movie_Recommendation_System_Complete_Guide.ipynb)".
 
-:spiral_notepad:***NOTE: Google chrome is preferred browser to run everything smoothly, but you can use any other browser of your choice as well. It is not a hard requirement, but can help you ease your UI & UX experience.***
+#### 3.2 Django Web Application Integration
+
+I'm writing a blog soon...
+
+Please be slightly patient while I create and upload the demo video. Follow and star this project to get latest notifications and update. :raised_hands:
 
 <hr>
 
 ## 4. Project Guide
 
-Updating soon... 
+#### 4.1 Running it OnRender Free Cloud
+
+I'm writing a blog soon...
+
+Please be slightly patient while I create and upload the demo video. Follow and star this project to get latest notifications and update. :raised_hands:
+
+#### 4.2 Running in Local
