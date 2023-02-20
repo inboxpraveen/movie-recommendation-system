@@ -24,9 +24,27 @@
 </head>
 
 <body>
-    <div id="overlay">
-        <div id="progstat"></div>
-        <div id="progress"></div>
+
+    <div class="container">
+        <form method="POST">
+            {% csrf_token %}
+            <input class="input-field" type="text" id="movie_name" name="movie_name"
+                placeholder="Start typing to see movie suggestions..." required />
+            <script>
+                $(function () {
+                    var availableTags = [
+                        {% for mmm in all_movie_names %}
+                        "{{ mmm }}",
+                    {% endfor %}
+                ];
+                $("#movie_name").autocomplete({
+                    source: availableTags,
+                    minLength: 4
+                });
+            } );
+            </script>
+            <button type="submit" class="submit-button">Search</button>
+        </form>
     </div>
 
     <div class="main-container">
@@ -35,25 +53,6 @@
             <p class="heading__credits"><a class="heading__link" target="_blank"
                     href="https://github.com/inboxpraveen">Made with &#x2665; by Praveen Kumar</a></p>
             <br>
-            <form method="POST">
-                {% csrf_token %}
-                <input type="text" id="movie_name" name="movie_name"
-                    placeholder="Start typing to see movie suggestions..." required />
-                <script>
-                    $(function () {
-                        var availableTags = [
-                            {% for mmm in all_movie_names %}
-                            "{{ mmm }}",
-                        {% endfor %}
-                    ];
-                    $("#movie_name").autocomplete({
-                        source: availableTags,
-                        minLength: 4
-                    });
-                } );
-                </script>
-                <input type="submit" class="fa fa-search" value="Search" />
-            </form>
         </div>
 
         <div class="container">
@@ -83,42 +82,6 @@
         {% endif %}
 
     </div>
-
-    <script>
-        ; (function () {
-            function id(v) { return document.getElementById(v); }
-            function loadbar() {
-                var ovrl = id("overlay"),
-                    prog = id("progress"),
-                    stat = id("progstat"),
-                    img = document.images,
-                    c = 0,
-                    tot = img.length;
-                if (tot == 0) return doneLoading();
-
-                function imgLoaded() {
-                    c += 1;
-                    var perc = ((100 / tot * c) << 0) + "%";
-                    prog.style.width = perc;
-                    stat.innerHTML = "Loading... " + perc;
-                    if (c === tot) return doneLoading();
-                }
-                function doneLoading() {
-                    ovrl.style.opacity = 0;
-                    setTimeout(function () {
-                        ovrl.style.display = "none";
-                    }, 1200);
-                }
-                for (var i = 0; i < tot; i++) {
-                    var tImg = new Image();
-                    tImg.onload = imgLoaded;
-                    tImg.onerror = imgLoaded;
-                    tImg.src = img[i].src;
-                }
-            }
-            document.addEventListener('DOMContentLoaded', loadbar, false);
-        }());
-    </script>
 
 </body>
 

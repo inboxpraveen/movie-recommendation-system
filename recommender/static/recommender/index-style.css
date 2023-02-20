@@ -11,62 +11,20 @@ body {
     background: #ffffff;
     color: #898989;
     font-family: "Poppins", helvetica;
-    font-weight: 300;
-    line-height: 20px;
-    letter-spacing: 0.03em;
     overflow-x: hidden;
     margin: 0 auto;
     padding: 0;
     box-sizing: border-box;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    margin: 5px;
-    padding: 5px;
-}
-
-h2 {
-    color: #292929;
-    font-weight: 600;
-}
-
-h4 {
-    color: #292929;
-    font-size: 14px;
-    font-weight: 600;
-}
-
-a {
-    color: #292929;
-    text-decoration: none !important;
-    transition: all 0.5s ease-in-out 0s;
-}
-
-a:hover {
-    transition: all 0.5s ease-in-out 0s;
-}
-
-p {
-    margin: 25px 0;
-    padding: 0;
-    font-size: 18px;
-    color: #585858;
-    line-height: 28px;
-}
-
 ::-moz-selection {
-    background: #b8a07e;
-    color: #fff;
+    background: #201e1a;
+    color: #d9ecec;
 }
 
 ::selection {
-    background: #b8a07e;
-    color: #fff;
+    background: #201e1a;
+    color: #d9ecec;
 }
 
 * {
@@ -75,10 +33,53 @@ p {
     box-sizing: border-box;
 }
 
-.main-container {
-    padding: 30px;
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
 }
 
+.input-field {
+    display: block;
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    line-height: 1.5;
+    box-sizing: border-box;
+}
+
+.submit-button {
+    display: block;
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    cursor: pointer;
+}
+
+@media screen and (min-width: 768px) {
+    .container {
+        flex-direction: row;
+    }
+
+    .input-field {
+        margin-right: 1rem;
+        margin-bottom: 0;
+    }
+
+    .submit-button {
+        width: auto;
+    }
+}
 
 /* HEADING */
 .heading {
@@ -185,37 +186,6 @@ p {
     }
 }
 
-
-#overlay {
-    position: fixed;
-    z-index: 99999;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.9);
-    transition: 1s 0.4s;
-}
-
-#progress {
-    height: 1px;
-    background: #fff;
-    position: absolute;
-    width: 0;
-    top: 50%;
-    transition: 1s;
-}
-
-#progstat {
-    font-size: 0.7em;
-    letter-spacing: 3px;
-    position: absolute;
-    top: 50%;
-    margin-top: -40px;
-    width: 100%;
-    text-align: center;
-    color: #fff;
-}
 
 .container {
     width: 100%;
