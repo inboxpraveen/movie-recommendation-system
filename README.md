@@ -78,6 +78,17 @@ It will take a moment and then show the following output on the terminal.
 
 <img title="" src="./readme_images/runserver_demo.png" alt="">
 
-You can now open your browser and hit the server ip provided to run the demo on your local system. 
+You can now open your browser and hit the server IP `http://localhost:8000` provided to run the demo on your local system. 
 
-By default, this project will run on Demo model. If you wish to change model, you can pull `local` branch and download the model of your choice along with it dataset to get better or faster recommendations.
+By default, this project will run on Demo model. If you wish to change model, you can pull `local` branch and download the model of your choice along with it dataset to get better or faster recommendations. For modifying the model, you have to updated 2 lines of code in the following file
+
+```python
+recommender/views.py
+```
+
+```python
+Line 6 : movies_data = pd.read_parquet("static/<dataset_name>.parquet")
+Line 74: model = pa.parquet.read_table('static/<model_name>.parquet').to_pandas()
+```
+
+Note that you have to place dataset and model into the `static` directory.
