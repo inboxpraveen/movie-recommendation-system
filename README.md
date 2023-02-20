@@ -61,3 +61,23 @@ I'm writing a blog soon...
 Please be slightly patient while I create and upload the demo video. Follow and star this project to get latest notifications and update. :raised_hands:
 
 #### 4.2 Running in Local
+
+I am assuming you have completed [section 2](https://github.com/inboxpraveen/movie-recommendation-system#2-requirements-heavy_check_mark) in the above reference for creating your environment. Let's start by activating it.
+
+```shell
+/path/to/env/bin/activate
+```
+
+Once done, you should go to project root directory and run the following command
+
+```she
+python manage.py runserver
+```
+
+It will take a moment and then show the following output on the terminal.
+
+<img title="" src="./readme_images/runserver_demo.png" alt="">
+
+You can now open your browser and hit the server ip provided to run the demo on your local system. 
+
+By default, this project will run on Demo model. If you wish to change model, you can pull `local` branch and download the model of your choice along with it dataset to get better or faster recommendations.
