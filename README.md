@@ -80,11 +80,7 @@ It will take a moment and then show the following output on the terminal.
 
 You can now open your browser and hit the server IP `http://localhost:8000` provided to run the demo on your local system. 
 
-By default, this project will run on Demo model. If you wish to change model, you can pull `local` branch and download the model of your choice along with it dataset to get better or faster recommendations. For modifying the model, you have to updated 2 lines of code in the following file
-
-```python
-recommender/views.py
-```
+By default, this project will run on Demo model. If you wish to change model, you can train and download the model of your choice using the python notebook to get better or faster recommendations. Once trained, you can integrate by modifying these 2 lines of code inside `recommender/views.py`
 
 ```python
 Line 6 : movies_data = pd.read_parquet("static/<dataset_name>.parquet")
