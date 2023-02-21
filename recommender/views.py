@@ -1,7 +1,6 @@
 from django.shortcuts import render
 import pandas as pd
 import pyarrow as pa
-import time
 
 movies_data = pd.read_parquet("static/top_2k_movie_data.parquet")
 titles = movies_data['title']
