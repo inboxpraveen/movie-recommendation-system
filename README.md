@@ -83,8 +83,8 @@ You can now open your browser and hit the server IP `http://localhost:8000` prov
 By default, this project will run on Demo model. If you wish to change model, you can train and download the model of your choice using the python notebook to get better or faster recommendations. Once trained, you can integrate by modifying these 2 lines of code inside `recommender/views.py`
 
 ```python
-Line 6 : movies_data = pd.read_parquet("static/<dataset_name>.parquet")
-Line 74: model = pa.parquet.read_table('static/<model_name>.parquet').to_pandas()
+Line 5 : movies_data = pd.read_parquet("static/<dataset_name>.parquet")
+Line 73: model = pa.parquet.read_table('static/<model_name>.parquet').to_pandas()
 ```
 
 Note that you have to place dataset and model into the `static` directory.
