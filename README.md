@@ -18,7 +18,7 @@ Do you like it? :heart: Follow me on [Twitter](https://twitter.com/InboxPraveen)
 
 In this section, we try to understand through video demo to play around the project and what all can be achieved through it.
 
-1. [Movie Recommendation System Hosted Application Demo](https://movie-recommender-29hr.onrender.com/)
+1. [Movie Recommendation System Hosted Application Demo](https://movie-recommendation-8g56.onrender.com/)
 
 2. Running MRS on local System - To be Updated
 
