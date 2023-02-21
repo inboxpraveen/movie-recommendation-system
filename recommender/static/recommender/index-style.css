@@ -133,6 +133,11 @@ body {
     padding-left: 10%;
 }
 
+.formcontainer form{
+    width: auto;
+    border: 2px red;
+}
+
 .input-field {
     display: block;
     width: 100%;

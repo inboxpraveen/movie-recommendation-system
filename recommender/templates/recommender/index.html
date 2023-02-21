@@ -25,9 +25,13 @@
 
 <body>
 
-    <div class="container">
-        <form method="POST">
-            {% csrf_token %}
+    <div class="movie-recommendation">
+		<h1>Movie Recommendation System Demo</h1>
+		<p>Check out these great movies that we recommend for you.</p>
+	</div>
+    <form method="POST">
+        {% csrf_token %}
+	    <div class="formcontainer">
             <input class="input-field" type="text" id="movie_name" name="movie_name"
                 placeholder="Start typing to see movie suggestions..." required />
             <script>
@@ -44,76 +48,35 @@
             } );
             </script>
             <button type="submit" class="submit-button">Search</button>
-        </form>
-    </div>
+	    </div>
+    </form>
 
-    <div class="main-container">
-        <div class="heading">
-            <h1 class="heading__title">Movie Recommendation Demo</h1>
-            <p class="heading__credits"><a class="heading__link" target="_blank"
-                    href="https://github.com/inboxpraveen">Made with &#x2665; by Praveen Kumar</a></p>
-            <br>
-        </div>
-
-        <div class="container">
-            {% if input_provided %}
+    <div class="movie-recommendation">
+        {% if input_provided %}
             <p class="heading__credits">Showing Results for: <b>{{ input_movie_name }}</b></p>
             {% if not movie_found %}
             <p>Oops! We can not match your movie in our database. As this is a demo model, only top 10K movies based on
                 IMBD are present.</p>
             {% endif %}
-            {% endif %}
-        </div>
+        {% endif %}
+    </div>
 
+    <div class="cardcontainer">
         {% if recomendation_found %}
-        <div class="cards">
             {% if recomendation_found %}
                 {% for each_movie_dictionary in recommended_movies %}
-                <div class="card card-1">
-                    <div class="card__icon"><i class="fa fa-film"></i> {{ each_movie_dictionary.movie_title }}</div>
-                    <h2 class="card__title">Directed by - {{ each_movie_dictionary.movie_director }}</h2>
-                    <p class="card__apply">
+                <div class="card">
+                    <div class="card-content">
+                        <h2 class="card-heading"><i class="fa fa-film"></i>  {{ each_movie_dictionary.movie_title }}</h2>
+                        <p class="card-paragraph">Directed By: {{ each_movie_dictionary.movie_director }}</p>
+                        <p class="card-paragraph">Release Date: {{ each_movie_dictionary.movie_release_date }}</p>
                         <a class="card__link" target="_blank" href="{{ each_movie_dictionary.google_link }}">Search on Google <i class="fa fa-arrow-right"></i></a>
-                    </p>
+                    </div>
                 </div>
                 {% endfor %}
             {% endif %}
-        </div>
         {% endif %}
-
     </div>
-
-    <div class="movie-recommendation">
-		<h1>Movie Recommendation System Demo</h1>
-		<p>Check out these great movies that we recommend for you.</p>
-	</div>
-	<div class="formcontainer">
-		<input type="text" class="input-field" placeholder="Enter your email address">
-		<button type="submit" class="submit-button">Submit</button>
-	</div>
-    <div class="cardcontainer">
-		<div class="card">
-			<div class="card-content">
-				<h2 class="card-heading">Card Heading</h2>
-				<p class="card-paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-				<p class="card-paragraph">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-			</div>
-		</div>
-		<div class="card">
-			<div class="card-content">
-				<h2 class="card-heading">Card Heading</h2>
-				<p class="card-paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-				<p class="card-paragraph">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-			</div>
-		</div>
-		<div class="card">
-			<div class="card-content">
-				<h2 class="card-heading">Card Heading</h2>
-				<p class="card-paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-				<p class="card-paragraph">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-			</div>
-		</div>
-	</div>
 
 </body>
 </html>
