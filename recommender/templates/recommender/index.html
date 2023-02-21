@@ -70,7 +70,7 @@
                         <h2 class="card-heading"><i class="fa fa-film"></i>  {{ each_movie_dictionary.movie_title }}</h2>
                         <p class="card-paragraph">Directed By: {{ each_movie_dictionary.movie_director }}</p>
                         <p class="card-paragraph">Release Date: {{ each_movie_dictionary.movie_release_date }}</p>
-                        <a class="card__link" target="_blank" href="{{ each_movie_dictionary.google_link }}">Search on Google <i class="fa fa-arrow-right"></i></a>
+                        <p class="card-paragraph"><a class="card-link" target="_blank" href="{{ each_movie_dictionary.google_link }}">Search on Google <i class="fa fa-arrow-right"></i></a></p>
                     </div>
                 </div>
                 {% endfor %}

@@ -97,7 +97,16 @@ body {
     padding-left: 2.5rem;
 }
 
+.card-link {
+    margin: 0.5rem 0;
+    padding-left: 2.5rem;
+}
+
 .card-paragraph:first-child {
+    margin-top: 1.5rem;
+}
+
+.card-link:first-child {
     margin-top: 1.5rem;
 }
 
