@@ -51,32 +51,32 @@
 	    </div>
     </form>
 
-    <div class="movie-recommendation">
-        {% if input_provided %}
+    {% if input_provided %}
+        <div class="movie-recommendation">
             <p class="heading__credits">Showing Results for: <b>{{ input_movie_name }}</b></p>
             {% if not movie_found %}
-            <p>Oops! We can not match your movie in our database. As this is a demo model, only top 10K movies based on
-                IMBD are present.</p>
+            <p>Oops! We can not match your movie in our database.</p>
+            <p>As this is a demo model, only top 2.5K movies based on IMBD are present.</p>
             {% endif %}
-        {% endif %}
-    </div>
+        </div>
+    {% endif %}
 
-    <div class="cardcontainer">
+    {% if recomendation_found %}
         {% if recomendation_found %}
-            {% if recomendation_found %}
+            <div class="cardcontainer">
                 {% for each_movie_dictionary in recommended_movies %}
                 <div class="card">
                     <div class="card-content">
-                        <h2 class="card-heading"><i class="fa fa-film"></i>  {{ each_movie_dictionary.movie_title }}</h2>
+                        <h2 class="card-heading"><i class="fa fa-film"></i> {{ each_movie_dictionary.movie_title }}</h2>
                         <p class="card-paragraph">Directed By: {{ each_movie_dictionary.movie_director }}</p>
                         <p class="card-paragraph">Release Date: {{ each_movie_dictionary.movie_release_date }}</p>
                         <p class="card-paragraph"><a target="_blank" href="{{ each_movie_dictionary.google_link }}">Search on Google <i class="fa fa-arrow-right"></i></a></p>
                     </div>
                 </div>
                 {% endfor %}
-            {% endif %}
+            </div>
         {% endif %}
-    </div>
+    {% endif %}
 
 </body>
 </html>

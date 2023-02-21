@@ -41,7 +41,7 @@ body {
 
 .card {
     background-color: #fff;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 5px rgba(20, 20, 20, 0.4);
     margin: 1rem;
     flex: 1 1 300px;
     display: flex;
@@ -51,30 +51,6 @@ body {
     position: relative;
 }
 
-.card-icon {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 2rem;
-    width: 2rem;
-    display: block;
-    margin: 0.5rem;
-    border-radius: 50%;
-    background-color: #ccc;
-    text-align: center;
-    line-height: 2rem;
-    font-size: 1.2rem;
-    color: #fff;
-    z-index: 1;
-}
-
-.card-icon.movie {
-    background-color: #1e88e5;
-}
-
-.card-icon.person {
-    background-color: #4caf50;
-}
 
 .card-content {
     flex: 1;
