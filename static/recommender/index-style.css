@@ -37,6 +37,7 @@ body {
     max-width: 1000px;
     padding: 1rem;
     box-sizing: border-box;
+    scroll-behavior: smooth;
 }
 
 .card {
@@ -95,6 +96,7 @@ body {
 .movie-recommendation {
     text-align: center;
     margin: 2rem 0;
+    scroll-behavior: smooth;
 }
 
 .movie-recommendation h1 {
@@ -116,11 +118,7 @@ body {
     justify-content: center;
     width: 80%;
     padding-left: 10%;
-}
-
-.formcontainer form{
-    width: auto;
-    border: 2px red;
+    scroll-behavior: smooth;
 }
 
 .input-field {
@@ -160,5 +158,28 @@ body {
 
     .submit-button {
         width: auto;
+    }
+}
+
+.reveal {
+    opacity: 0.05;
+}
+
+.reveal.active {
+    opacity: 1;
+}
+
+.active.fade-bottom {
+    animation: fade-bottom 0.5s ease-in;
+}
+
+@keyframes fade-bottom {
+    0% {
+    transform: translateY(50px);
+    opacity: 0;
+}
+100% {
+        transform: translateY(0);
+        opacity: 1;
     }
 }

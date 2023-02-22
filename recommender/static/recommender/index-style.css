@@ -37,6 +37,7 @@ body {
     max-width: 1000px;
     padding: 1rem;
     box-sizing: border-box;
+    scroll-behavior: smooth;
 }
 
 .card {
@@ -95,6 +96,7 @@ body {
 .movie-recommendation {
     text-align: center;
     margin: 2rem 0;
+    scroll-behavior: smooth;
 }
 
 .movie-recommendation h1 {
@@ -116,11 +118,7 @@ body {
     justify-content: center;
     width: 80%;
     padding-left: 10%;
-}
-
-.formcontainer form{
-    width: auto;
-    border: 2px red;
+    scroll-behavior: smooth;
 }
 
 .input-field {
