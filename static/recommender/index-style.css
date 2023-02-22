@@ -160,26 +160,3 @@ body {
         width: auto;
     }
 }
-
-.reveal {
-    opacity: 0.05;
-}
-
-.reveal.active {
-    opacity: 1;
-}
-
-.active.fade-bottom {
-    animation: fade-bottom 0.5s ease-in;
-}
-
-@keyframes fade-bottom {
-    0% {
-    transform: translateY(50px);
-    opacity: 0;
-}
-100% {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
