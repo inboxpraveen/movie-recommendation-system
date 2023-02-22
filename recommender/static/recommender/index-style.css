@@ -7,6 +7,11 @@
     }
 }
 
+* {
+    transition: all .5s ease;
+    -webkit-transition: all .4s ease;
+}
+
 body {
     background: #ffffff;
     color: #000000;
@@ -21,7 +26,7 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed; 
     background-size: cover;
-    background-image: url('../header-image.jpg');
+    background-image: linear-gradient(rgba(255, 255, 255, 0.25), rgba(0, 0, 0, 0.75)), url('../header-image.jpg');
 }
 
 
@@ -112,14 +117,14 @@ body {
     font-size: 2rem;
     margin: 3rem 0 1rem 0;
     padding: 0;
-    text-shadow: 1px 1px 10px #bff3ec;
+    text-shadow: 1px 1px 40px #bff3ec;
 }
 
 .movie-recommendation p {
     font-size: 1.25rem;
     margin: 1rem 0 1rem 0;
     padding: 0;
-    text-shadow: 1px 1px 10px #bff3ec;
+    text-shadow: 1px 1px 40px #bff3ec;
 }
 
 .formcontainer {
@@ -147,15 +152,22 @@ body {
 .submit-button {
     display: block;
     width: 100%;
-    background-color: #4CAF50;
-    color: white;
+    background-color: white;
+    color: black;
     padding: 0.5rem;
     border: none;
     border-radius: 0.25rem;
     font-size: 1rem;
     line-height: 1.5;
     cursor: pointer;
+    font-weight: bold;
 }
+
+.submit-button:hover{
+    background-color: black;
+    color: white;
+}
+
 
 @media screen and (min-width: 768px) {
     .formcontainer {
