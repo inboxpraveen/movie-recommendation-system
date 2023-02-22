@@ -34,16 +34,16 @@ body {
     justify-content: center;
     align-items: stretch;
     margin: 0 auto;
-    max-width: 960px;
+    max-width: 1000px;
     padding: 1rem;
     box-sizing: border-box;
 }
 
 .card {
     background-color: #fff;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 5px rgba(20, 20, 20, 0.4);
     margin: 1rem;
-    flex: 1 1 300px;
+    flex: 1 1 200px;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -51,30 +51,6 @@ body {
     position: relative;
 }
 
-.card-icon {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 2rem;
-    width: 2rem;
-    display: block;
-    margin: 0.5rem;
-    border-radius: 50%;
-    background-color: #ccc;
-    text-align: center;
-    line-height: 2rem;
-    font-size: 1.2rem;
-    color: #fff;
-    z-index: 1;
-}
-
-.card-icon.movie {
-    background-color: #1e88e5;
-}
-
-.card-icon.person {
-    background-color: #4caf50;
-}
 
 .card-content {
     flex: 1;
@@ -88,7 +64,7 @@ body {
 .card-heading {
     font-size: 1.25rem;
     font-weight: bold;
-    margin: 2.5rem 0 0.5rem 0;
+    margin: 0.5rem 0 0.5rem 0;
     padding-left: 2.5rem;
 }
 

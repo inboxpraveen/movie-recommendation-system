@@ -34,7 +34,7 @@ body {
     justify-content: center;
     align-items: stretch;
     margin: 0 auto;
-    max-width: 960px;
+    max-width: 1000px;
     padding: 1rem;
     box-sizing: border-box;
 }
@@ -43,7 +43,7 @@ body {
     background-color: #fff;
     box-shadow: 0 0 5px rgba(20, 20, 20, 0.4);
     margin: 1rem;
-    flex: 1 1 300px;
+    flex: 1 1 200px;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -64,7 +64,7 @@ body {
 .card-heading {
     font-size: 1.25rem;
     font-weight: bold;
-    margin: 2.5rem 0 0.5rem 0;
+    margin: 0.5rem 0 0.5rem 0;
     padding-left: 2.5rem;
 }
 
