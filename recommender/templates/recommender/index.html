@@ -13,10 +13,15 @@
     <meta name="description" content="">
 
     <link rel="shortcut icon" href="{% static 'logo.png' %}">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700|Source+Serif+Pro:700" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
     <link rel="stylesheet" href="{% static 'recommender/index-style.css' %}">
     <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
@@ -24,6 +29,17 @@
 </head>
 
 <body>
+
+    <input class="menu-icon" type="checkbox" id="menu-icon" name="menu-icon"/>
+  	<label for="menu-icon"></label>
+  	<nav class="nav">
+  		<ul class="pt-5">
+  			<li><a href="https://inboxpraveen.github.io/" target="_blank">About Me</a></li>
+  			<li><a href="https://inboxpraveen.github.io/projects/all-projects.html" target="_blank">AI-nspirational Projects</a></li>
+  			<li><a href="https://inboxpraveen.github.io/" target="_blank">AI-Blog Bites</a></li>
+  			<li><a href="https://inboxpraveen.github.io/" target="_blank">Contact Me</a></li>
+  		</ul>
+  	</nav>
 
     <div class="movie-recommendation">
 		<h1>Movie Recommendation System Demo</h1>
