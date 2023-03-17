@@ -1,0 +1,194 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    max-height: 100vh;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    opacity: 1;
+    overflow: hidden;
+    z-index: 100;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0.5)), url("../images/hero-background.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position:center;
+}
+
+a {
+    text-decoration: none;
+    color: white !important;
+}
+
+.main-container {
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+    text-align: center;
+    justify-content: center;
+}
+
+.two{
+    flex: 2 1 auto;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: white;
+}
+
+.two h1 {
+    margin: 0.1rem 0.5rem;
+    text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
+}
+
+.two p {
+    text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
+}
+
+.two .typed-text {
+    font-weight: bolder;
+    font-size: 1em;
+    padding: 1px 5px;
+    color: #c341ff;
+}
+
+.two .blinker {
+    font-size: 1em;
+}
+
+.three{
+    display: flex;
+    flex-flow: row wrap;
+    flex: 1 1 auto;
+    max-width: 100;
+    max-height: 10%;
+}
+
+.main-container .social-links-span {
+    border-radius: 1rem;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+}
+
+.main-container i{
+    margin: 0rem 0.75rem;
+}
+
+.add-text-background {
+    color: #c341ff;
+}
+
+
+/* Extra small devices (phones, 600px and down) */
+@media screen and (max-width: 600px) {
+    .two h1 {
+        font-size: 3rem;
+        font-weight: 650;
+    }
+
+    .two p {
+        font-size: 1.5rem;
+    }
+
+    .main-container .social-links-span {
+        font-size: 1.75rem;
+        margin: 0.25rem 0.35rem;
+    }
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media screen and (min-width: 600px) {
+    .two h1 {
+        font-size: 3.25rem;
+        font-weight: 700;
+    }
+
+    .two p {
+        font-size: 1.75rem;
+    }
+
+    .main-container .social-links-span {
+        font-size: 2rem;
+        margin: 0rem 0.75rem;
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media screen and (min-width: 768px) {
+    .two h1 {
+        font-size: 3.5rem;
+        font-weight: 750;
+    }
+    
+    .two p {
+        font-size: 2rem;
+    }
+
+    .main-container .social-links-span {
+        font-size: 2.2rem;
+        margin: 0rem 0.75rem;
+    }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media screen and (min-width: 992px) {
+    .two h1 {
+        font-size: 3.75rem;
+        font-weight: 775;
+    }
+
+    .two p {
+        font-size: 2.25rem;
+    }
+
+    .main-container .social-links-span {
+        font-size: 2.3rem;
+        margin: 0rem 1rem;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media screen and (min-width: 1200px) {
+    .two h1 {
+        font-size: 4rem;
+        font-weight: 800;
+    }
+
+    .two p {
+        font-size: 2.5rem;
+    }
+
+    .main-container .social-links-span {
+        font-size: 2.5rem;
+        margin: 0rem 1rem;
+    }
+}
+
+/* Extra large devices (ultra wide desktops, 1800px and up) */
+@media screen and (min-width: 1800px) {
+    .two h1 {
+        font-size: 4.5rem;
+        font-weight: 900;
+    }
+
+    .two p {
+        font-size: 2.75rem;
+    }
+
+    .main-container .social-links-span {
+        font-size: 2.75rem;
+        margin: 0rem 1rem;
+    }
+}
