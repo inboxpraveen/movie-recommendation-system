@@ -27,7 +27,6 @@
     <link rel="stylesheet" href="{% static 'recommender/cursor.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'recommender/page.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'recommender/navbar.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'recommender/typing.css' %}" type="text/css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons@latest/iconfont/tabler-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
@@ -93,8 +92,8 @@
             <p class="message">
                 {% if input_provided %}
                     <div>
-                        <p class="message__result">Showing Results for: <b>{{ input_movie_name }}</b></p>
                         {% if not movie_found %}
+                            <p class="message__result">Showing Results for: <b>{{ input_movie_name }}</b></p>
                             <p class="message__p1">Oops! We can not match your movie in our database.</p>
                             <p class="message__p2">As this is a demo model, only top 2.5K movies based on IMBD are present.</p>
                         {% endif %}
@@ -134,8 +133,7 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
-    <script src="./assets/js/cursor.js"></script>
-    <script src="./assets/js/typing.js"></script>
+
 </body>
 
 </html>

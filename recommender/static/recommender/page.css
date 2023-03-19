@@ -75,6 +75,10 @@ a {
     justify-content: center;
 }
 
+.social-links-span a:hover {
+    text-decoration: none;
+}
+
 .social-links-span i{
     margin: 0rem 0.75rem;
 }
@@ -82,19 +86,30 @@ a {
 .formcontainer input {
     width: 70%;
     margin: 0rem 0.75rem;
-    border-color: red;
-    border-width: 2px;
-    border-style: solid;
     padding: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 1%;
+    color: black;
+    border-color: black;
+    border-width: 2px;
+}
+
+.formcontainer input:hover {
+    background-color: rgba(255, 255, 255, 0.9);
 }
 
 .formcontainer button {
-    /* width: 80%; */
     margin: 0.5rem 0rem;
-    border-color: red;
-    border-width: 2px;
-    border-style: solid;
     padding: 0.5rem;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: black;
+    border-radius: 5%;
+    border-color: black;
+    border-width: 2px;
+}
+
+.formcontainer button:hover {
+    background-color: rgba(255, 255, 255, 0.9);
 }
 
 
