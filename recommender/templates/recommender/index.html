@@ -134,7 +134,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
 
-    <script src="{% static 'recommender/cursor.js' %}"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
 
@@ -144,6 +143,7 @@
 
     <div class="cursor-dot-outline"></div>
     <div class="cursor-dot"></div>
+    <script src="{% static 'recommender/cursor.js' %}"></script>
 
     <input class="menu-icon" type="checkbox" id="menu-icon" name="menu-icon" />
     <label for="menu-icon"></label>
@@ -159,12 +159,16 @@
     <video autoplay muted loop id="myVideo">
         <source src="{% static 'production ID_4779866.mp4' %}" type="video/mp4">
     </video>
+    <script>
+        var vid = document.getElementById("myVideo");
+        vid.playbackRate = 0.5;
+    </script>
 
     <div class="main-container">
         <div class="two">
             <h1><span class="add-text-background">Movie</span> Recommendation System</h1>
-            <p>Check out these great movies that we recommend for you.</p>
-            <form method="POST">
+            <p class="subheading">Check out these great movies that we recommend for you.</p>
+            <form method="POST">    
                 {% csrf_token %}
                 <div class="formcontainer">
                     <input class="input-field" type="text" id="movie_name" name="movie_name"
@@ -187,11 +191,11 @@
             </form>
             <p class="message">
                 {% if input_provided %}
-                    <div class="movie-recommendation">
-                        <p class="heading__credits">Showing Results for: <b>{{ input_movie_name }}</b></p>
+                    <div>
+                        <p class="message__result">Showing Results for: <b>{{ input_movie_name }}</b></p>
                         {% if not movie_found %}
-                        <p>Oops! We can not match your movie in our database.</p>
-                        <p>As this is a demo model, only top 2.5K movies based on IMBD are present.</p>
+                            <p class="message__p1">Oops! We can not match your movie in our database.</p>
+                            <p class="message__p2">As this is a demo model, only top 2.5K movies based on IMBD are present.</p>
                         {% endif %}
                     </div>
                 {% endif %}
@@ -199,8 +203,16 @@
         </div>
         
         <div clas="three">
-            
+            <span class="social-links-span">
+                <a href="#"><i class="ti ti-user-circle"></i></a>
+                <a href="#"><i class="ti ti-brand-github"></i></a>
+                <a href="#"><i class="ti ti-brand-linkedin"></i></a>
+                <a href="#"><i class="ti ti-brand-twitter"></i></a>
+                <a href="#"><i class="ti ti-brand-medium"></i></a>
+            </span>
+        </div>
 
+        <!-- <div clas="three"> -->
             <!-- {% if recomendation_found %}
                 {% if recomendation_found %}
                     <div class="cardcontainer">
@@ -217,7 +229,7 @@
                     </div>
                 {% endif %}
             {% endif %} -->
-        </div>
+        <!-- </div> -->
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
