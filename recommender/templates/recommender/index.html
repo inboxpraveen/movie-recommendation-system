@@ -122,7 +122,7 @@
 
     <link rel="shortcut icon" href="{% static 'logo.png' %}">
 
-    <title>Praveen Kumar - AI Engineer</title>
+    <title>Movie Recommendation System</title>
     <link rel="stylesheet" href="{% static 'recommender/cursor.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'recommender/page.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'recommender/navbar.css' %}" type="text/css">
@@ -156,6 +156,10 @@
         </ul>
     </nav>
 
+    <video autoplay muted loop id="myVideo">
+        <source src="{% static 'production ID_4779866.mp4' %}" type="video/mp4">
+    </video>
+
     <div class="main-container">
         <div class="two">
             <h1><span class="add-text-background">Movie</span> Recommendation System</h1>
@@ -181,20 +185,23 @@
                     <button type="submit" class="submit-button">Search</button>
                 </div>
             </form>
+            <p class="message">
+                {% if input_provided %}
+                    <div class="movie-recommendation">
+                        <p class="heading__credits">Showing Results for: <b>{{ input_movie_name }}</b></p>
+                        {% if not movie_found %}
+                        <p>Oops! We can not match your movie in our database.</p>
+                        <p>As this is a demo model, only top 2.5K movies based on IMBD are present.</p>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </p>
         </div>
         
         <div clas="three">
-            {% if input_provided %}
-                <div class="movie-recommendation">
-                    <p class="heading__credits">Showing Results for: <b>{{ input_movie_name }}</b></p>
-                    {% if not movie_found %}
-                    <p>Oops! We can not match your movie in our database.</p>
-                    <p>As this is a demo model, only top 2.5K movies based on IMBD are present.</p>
-                    {% endif %}
-                </div>
-            {% endif %}
+            
 
-            {% if recomendation_found %}
+            <!-- {% if recomendation_found %}
                 {% if recomendation_found %}
                     <div class="cardcontainer">
                         {% for each_movie_dictionary in recommended_movies %}
@@ -209,7 +216,7 @@
                         {% endfor %}
                     </div>
                 {% endif %}
-            {% endif %}
+            {% endif %} -->
         </div>
     </div>
 

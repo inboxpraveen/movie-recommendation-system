@@ -13,21 +13,23 @@ body {
     opacity: 1;
     overflow: hidden;
     z-index: 100;
-    background-image: linear-gradient(rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.5)), url("../header-image.jpg");
+    /* background-image: linear-gradient(rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.5)), url("../header-image.jpg");
     background-repeat: no-repeat;
     background-size: cover;
-    background-position:center;
+    background-position:center; */
 }
 
 a {
     text-decoration: none;
-    color: white !important;
+    color: rgb(0, 0, 0) !important;
 }
 
 .main-container {
     width: 100%;
     height: 100%;
     z-index: 10;
+
+    background-color: transparent;
 
     display: flex;
     flex-direction: column;
@@ -38,11 +40,13 @@ a {
 }
 
 .two{
-    flex: 2 1 auto;
+    flex: 1 1 auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     color:black;
+    border-color: red;
+    border-width: 5px;
 }
 
 .two h1 {
@@ -54,11 +58,8 @@ a {
     text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
 }
 
-.two .typed-text {
-    font-weight: bolder;
-    font-size: 1em;
-    padding: 1px 5px;
-    color: #c341ff;
+.message {
+    color: black;
 }
 
 
@@ -81,7 +82,7 @@ a {
 }
 
 .add-text-background {
-    color: #c341ff;
+    color: #2319aa;
 }
 
 
@@ -186,4 +187,16 @@ a {
         font-size: 2.75rem;
         margin: 0rem 1rem;
     }
+}
+
+
+#myVideo {
+    position: fixed;
+    right: 0;
+    opacity: 0.75;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -100;
+    transform: translateX(calc((100% - 100vw) / 2));
 }
