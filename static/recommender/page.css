@@ -56,6 +56,7 @@ a {
 }
 
 .message {
+    margin-top: 1rem 0rem;
     color: black;
 }
 
@@ -76,6 +77,24 @@ a {
 
 .social-links-span i{
     margin: 0rem 0.75rem;
+}
+
+.formcontainer input {
+    width: 70%;
+    margin: 0rem 0.75rem;
+    border-color: red;
+    border-width: 2px;
+    border-style: solid;
+    padding: 0.5rem;
+}
+
+.formcontainer button {
+    /* width: 80%; */
+    margin: 0.5rem 0rem;
+    border-color: red;
+    border-width: 2px;
+    border-style: solid;
+    padding: 0.5rem;
 }
 
 

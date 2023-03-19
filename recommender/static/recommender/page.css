@@ -79,6 +79,24 @@ a {
     margin: 0rem 0.75rem;
 }
 
+.formcontainer input {
+    width: 70%;
+    margin: 0rem 0.75rem;
+    border-color: red;
+    border-width: 2px;
+    border-style: solid;
+    padding: 0.5rem;
+}
+
+.formcontainer button {
+    /* width: 80%; */
+    margin: 0.5rem 0rem;
+    border-color: red;
+    border-width: 2px;
+    border-style: solid;
+    padding: 0.5rem;
+}
+
 
 /* Extra small devices (phones, 600px and down) */
 @media screen and (max-width: 600px) {
