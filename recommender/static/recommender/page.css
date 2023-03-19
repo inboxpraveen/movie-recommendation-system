@@ -13,7 +13,7 @@ body {
     opacity: 1;
     overflow: hidden;
     z-index: 100;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0.5)), url("../images/hero-background.png");
+    background-image: linear-gradient(rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.5)), url("../header-image.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position:center;
@@ -39,11 +39,10 @@ a {
 
 .two{
     flex: 2 1 auto;
-    max-height: 90vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    color: white;
+    color:black;
 }
 
 .two h1 {
@@ -62,16 +61,12 @@ a {
     color: #c341ff;
 }
 
-.two .blinker {
-    font-size: 1em;
-}
 
 .three{
     display: flex;
     flex-flow: row wrap;
     flex: 1 1 auto;
     max-width: 100;
-    max-height: 10%;
 }
 
 .main-container .social-links-span {
