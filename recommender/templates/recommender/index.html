@@ -1,104 +1,5 @@
 {% load static %}
 
-<!-- <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-
-    <title>Movie Recommendation System</title>
-    <meta name="description" content="">
-
-    <link rel="shortcut icon" href="{% static 'logo.png' %}">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-
-    <link rel="stylesheet" href="{% static 'recommender/index-style.css' %}">
-    <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
-
-</head>
-
-<body>
-
-    <input class="menu-icon" type="checkbox" id="menu-icon" name="menu-icon"/>
-  	<label for="menu-icon"></label>
-  	<nav class="nav">
-  		<ul class="pt-5">
-  			<li><a href="https://inboxpraveen.github.io/" target="_blank">About Me</a></li>
-  			<li><a href="https://inboxpraveen.github.io/projects/all-projects.html" target="_blank">AI-nspirational Projects</a></li>
-  			<li><a href="https://inboxpraveen.github.io/" target="_blank">AI-Blog Bites</a></li>
-  			<li><a href="https://inboxpraveen.github.io/" target="_blank">Contact Me</a></li>
-  		</ul>
-  	</nav>
-
-    <div class="movie-recommendation">
-		<h1>Movie Recommendation System Demo</h1>
-		<p>Check out these great movies that we recommend for you.</p>
-	</div>
-    <form method="POST">
-        {% csrf_token %}
-	    <div class="formcontainer">
-            <input class="input-field" type="text" id="movie_name" name="movie_name"
-                placeholder="Start typing to see movie suggestions..." required />
-            <script>
-                $(function () {
-                    var availableTags = [
-                        {% for mmm in all_movie_names %}
-                        "{{ mmm }}",
-                    {% endfor %}
-                ];
-                $("#movie_name").autocomplete({
-                    source: availableTags,
-                    minLength: 4
-                });
-            } );
-            </script>
-            <button type="submit" class="submit-button">Search</button>
-	    </div>
-    </form>
-
-    {% if input_provided %}
-        <div class="movie-recommendation">
-            <p class="heading__credits">Showing Results for: <b>{{ input_movie_name }}</b></p>
-            {% if not movie_found %}
-            <p>Oops! We can not match your movie in our database.</p>
-            <p>As this is a demo model, only top 2.5K movies based on IMBD are present.</p>
-            {% endif %}
-        </div>
-    {% endif %}
-
-    {% if recomendation_found %}
-        {% if recomendation_found %}
-            <div class="cardcontainer">
-                {% for each_movie_dictionary in recommended_movies %}
-                <div class="card">
-                    <div class="card-content">
-                        <h2 class="card-heading"><i class="fa fa-film"></i> {{ each_movie_dictionary.movie_title }}</h2>
-                        <p class="card-paragraph">Directed By: {{ each_movie_dictionary.movie_director }}</p>
-                        <p class="card-paragraph">Release Date: {{ each_movie_dictionary.movie_release_date }}</p>
-                        <p class="card-paragraph"><a target="_blank" href="{{ each_movie_dictionary.google_link }}">Search on Google <i class="fa fa-arrow-right"></i></a></p>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        {% endif %}
-    {% endif %}
-
-</body>
-</html> -->
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -182,7 +83,7 @@
                         ];
                         $("#movie_name").autocomplete({
                             source: availableTags,
-                            minLength: 4
+                            minLength: 3
                         });
                     } );
                     </script>
