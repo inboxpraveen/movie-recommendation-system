@@ -92,7 +92,7 @@ def main(request):
                 {
                     'all_movie_names':titles_list,
                     'input_provided':'yes',
-                    'movie_found':'yes',
+                    'movie_found':'',
                     'recomendation_found':'',
                     'recommended_movies':[],
                     'input_movie_name':movie_name

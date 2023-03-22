@@ -25,9 +25,6 @@
     <link rel="shortcut icon" href="{% static 'logo.png' %}">
 
     <title>Movie Recommendation System</title>
-    <link rel="stylesheet" href="{% static 'recommender/cursor.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'recommender/page.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'recommender/navbar.css' %}" type="text/css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons@latest/iconfont/tabler-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
@@ -37,6 +34,10 @@
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+
+    <link rel="stylesheet" href="{% static 'recommender/cursor.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'recommender/page.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'recommender/navbar.css' %}" type="text/css">
 
 </head>
 
@@ -94,9 +95,11 @@
                 {% if input_provided %}
                     <div>
                         {% if not movie_found %}
-                            <p class="message__result">Showing Results for: <b>{{ input_movie_name }}</b></p>
-                            <p class="message__p1">Oops! We can not match your movie in our database.</p>
-                            <p class="message__p2">As this is a demo model, only top 2.5K movies based on IMBD are present.</p>
+                            <p class="message__result">You Searched For: <b>{{ input_movie_name }}</b></p>
+                            {% if not recomendation_found %}
+                                <p class="message__p1">Oops! We can not match your movie in our database.</p>
+                                <p class="message__p2">As this is a demo model, only top 2.5K movies based on IMBD are present.</p>
+                            {% endif %}
                         {% endif %}
                     </div>
                 {% endif %}
