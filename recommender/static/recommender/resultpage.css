@@ -28,8 +28,10 @@ body {
 /* Main Container */
 .main-container {
     max-width: 1200px;
+    max-height: 75vh;
+    overflow-x: hidden;
     text-align: center;
-    margin: 1rem auto;
+    margin: 1rem;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -78,17 +80,32 @@ body {
     margin: 0 auto;
 }
 
+/* width */
+::-webkit-scrollbar {
+    width: 2px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #353535;
+  }
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media screen and (max-width: 992px) {
     .title-container {
-        margin-top: 100px;
+        margin-top: 15vh;
     }
 
     .main-container{
-        width: 100%;
+        width: 90%;
         margin: 0 auto;
-        overflow: hidden;
+        max-height: 60vh;
+        overflow-x: hidden;
     }
 
     .card-container{

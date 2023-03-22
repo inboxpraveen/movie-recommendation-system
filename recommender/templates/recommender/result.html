@@ -65,7 +65,7 @@
     </script>
 
     <div class="title-container">
-        <h3>Showing Results for: {{ input_movie_name }}</h3>
+        <h3>Movies like: {{ input_movie_name }}</h3>
     </div>
 
     <div class="main-container">
@@ -73,7 +73,7 @@
             {% if recomendation_found %}
                 {% for each_movie_dictionary in recommended_movies %}
                     <div class="card-container">
-                        <h1 class="card-header"><i class="fa fa-film"></i> {{ each_movie_dictionary.movie_title }}</h1>
+                        <h2 class="card-header"><i class="fa fa-film"></i> {{ each_movie_dictionary.movie_title }}</h2>
                         <p class="card-para">Directed By: {{ each_movie_dictionary.movie_director }}</p>
                         <p class="card-para">Release Date: {{ each_movie_dictionary.movie_release_date }}</p>
                         <a target="_blank" href="{{ each_movie_dictionary.google_link }}" class="card-link">Google Search <i class="fa fa-arrow-circle-o-right"></i></a>

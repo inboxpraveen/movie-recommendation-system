@@ -11,7 +11,7 @@ body {
     margin: 0;
     padding: 0;
     opacity: 1;
-    overflow: hidden;
+    overflow-x: hidden;
     z-index: 100;
 }
 

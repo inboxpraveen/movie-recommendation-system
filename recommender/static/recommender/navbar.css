@@ -200,6 +200,7 @@
     position: relative;
     color: #ececee;
     transition: all 150ms linear;
+    text-decoration: none;
 }
 
 .nav ul li a:hover {
@@ -281,16 +282,7 @@
         right: 30px;
     }
 
-    h2 {
-        font-size: 5vw;
-        -webkit-text-stroke: 2px transparent;
-        text-stroke: 2px transparent;
-        -webkit-text-fill-color: #ffeba7;
-        text-fill-color: #ffeba7;
-        color: #000000;
-    }
-
     .nav ul li a {
-        font-size: 5vw;
+        font-size: 7vw;
     }
 }
