@@ -5,13 +5,10 @@
 }
 
 body {
-    height: 100vh;
-    max-height: 100vh;
     max-width: 100%;
     margin: 0;
     padding: 0;
     opacity: 1;
-    overflow: hidden;
     z-index: 100;
 }
 
@@ -20,11 +17,10 @@ a {
     color: rgb(0, 0, 0) !important;
 }
 
-
 #myVideo {
     position: fixed;
     right: 0;
-    opacity: 0.75;
+    opacity: 0.5;
     bottom: 0;
     min-width: 100%;
     min-height: 100%;
@@ -35,10 +31,7 @@ a {
 
 /* Main Container */
 .main-container {
-    max-width: 1000px;
-    border-color: #0077c2;
-    border-width: 3px;
-    border-style: solid;
+    max-width: 1200px;
     text-align: center;
     margin: 1rem auto;
     display: flex;
@@ -48,11 +41,11 @@ a {
 
 /* Card Container */
 .card-container {
-    max-width: 500px;
+    width: 350px;
+    max-width: 350px;
     margin: 0.5rem auto;
     padding: 1rem;
-    border: 1px solid #ddd;
-    background-color: rgba(211, 211, 211, 0.863);
+    background-color: rgba(255, 255, 255, 0.863);
     border-radius: 5%;
 }
 
