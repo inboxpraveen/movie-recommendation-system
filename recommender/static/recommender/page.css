@@ -13,6 +13,7 @@ body {
     opacity: 1;
     overflow-x: hidden;
     z-index: 100;
+    cursor: none;
 }
 
 a {
