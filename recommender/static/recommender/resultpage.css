@@ -1,7 +1,7 @@
 *,
 *:before,
 *:after {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 body {
@@ -34,38 +34,51 @@ a {
 
 
 /* Main Container */
-         .main-container {
-         max-width: 800px;
-         margin: 0 auto;
-         }
-         /* Card Container */
-         .card-container {
-         max-width: 500px;
-         margin: 20px auto;
-         padding: 20px;
-         border: 1px solid #ddd;
-         border-radius: 5px;
-         }
-         /* Card Header */
-         .card-header {
-         font-size: 24px;
-         font-weight: bold;
-         margin-bottom: 10px;
-         }
-         /* Card Paragraph */
-         .card-para {
-         font-size: 16px;
-         line-height: 1.5em;
-         margin-bottom: 10px;
-         }
-         /* Card Link */
-         .card-link {
-         display: inline-block;
-         font-size: 16px;
-         color: #0077c2;
-         text-decoration: none;
-         margin-top: 10px;
-         }
-         .card-link:hover {
-         text-decoration: underline;
-         }
+.main-container {
+    max-width: 1000px;
+    border-color: #0077c2;
+    border-width: 3px;
+    border-style: solid;
+    text-align: center;
+    margin: 1rem auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+/* Card Container */
+.card-container {
+    max-width: 500px;
+    margin: 0.5rem auto;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    background-color: rgba(211, 211, 211, 0.863);
+    border-radius: 5%;
+}
+
+/* Card Header */
+.card-header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Card Paragraph */
+.card-para {
+    font-size: 16px;
+    line-height: 1.5em;
+    margin-bottom: 10px;
+}
+
+/* Card Link */
+.card-link {
+    display: inline-block;
+    font-size: 16px;
+    color: #0077c2;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+.card-link:hover {
+    text-decoration: underline;
+}

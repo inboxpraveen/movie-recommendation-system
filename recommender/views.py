@@ -75,7 +75,7 @@ def main(request):
         if final_recommendations:
             return render(
                 request,
-                'recommender/index.html',
+                'recommender/result.html',
                 {
                     'all_movie_names':titles_list,
                     'input_provided':'yes',
