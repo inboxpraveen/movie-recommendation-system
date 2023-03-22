@@ -1,0 +1,96 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="description" content="Movie Recommendation ">
+    <meta name="keywords" content="Portfolio, Hitchhikers Guide to Deep Learning, Computer Vision Engineer, Trellissoft, Research, Praveen-kumar,Praveen Kumar linkedin, Praveen Kumar github, Inbox praveen, inbox praveen kumar, praveen kumar twitter, inbox praveen twitter, praveen kumar medium, inbox praveen medium">
+    <meta name="author" content="Praveen Kumar" />
+
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="Praveen Kumar">
+    <meta name="twitter:site" content="@inboxpraveen">
+    <meta name="twitter:title" content="Movie Recommendation System">
+    <meta name="twitter:creator" content="@inboxpraveen">
+
+    <meta property="og:title" content="Praveen Kumar">
+    <meta property="og:description" content="AI Engineer & Software Developer based in Bangalore">
+    <meta property="og:image" content="https://github.com/inboxpraveen/inboxpraveen.github.io/blob/master/assets/img/hero_3.png">
+    <meta property="og:url" content="https://inboxpraveen.github.io/">
+
+    <link rel="shortcut icon" href="{% static 'logo.png' %}">
+
+    <title>Movie Recommendation System</title>
+    <link rel="stylesheet" href="{% static 'recommender/cursor.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'recommender/page.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'recommender/navbar.css' %}" type="text/css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons@latest/iconfont/tabler-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="Stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+
+</head>
+
+<body>
+
+    <div class="cursor-dot-outline"></div>
+    <div class="cursor-dot"></div>
+    <script src="{% static 'recommender/cursor.js' %}"></script>
+
+    <input class="menu-icon" type="checkbox" id="menu-icon" name="menu-icon" />
+    <label for="menu-icon"></label>
+    <nav class="nav">
+        <ul class="pt-5">
+            <li><a href="https://inboxpraveen.github.io/" target="_blank">About</a></li>
+            <li><a href="https://inboxpraveen.github.io/projects/all-projects.html" target="_blank">All Projects</a></li>
+            <li><a href="https://inboxpraveen.github.io/" target="_blank">Blogs</a></li>
+            <li><a href="https://inboxpraveen.github.io/" target="_blank">Contact</a></li>
+        </ul>
+    </nav>
+
+    <video autoplay muted loop id="myVideo">
+        <source src="{% static 'production ID_4779866.mp4' %}" type="video/mp4">
+    </video>
+    <script>
+        var vid = document.getElementById("myVideo");
+        vid.playbackRate = 0.5;
+    </script>
+
+    <div class="main-container">
+        <div class="card">
+            
+        </div>
+        <!-- <div clas="three"> -->
+            <!-- {% if recomendation_found %}
+                {% if recomendation_found %}
+                    <div class="cardcontainer">
+                        {% for each_movie_dictionary in recommended_movies %}
+                        <div class="card">
+                            <div class="card-content">
+                                <h2 class="card-heading"><i class="fa fa-film"></i> {{ each_movie_dictionary.movie_title }}</h2>
+                                <p class="card-paragraph">Directed By: {{ each_movie_dictionary.movie_director }}</p>
+                                <p class="card-paragraph">Release Date: {{ each_movie_dictionary.movie_release_date }}</p>
+                                <p class="card-paragraph"><a target="_blank" href="{{ each_movie_dictionary.google_link }}">Search on Google <i class="fa fa-arrow-right"></i></a></p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endif %} -->
+        <!-- </div> -->
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
+
+</body>
+
+</html>
+

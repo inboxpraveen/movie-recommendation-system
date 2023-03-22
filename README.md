@@ -88,3 +88,30 @@ Line 73: model = pa.parquet.read_table('static/<model_name>.parquet').to_pandas(
 ```
 
 Note that you have to place dataset and model into the `static` directory.
+
+
+This code implements a movie recommendation system based on user input. The system provides a simple web interface built on HTML, CSS, and JavaScript libraries. 
+
+Inputs: The user can search for movies by providing a partial or complete movie name. 
+
+Outputs: The system provides movie recommendations based on user input. 
+
+Dependencies: 
+
+* `static/recommender/` -- contains the following CSS files: `cursor.css`, `page.css`, and `navbar.css`
+* `static/logo.png` -- the logo of the application
+* `static/production ID_4779866.mp4` -- a background video for the web page
+* `@tabler/icons@latest/iconfont/tabler-icons.min.css`
+* `normalize/5.0.0/normalize.min.css`
+* `jquery-ui.css`
+* `font-awesome.min.css`
+* `bootstrap.min.css`
+* `jquery.min.js`
+* `jquery-ui.js`
+
+Usage:
+
+1. Open the HTML file in a web browser.
+2. Type the name of a movie in the search bar, and the system will provide the movie recommendation. 
+
+Note: Only the top 2.5K movies based on IMBD are present in this system's database.
