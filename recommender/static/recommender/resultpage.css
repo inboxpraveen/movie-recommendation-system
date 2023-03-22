@@ -28,7 +28,6 @@ body {
 /* Main Container */
 .main-container {
     max-width: 1200px;
-    max-height: 75vh;
     overflow-x: hidden;
     text-align: center;
     margin: 1rem;
@@ -43,7 +42,7 @@ body {
     max-width: 350px;
     margin: 0.5rem auto;
     padding: 1rem;
-    background-color: rgba(255, 255, 255, 0.863);
+    background-color: rgba(255, 255, 255, 0.85);
     border-radius: 2%;
 }
 
@@ -65,7 +64,7 @@ body {
 .card-link {
     display: inline-block;
     font-size: 16px;
-    color: #0077c2;
+    color: #4193c5;
     text-decoration: none;
     margin-top: 10px;
 }
@@ -78,22 +77,25 @@ body {
     text-align: center;
     padding: 1rem 0.5rem;
     margin: 0 auto;
+    position: sticky;
+    background-color: transparent;
+    top: 0;
 }
 
 /* width */
 ::-webkit-scrollbar {
     width: 2px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
+}
+
+/* Track */
+::-webkit-scrollbar-track {
     background: #f1f1f1;
-  }
-  
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
     background: #353535;
-  }
+}
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media screen and (max-width: 992px) {
@@ -101,14 +103,13 @@ body {
         margin-top: 15vh;
     }
 
-    .main-container{
+    .main-container {
         width: 90%;
         margin: 0 auto;
-        max-height: 60vh;
         overflow-x: hidden;
     }
 
-    .card-container{
+    .card-container {
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
