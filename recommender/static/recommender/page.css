@@ -42,8 +42,8 @@ a {
     justify-content: center;
     color:black;
     max-height: 90%;
-    border-color: red;
-    border-width: 5px;
+    max-width: 100%;
+    text-align: center;
 }
 
 .two h1 {
@@ -52,6 +52,7 @@ a {
 }
 
 .two p {
+    margin: 0.1rem 0.5rem;
     text-shadow: 4px 4px 4px rgba(190, 190, 190, 0.5);
 }
 
@@ -81,6 +82,14 @@ a {
 
 .social-links-span i{
     margin: 0rem 0.75rem;
+}
+
+.formcontainer {
+    max-width: 100%;
+    margin: 0rem 0.5rem;
+    justify-self: center;
+    text-align: center;
+    align-items: center;
 }
 
 .formcontainer input {
@@ -244,7 +253,7 @@ a {
 #myVideo {
     position: fixed;
     right: 0;
-    opacity: 0.75;
+    opacity: 0.5;
     bottom: 0;
     min-width: 100%;
     min-height: 100%;
