@@ -22,6 +22,25 @@ In this section, we try to understand through video demo to play around the proj
 
 2. Running MRS on local System - To be Updated
 
+3. Sample Screenshots
+
+   1. Home Screen
+
+      <img src="static/images/ss1.png" alt="Home Screen" />
+
+   2. Navigation Screen
+
+      <img src="static/images/ss2.png" alt="Navigation Screen" />
+
+   3. Search with Auto Suggestion
+
+      <img src="static/images/ss3.png" alt="Search Functionality" />
+
+   4. Recommended Movies
+
+      <img src="static/images/ss4.png" alt="Movie Recommended Results" />
+
+
 ____
 
 ***Please be slightly patient while I create and upload the demo video. Follow and star this project to get latest notifications and update. :raised_hands:***
