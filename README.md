@@ -20,7 +20,7 @@ In this section, we try to understand through video demo to play around the proj
 
 1. [Movie Recommendation System Hosted Application Demo](https://movie-recommendation-8g56.onrender.com/)
 
-2. Running MRS on local System - To be Updated
+2. [Running MRS on local System](https://github.com/inboxpraveen/movie-recommendation-system/tree/master#42-running-in-local)
 
 3. Sample Screenshots
 
@@ -65,9 +65,7 @@ For complete guide to training your model and inference using the trained model,
 
 #### 3.2 Django Web Application Integration
 
-I'm writing a blog soon...
-
-Please be slightly patient while I create and upload the demo video. Follow and star this project to get latest notifications and update. :raised_hands:
+[Here is a detailed blog](https://medium.com/analytics-vidhya/movie-recommendation-system-python-flask-web-application-heroku-deployment-7e39492b640c) explaining about complete approach and directory structure essential to understand Django integration.
 
 <hr>
 
@@ -75,9 +73,7 @@ Please be slightly patient while I create and upload the demo video. Follow and 
 
 #### 4.1 Running it OnRender Free Cloud
 
-I'm writing a blog soon...
-
-Please be slightly patient while I create and upload the demo video. Follow and star this project to get latest notifications and update. :raised_hands:
+[Here is a detailed blog](https://medium.com/analytics-vidhya/movie-recommendation-system-python-flask-web-application-heroku-deployment-7e39492b640c) explaining about complete approach and essential details to deploy not just this application but also any other web-application you like to built.
 
 #### 4.2 Running in Local
 
@@ -134,3 +130,5 @@ Usage:
 2. Type the name of a movie in the search bar, and the system will provide the movie recommendation. 
 
 Note: Only the top 2.5K movies based on IMBD are present in this system's database.
+
+> **Working on [version 2 of movie recommendation system on new repository](https://github.com/inboxpraveen/movie-recommendation-system-version-2) which can process 1 million movies within similar memory footprints, better recommendations, and diverse selections, with added features like recommendation bucket and mutual sharing. Stay tuned and do not forget to start the repository to reach out to open-source community.**
