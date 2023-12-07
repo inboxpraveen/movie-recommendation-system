@@ -1,4 +1,4 @@
-# The configuration for the `remote` backend.
+# The configuration for the `remote` backend
 terraform {
   backend "remote" {
     organization = "C4_Final_Proj"
