@@ -1,10 +1,10 @@
 # The configuration for the `remote` backend.
 terraform {
   backend "remote" {
-    organization = "example-organization"
+    organization = "C4_Final_Proj"
 
     workspaces {
-      name = "example-workspace"
+      name = "c4-final-proj"
     }
   }
 }
