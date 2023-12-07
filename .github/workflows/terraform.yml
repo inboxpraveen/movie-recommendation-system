@@ -53,9 +53,14 @@ on:
 permissions:
   contents: read
 
+env:
+  TF_CLOUD_ORGANIZATION: "C4_Final_Proj"
+  TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
+  TF_WORKSPACE: "c4-final-proj"
+  CONFIG_DIRECTORY: "./"
+
 jobs:
   build:
-
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
@@ -79,7 +84,6 @@ jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
-    environment: production
 
     # Use the Bash shell regardless of whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -88,22 +92,32 @@ jobs:
 
     steps:
     # Checkout the repository to the GitHub Actions runner
-    - name: Checkout
+    - name: Checkout code
       uses: actions/checkout@v3
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-region: us-east-1
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
       with:
-        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+        terraform_version: 1.6.5
+
+    # Checks that all Terraform configuration files adhere to a canonical format
+    - name: Terraform Format
+      run: terraform fmt -check
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       run: terraform init
 
-    # Checks that all Terraform configuration files adhere to a canonical format
-    - name: Terraform Format
-      run: terraform fmt -check
+    # Validate Terraform Infra
+    - name: Terraform Validate
+      run: terraform validate -no-color
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
