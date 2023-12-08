@@ -1,0 +1,98 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta charset="UTF-8">
+    <meta name="description" content="This page is a Movie Recommendation System created by Praveen Kumar, an AI Engineer & Software Developer based in Bangalore. Search for movies using the autocomplete input field, and get great movie suggestions.">
+    <meta name="keywords" content="Praveen Kumar, Portfolio, Hitchhikers Guide to Deep Learning, Computer Vision Engineer, Trellissoft, Research, Praveen-kumar,Praveen Kumar linkedin, Praveen Kumar github, Inbox praveen, inbox praveen kumar, praveen kumar twitter, inbox praveen twitter, praveen kumar medium, inbox praveen medium, Movie Recommendation System, AI Engineer, Software Developer, autocomplete, movie suggestions, Recommendation system">
+    <meta name="author" content="Praveen Kumar" />
+
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="Praveen Kumar">
+    <meta name="twitter:site" content="@inboxpraveen">
+    <meta name="twitter:title" content="Movie Recommendation System">
+    <meta name="twitter:creator" content="@inboxpraveen">
+
+    <meta property="og:title" content="Movie Recommendation System">
+    <meta property="og:description" content="This page is a Movie Recommendation System created by Praveen Kumar, an AI Engineer & Software Developer based in Bangalore. Search for movies using the autocomplete input field, and get great movie suggestions.">
+
+    <link rel="shortcut icon" href="{% static 'logo.png' %}">
+
+    <title>Movie Recommendation System</title>
+    <link rel="stylesheet" href="{% static 'recommender/cursor.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'recommender/resultpage.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'recommender/resultnavbar.css' %}" type="text/css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons@latest/iconfont/tabler-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="Stylesheet" href="https://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+
+</head>
+
+<body>
+
+    <div class="cursor-dot-outline"></div>
+    <div class="cursor-dot"></div>
+    <script src="{% static 'recommender/cursor.js' %}"></script>
+
+    <input class="menu-icon" type="checkbox" id="menu-icon" name="menu-icon" />
+    <label for="menu-icon"></label>
+    <nav class="nav">
+        <ul class="pt-5">
+            <li><a href="https://inboxpraveen.github.io/" target="_blank">About</a></li>
+            <li><a href="https://inboxpraveen.github.io/projects/all-projects.html" target="_blank">All Projects</a>
+            </li>
+            <li><a href="https://inboxpraveen.github.io/" target="_blank">Blogs</a></li>
+            <li><a href="https://inboxpraveen.github.io/" target="_blank">Contact</a></li>
+        </ul>
+    </nav>
+
+    <video autoplay muted loop id="myVideo">
+        <source src="{% static 'production ID_4779866.mp4' %}" type="video/mp4">
+    </video>
+    <script>
+        var vid = document.getElementById("myVideo");
+        vid.playbackRate = 0.25;
+    </script>
+
+    <div class="title-container">
+        <h3>Movies like: {{ input_movie_name }}</h3>
+    </div>
+
+    <div class="main-container">
+        {% if recomendation_found %}
+            {% if recomendation_found %}
+                {% for each_movie_dictionary in recommended_movies %}
+                    <div class="card-container">
+                        <h2 class="card-header"><i class="fa fa-film"></i> {{ each_movie_dictionary.movie_title }}</h2>
+                        <p class="card-para">Directed By: {{ each_movie_dictionary.movie_director }}</p>
+                        <p class="card-para">Release Date: {{ each_movie_dictionary.movie_release_date }}</p>
+                        <a target="_blank" href="{{ each_movie_dictionary.google_link }}" class="card-link">Google Search <i class="fa fa-arrow-circle-o-right"></i></a>
+                    </div>
+                {% endfor %} 
+            {% endif %}
+        {% endif %}
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
+    <script>
+        function changeCss () {
+                var navElement = document.querySelector(".title-container");
+                this.scrollY < 100 ? navElement.style.backgroundColor = "transparent" : navElement.style.backgroundColor = "rgba(255, 255, 255, 0.85)";
+            }
+
+        window.addEventListener("scroll", changeCss , true);
+    </script>
+</body>
+
+</html>
