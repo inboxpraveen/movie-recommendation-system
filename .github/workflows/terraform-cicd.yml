@@ -13,8 +13,6 @@ env:
   CONFIG_DIRECTORY: "./"
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
 
   terraform:
     name: 'Terraform'
