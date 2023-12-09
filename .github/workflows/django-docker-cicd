@@ -1,4 +1,4 @@
-name: 'Django-Docker CD' 
+name: 'Django and Docker CD' 
 
 on:
   push: 
