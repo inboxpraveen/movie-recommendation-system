@@ -1,48 +1,53 @@
-name: Docker Build 
-
-on:
+name: Django-Docker CD
+'on':
   push:
     branches:
       - main
-      
+  pull_request:
+    branches:
+      - main
+env:
+  DOCKER_USERNAME: '${{ secrets.DOCKER_USERNAME }}'
+  DOCKER_PASSWORD: '${{ secrets.DOCKER_PASSWORD }}'
+  
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
+    
     steps:
-    
-    - name: Check out code
-      uses: actions/checkout@v3
-    
-    - name: Login to Docker Hub
-      uses: docker/login-action@v1
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-
-    - name: Build container image
-      uses: docker/build-push-action@v2
-      with:
-        push: false
-        tags: user/app:latest  
-
-  push:
-
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-    
-    - name: Login to Docker Hub
-      uses: docker/login-action@v1
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-        
-    - name: Push image to Docker Hub
-      uses: docker/build-push-action@v2
-      with:
-        push: true
-        tags: user/app:latest
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.9
+          
+      - name: Cache pip dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: '${{ runner.os }}-pip-${{ hashFiles(''**/requirements.txt'') }}'
+          restore-keys: |
+            ${{ runner.os }}-pip-
+            
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          
+      - name: Run tests
+        run: |
+          python manage.py test
+          
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: '${{ env.DOCKER_USERNAME }}'
+          password: '${{ env.DOCKER_PASSWORD }}'
+          
+      - name: Pull Backend Image
+        run: |
+          docker pull bdunu/d10-be:latest
+          
+      - name: Pull Frontend Image
+        run: |
+          docker pull bdunu/d10-fe:latest
