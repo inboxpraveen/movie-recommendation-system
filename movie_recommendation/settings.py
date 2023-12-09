@@ -114,9 +114,7 @@ STATICFILES_DIRS = (
   # Always use forward slashes, even on Windows.
   # Don't forget to use absolute paths, not relative paths.
 )
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR.parent, 'frontend', 'static'),
-# ]
+
 # Following settings only make sense on production and may break development environments.
 if not DEBUG:    # Tell Django to copy statics to the `staticfiles` directory
     # Turn on WhiteNoise storage backend that takes care of compressing static files
