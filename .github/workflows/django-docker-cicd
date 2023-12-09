@@ -1,56 +1,51 @@
-name: 'Django and Docker CD' 
-
-on:
-  push: 
-    branches: [ "main" ]
+name: Django-Docker CD
+'on':
+  push:
+    branches:
+      - main
   pull_request:
-    branches: [ "main" ]
-
+    branches:
+      - main
 env:
-  DOCKER_USERNAME: "${{ secrets.DOCKER_USERNAME }}"
-  DOCKER_PASSWORD: "${{ secrets.DOCKER_PASSWORD }}"
-
+  DOCKER_USERNAME: '${{ secrets.DOCKER_USERNAME }}'
+  DOCKER_PASSWORD: '${{ secrets.DOCKER_PASSWORD }}'
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-
-    - name: Set up Python
-      uses: actions/setup-python@v3
-      with: 
-        python-version: 3.9
-
-    - name: Cache pip dependencies  
-      uses: actions/cache@v2
-      with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-pip-
-
-    - name: Install dependencies
-      working-directory: ./backend
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-
-    - name: Run tests
-      working-directory: ./backend
-      run: |
-        python manage.py test
-
-    - name: Login to Docker Hub  
-      uses: docker/login-action@v1 
-      with:
-        username: ${{ env.DOCKER_USERNAME }} 
-        password: ${{ env.DOCKER_PASSWORD }}
-
-    - name: Pull Backend Image
-      run: | 
-        docker pull bdunu/d10-be:latest
-
-    - name: Pull Frontend Image
-      run: |
-        docker pull bdunu/d10-fe:latest
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.9
+      - name: Cache pip dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: '${{ runner.os }}-pip-${{ hashFiles(''**/requirements.txt'') }}'
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: Install dependencies
+        working-directory: ./backend
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run tests
+        working-directory: ./backend
+        run: |
+          python manage.py test
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: '${{ env.DOCKER_USERNAME }}'
+          password: '${{ env.DOCKER_PASSWORD }}'
+      - name: Pull Backend Image
+        run: |
+          docker pull username/backend:latest
+        with:
+          context: ./backend
+      - name: Pull Frontend Image
+        run: |
+          docker pull username/frontend:latest
+        with:
+          context: ./frontend
