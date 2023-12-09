@@ -43,27 +43,27 @@ jobs:
       working-directory: ./backend
       run: terraform fmt
 
-    - name: Terraform Format - Frontend 
-      working-directory: ./frontend
-      run: terraform fmt
+    # - name: Terraform Format - Frontend 
+    #   working-directory: ./frontend
+    #   run: terraform fmt
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init - Backend 
       working-directory: ./backend
       run: terraform init
 
-    - name: Terraform Init - Frontend
-      working-directory: ./frontend 
-      run: terraform init
+    # - name: Terraform Init - Frontend
+    #   working-directory: ./frontend 
+    #   run: terraform init
 
     # Validate Terraform Infra
     - name: Terraform Validate - Backend
       working-directory: ./backend
       run: terraform validate -no-color
 
-    - name: Terraform Validate - Frontend
-      working-directory: ./frontend
-      run: terraform validate -no-color
+    # - name: Terraform Validate - Frontend
+    #   working-directory: ./frontend
+    #   run: terraform validate -no-color
 
     # Generates an execution plan for Terraform
     - name: Terraform Plan
