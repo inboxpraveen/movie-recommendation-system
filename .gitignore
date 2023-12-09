@@ -24,3 +24,8 @@ pip-delete-this-directory.txt
 # Django stuff:
 *.log
 *.pot
+
+# Terraform
+.terraform.lock.hcl
+.terraform/
+terraform.tfvars
