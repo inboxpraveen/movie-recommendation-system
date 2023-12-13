@@ -1,7 +1,0 @@
-wheel
-django
-pandas
-gunicorn
-whitenoise
-fastparquet
-pyarrow
