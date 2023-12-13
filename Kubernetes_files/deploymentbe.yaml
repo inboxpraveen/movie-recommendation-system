@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: aubreyz/d10be5
+          image: aubreyz/d10be5:${{ github.sha }}
           ports:
           - name: http
             containerPort: 8000
