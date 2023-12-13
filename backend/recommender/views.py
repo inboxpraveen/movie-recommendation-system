@@ -2,7 +2,7 @@ from django.shortcuts import render
 import pandas as pd
 import pyarrow as pa
 
-movies_data = pd.read_parquet("static/top_2k_movie_data.parquet")
+movies_data = pd.read_parquet("backend/static/top_2k_movie_data.parquet")
 titles = movies_data['title']
 titles_list = titles.to_list()
 
