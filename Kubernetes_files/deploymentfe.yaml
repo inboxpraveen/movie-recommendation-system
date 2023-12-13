@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: aubreyz/d10-fe5
+          image: aubreyz/d10-fe5:${{ github.sha }}
           ports:
             - name: http
               containerPort: 80
