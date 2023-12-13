@@ -8,7 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY', default='empty')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True  # Remember to set this to False in production
+DEBUG = False  # Remember to set this to False in production
 
 
 ALLOWED_HOSTS = ['backend', 'frontend']
