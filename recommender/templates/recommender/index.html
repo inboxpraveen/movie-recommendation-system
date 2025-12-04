@@ -1,126 +1,502 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <meta charset="UTF-8">
-    <meta name="description" content="This page is a Movie Recommendation System created by Praveen Kumar, an AI Engineer & Software Developer based in Bangalore. Search for movies using the autocomplete input field, and get great movie suggestions.">
-    <meta name="keywords" content="Praveen Kumar, Portfolio, Hitchhikers Guide to Deep Learning, Computer Vision Engineer, Trellissoft, Research, Praveen-kumar,Praveen Kumar linkedin, Praveen Kumar github, Inbox praveen, inbox praveen kumar, praveen kumar twitter, inbox praveen twitter, praveen kumar medium, inbox praveen medium, Movie Recommendation System, AI Engineer, Software Developer, autocomplete, movie suggestions, Recommendation system">
-    <meta name="author" content="Praveen Kumar" />
-
-    <!-- Twitter Card data -->
-    <meta name="twitter:card" content="Praveen Kumar">
-    <meta name="twitter:site" content="@inboxpraveen">
-    <meta name="twitter:title" content="Movie Recommendation System">
-    <meta name="twitter:creator" content="@inboxpraveen">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Discover your next favorite movie with our AI-powered recommendation system. Get personalized movie suggestions based on your preferences.">
+    <meta name="keywords" content="movie recommendations, film suggestions, movie finder, AI recommendations">
+    <meta name="author" content="Movie Recommendation System">
+    
+    <!-- Open Graph / Social Media -->
     <meta property="og:title" content="Movie Recommendation System">
-    <meta property="og:description" content="This page is a Movie Recommendation System created by Praveen Kumar, an AI Engineer & Software Developer based in Bangalore. Search for movies using the autocomplete input field, and get great movie suggestions.">
-    <meta property="og:image" content="https://github.com/inboxpraveen/inboxpraveen.github.io/blob/master/assets/img/hero_3.png">
-    <meta property="og:url" content="https://inboxpraveen.github.io/">
-
+    <meta property="og:description" content="Discover your next favorite movie with our AI-powered recommendation system">
+    <meta property="og:type" content="website">
+    
     <link rel="shortcut icon" href="{% static 'logo.png' %}">
+    <title>Movie Recommendation System - Find Your Next Favorite Film</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- jQuery UI for autocomplete -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    <title>Movie Recommendation System</title>
+        :root {
+            --primary-color: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary-color: #8b5cf6;
+            --background: #0f172a;
+            --surface: #1e293b;
+            --surface-light: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --error: #ef4444;
+            --success: #10b981;
+            --border-radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons@latest/iconfont/tabler-icons.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-    <link rel="Stylesheet" href="https://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--background) 0%, #1a1f3a 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+        /* Animated background */
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
 
-    <link rel="stylesheet" href="{% static 'recommender/cursor.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'recommender/page.css' %}" type="text/css">
-    <link rel="stylesheet" href="{% static 'recommender/navbar.css' %}" type="text/css">
+        .background-animation::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--primary-color) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: backgroundMove 20s linear infinite;
+        }
 
+        @keyframes backgroundMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Header */
+        .header {
+            padding: 2rem 1rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .logo-container {
+            display: inline-block;
+            margin-bottom: 1rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInDown 0.8s ease-out 0.2s both;
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--text-secondary);
+            font-weight: 400;
+            animation: fadeInDown 0.8s ease-out 0.4s both;
+        }
+
+        .stats {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--surface);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+        }
+
+        .stats-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--success);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            animation: fadeInUp 0.8s ease-out 0.8s both;
+        }
+
+        /* Search Card */
+        .search-card {
+            background: var(--surface);
+            border-radius: var(--border-radius);
+            padding: 2.5rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .search-label {
+            display: block;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .search-container {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            font-size: 1rem;
+            border: 2px solid var(--surface-light);
+            border-radius: var(--border-radius);
+            background: var(--background);
+            color: var(--text-primary);
+            transition: var(--transition);
+            font-family: inherit;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.7;
+        }
+
+        .search-button {
+            width: 100%;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+            font-family: inherit;
+        }
+
+        .search-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+        }
+
+        .search-button:active {
+            transform: translateY(0);
+        }
+
+        /* Alert Messages */
+        .alert {
+            padding: 1rem 1.25rem;
+            border-radius: var(--border-radius);
+            margin-top: 1.5rem;
+            border-left: 4px solid;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .alert-error {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: var(--error);
+            color: #fca5a5;
+        }
+
+        .alert-icon {
+            display: inline-block;
+            margin-right: 0.5rem;
+        }
+
+        /* jQuery UI Autocomplete Styling */
+        .ui-autocomplete {
+            background: var(--surface);
+            border: 1px solid var(--surface-light);
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 0.5rem 0;
+            font-family: inherit;
+        }
+
+        .ui-menu-item {
+            padding: 0;
+        }
+
+        .ui-menu-item-wrapper {
+            padding: 0.75rem 1.25rem;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+
+        .ui-menu-item-wrapper:hover,
+        .ui-state-active {
+            background: var(--surface-light) !important;
+            border: none !important;
+            color: var(--text-primary) !important;
+            margin: 0 !important;
+        }
+
+        /* Features Section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: var(--surface);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-description {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Loading State */
+        .search-button.loading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .search-button.loading::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            top: 50%;
+            left: 50%;
+            margin-left: -8px;
+            margin-top: -8px;
+            border: 2px solid white;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 0.6s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .search-card {
+                padding: 1.5rem;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
-
 <body>
+    <div class="background-animation"></div>
 
-    <div class="cursor-dot-outline"></div>
-    <div class="cursor-dot"></div>
-    <script src="{% static 'recommender/cursor.js' %}"></script>
+    <header class="header">
+        <div class="logo-container">
+            <img src="{% static 'logo.png' %}" alt="Movie Recommendation Logo" class="logo">
+        </div>
+        <h1>Movie Recommendation System</h1>
+        <p class="subtitle">Discover your next favorite movie powered by AI</p>
+        <div class="stats">
+            <span class="stats-dot"></span>
+            <span>{{ total_movies|default:"2,000" }}+ movies available</span>
+        </div>
+    </header>
 
-    <input class="menu-icon" type="checkbox" id="menu-icon" name="menu-icon" />
-    <label for="menu-icon"></label>
-    <nav class="nav">
-        <ul class="pt-5">
-            <li><a href="https://inboxpraveen.github.io/" target="_blank">About</a></li>
-            <li><a href="https://inboxpraveen.github.io/projects/all-projects.html" target="_blank">All Projects</a></li>
-            <li><a href="https://inboxpraveen.github.io/" target="_blank">Blogs</a></li>
-            <li><a href="https://inboxpraveen.github.io/" target="_blank">Contact</a></li>
-        </ul>
-    </nav>
-
-    <video autoplay muted loop id="myVideo">
-        <source src="{% static 'production ID_4779866.mp4' %}" type="video/mp4">
-    </video>
-    <script>
-        var vid = document.getElementById("myVideo");
-        vid.playbackRate = 0.25;
-    </script>
-
-    <div class="main-container">
-        <div class="two">
-            <h1><span class="add-text-background">Movie</span> Recommendation System</h1>
-            <p class="subheading">Check out these great movies that we recommend for you.</p>
-            <form method="POST">    
+    <main class="container">
+        <div class="search-card">
+            <label for="movie_name" class="search-label">
+                🎬 Search for a movie
+            </label>
+            
+            <form method="POST" id="searchForm">
                 {% csrf_token %}
-                <div class="formcontainer">
-                    <input class="input-field" type="text" id="movie_name" name="movie_name"
-                        placeholder="Start typing to see movie suggestions..." required />
-                    <script>
-                        $(function () {
-                            var availableTags = [
-                                {% for mmm in all_movie_names %}
-                                "{{ mmm }}",
-                            {% endfor %}
-                        ];
-                        $("#movie_name").autocomplete({
-                            source: availableTags,
-                            minLength: 3
-                        });
-                    } );
-                    </script>
-                    <button type="submit" class="submit-button">Search</button>
+                <div class="search-container">
+                    <input 
+                        type="text" 
+                        id="movie_name" 
+                        name="movie_name"
+                        class="search-input"
+                        placeholder="Start typing a movie name..."
+                        value="{{ input_movie_name|default:'' }}"
+                        required
+                        autocomplete="off"
+                    >
                 </div>
+                
+                <button type="submit" class="search-button" id="searchButton">
+                    Get Recommendations
+                </button>
             </form>
-            <p class="message">
-                {% if input_provided %}
-                    <div>
-                        {% if not movie_found %}
-                            <p class="message__result">You Searched For: <b>{{ input_movie_name }}</b></p>
-                            {% if not recomendation_found %}
-                                <p class="message__p1">Oops! We can not match your movie in our database.</p>
-                                <p class="message__p2">As this is a demo model, only top 2.5K movies based on IMBD are present.</p>
-                            {% endif %}
-                        {% endif %}
-                    </div>
-                {% endif %}
-            </p>
-        </div>
-        
-        <div clas="three">
-            <span class="social-links-span">
-                <a target="_blank" href="https://inboxpraveen.github.io/"><i class="ti ti-user-circle"></i></a>
-                <a target="_blank" href="https://github.com/inboxpraveen"><i class="ti ti-brand-github"></i></a>
-                <a target="_blank" href="https://www.linkedin.com/in/praveen-kumar-inbox/"><i class="ti ti-brand-linkedin"></i></a>
-                <a target="_blank" href="https://twitter.com/InboxPraveen"><i class="ti ti-brand-twitter"></i></a>
-                <a target="_blank" href="https://medium.com/@inboxpraveen"><i class="ti ti-brand-medium"></i></a>
-            </span>
+
+            {% if error_message %}
+            <div class="alert alert-error">
+                <span class="alert-icon">⚠️</span>
+                <strong>{{ error_message }}</strong>
+            </div>
+            {% endif %}
         </div>
 
-    </div>
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🤖</div>
+                <h3 class="feature-title">AI-Powered</h3>
+                <p class="feature-description">Advanced algorithms analyze movie similarities</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3 class="feature-title">Lightning Fast</h3>
+                <p class="feature-description">Get recommendations in milliseconds</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3 class="feature-title">Accurate</h3>
+                <p class="feature-description">Personalized suggestions just for you</p>
+            </div>
+        </div>
+    </main>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
+    <footer class="footer">
+        <p>Made with ❤️ for movie lovers | © 2024 Movie Recommendation System</p>
+    </footer>
 
+    <script>
+        $(function() {
+            // Autocomplete configuration
+            var movieNames = [
+                {% for movie in all_movie_names %}
+                "{{ movie|escapejs }}",
+                {% endfor %}
+            ];
+
+            $("#movie_name").autocomplete({
+                source: movieNames,
+                minLength: 2,
+                delay: 300,
+                select: function(event, ui) {
+                    $(this).val(ui.item.value);
+                    return false;
+                }
+            });
+
+            // Form submission with loading state
+            $('#searchForm').on('submit', function() {
+                var button = $('#searchButton');
+                button.addClass('loading');
+                button.text('Searching...');
+            });
+
+            // Auto-focus on load
+            $('#movie_name').focus();
+        });
+    </script>
 </body>
-
 </html>
-

@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: movie-recommendation-system
+    env: python
+    region: oregon
+    plan: free
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn movie_recommendation.wsgi:application"
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: PYTHON_VERSION
+        value: "3.10.13"
+      - key: ALLOWED_HOSTS
+        sync: false
+    healthCheckPath: /api/health/
+

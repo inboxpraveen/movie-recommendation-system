@@ -1,7 +1,27 @@
-wheel
-django
-pandas
-gunicorn
-whitenoise
-fastparquet
-pyarrow
+# Core Framework
+Django>=5.0,<5.1
+gunicorn>=21.2.0
+
+# Data Processing & ML
+pandas>=2.2.0
+pyarrow>=15.0.0
+fastparquet>=2024.2.0
+numpy>=1.26.0
+
+# Static Files & Performance
+whitenoise[brotli]>=6.6.0
+
+# Caching
+django-redis>=5.4.0
+
+# Environment Management
+python-decouple>=3.8
+
+# API & Validation
+djangorestframework>=3.14.0
+
+# Development Tools
+django-extensions>=3.2.3
+
+# Security
+django-cors-headers>=4.3.1
