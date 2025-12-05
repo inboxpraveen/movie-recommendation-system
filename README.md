@@ -54,24 +54,23 @@ The Movie Recommendation System provides intelligent movie suggestions using **c
 
 ---
 
-## 📸 Screenshots
+## 📸 Screenshots & Demo
 
-### Home Page - Search Interface
+### Demo Video
+![Demo Video](./assets/demo-video/Application-Demo.mp4)
 
-<!-- ![Home Page](docs/screenshots/home.png) -->
-_TODO: Add screenshot of the main search page with autocomplete feature_
 
-### Recommendations Page
+### Model Loading
 
-<!-- ![Recommendations](docs/screenshots/recommendations.png) -->
-_TODO: Add screenshot of the recommendations results with movie cards_
+![Model Loading](./assets//images-for-readme/Loading.png)
 
-### Movie Details
+### Home Page
 
-<!-- ![Movie Details](docs/screenshots/movie-details.png) -->
-_TODO: Add screenshot showing detailed movie information with ratings and links_
+![Home Page](./assets/images-for-readme/Homepage.png)
 
-> **Note**: Run the application locally and capture screenshots to add here.
+### Movie Search Recommendations
+
+![Movie Recommendations](./assets/images-for-readme/Results.png)
 
 ---
 

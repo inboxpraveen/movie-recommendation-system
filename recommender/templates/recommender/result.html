@@ -7,7 +7,7 @@
     <meta name="description" content="Movie recommendations for {{ input_movie_name }}">
     <title>Recommendations for {{ input_movie_name }} | Movie Recommendation System</title>
     
-    <link rel="shortcut icon" href="{% static 'logo.png' %}">
+    <link rel="shortcut icon" href="{% static 'logo.ico' %}">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -339,28 +339,28 @@
             }
         }
 
-        /* Loading animation for cards */
+        /* Scroll-based animation for cards */
         .movie-card {
-            animation: cardAppear 0.4s ease-out backwards;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+        }
+
+        .movie-card.animate-in {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         @keyframes cardAppear {
             from {
                 opacity: 0;
-                transform: scale(0.9);
+                transform: scale(0.95) translateY(20px);
             }
             to {
                 opacity: 1;
-                transform: scale(1);
+                transform: scale(1) translateY(0);
             }
         }
-
-        /* Stagger animation */
-        {% for i in "0123456789"|make_list %}
-        .movie-card:nth-child({{ forloop.counter }}) {
-            animation-delay: {{ forloop.counter|add:"-1"|floatformat:"1" }}s;
-        }
-        {% endfor %}
 
         /* Responsive Design */
         @media (max-width: 768px) {
@@ -413,8 +413,7 @@
     <header class="header">
         <div class="header-content">
             <a href="/" class="logo-link">
-                <img src="{% static 'logo.png' %}" alt="Logo" class="logo-small">
-                <span>Movie Recommender</span>
+                <span>Movie Recommendation System</span>
             </a>
             <a href="/" class="back-button">
                 ← New Search
@@ -491,18 +490,49 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <p>Made with ❤️ for movie lovers | © 2024 Movie Recommendation System</p>
+        <p>Made with ❤️ for movie lovers | © <span id="currentYear"></span> Movie Recommendation System</p>
     </footer>
+    <script>
+        // Set dynamic year in footer
+        document.addEventListener("DOMContentLoaded", function() {
+            var currentYear = new Date().getFullYear();
+            document.getElementById("currentYear").textContent = currentYear;
+        });
+    </script>
 
     <script>
         // Smooth scroll to top
         window.scrollTo({ top: 0, behavior: 'smooth' });
 
+        // Scroll-based animation for cards
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe all movie cards
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.movie-card');
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+        });
+
         // Add interactive feedback
         document.querySelectorAll('.movie-card').forEach(card => {
             card.addEventListener('click', function(e) {
                 if (e.target.tagName !== 'A') {
-                    this.style.transform = 'scale(0.98)';
+                    this.style.transform = 'scale(0.98) translateY(0)';
                     setTimeout(() => {
                         this.style.transform = '';
                     }, 100);

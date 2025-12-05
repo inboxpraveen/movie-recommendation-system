@@ -4,6 +4,7 @@ Integrates with advanced TMDB model training system
 """
 import logging
 import os
+import threading
 from pathlib import Path
 from typing import Dict, List, Optional
 from difflib import get_close_matches
@@ -21,40 +22,57 @@ logger = logging.getLogger(__name__)
 
 # Global cache for recommender system
 _RECOMMENDER = None
+_MODEL_LOADING = False
+_MODEL_LOAD_PROGRESS = 0
+_LOADING_THREAD = None
+_LOAD_ERROR = None
 
 
 class MovieRecommender:
     """Integrated recommender system matching training/infer.py logic"""
     
-    def __init__(self, model_dir='models'):
+    def __init__(self, model_dir='models', progress_callback=None):
         """Initialize with trained model directory"""
         self.model_dir = Path(model_dir)
         self.metadata = None
         self.similarity_matrix = None
         self.title_to_idx = None
         self.config = None
-        self._load_models()
+        self._load_models(progress_callback)
     
-    def _load_models(self):
-        """Load all model artifacts"""
+    def _load_models(self, progress_callback=None):
+        """Load all model artifacts with progress tracking"""
+        global _MODEL_LOAD_PROGRESS
         logger.info(f"Loading models from {self.model_dir}...")
         
-        # Load metadata
+        # Load metadata (25%)
+        if progress_callback:
+            progress_callback(10)
         self.metadata = pd.read_parquet(self.model_dir / 'movie_metadata.parquet')
+        if progress_callback:
+            progress_callback(25)
         
-        # Load similarity matrix (sparse or dense)
+        # Load similarity matrix (sparse or dense) (50%)
+        if progress_callback:
+            progress_callback(40)
         if (self.model_dir / 'similarity_matrix.npz').exists():
             self.similarity_matrix = load_npz(self.model_dir / 'similarity_matrix.npz').toarray()
         else:
             self.similarity_matrix = np.load(self.model_dir / 'similarity_matrix.npy')
+        if progress_callback:
+            progress_callback(65)
         
-        # Load title mapping
+        # Load title mapping (75%)
         with open(self.model_dir / 'title_to_idx.json', 'r') as f:
             self.title_to_idx = json.load(f)
+        if progress_callback:
+            progress_callback(80)
         
-        # Load config
+        # Load config (100%)
         with open(self.model_dir / 'config.json', 'r') as f:
             self.config = json.load(f)
+        if progress_callback:
+            progress_callback(100)
         
         logger.info(f"Loaded {self.config['n_movies']:,} movies successfully")
     
@@ -123,24 +141,58 @@ class MovieRecommender:
         }
 
 
+def _load_model_in_background():
+    """Load model in background thread"""
+    global _RECOMMENDER, _MODEL_LOADING, _MODEL_LOAD_PROGRESS, _LOAD_ERROR
+    
+    _MODEL_LOADING = True
+    _MODEL_LOAD_PROGRESS = 0
+    _LOAD_ERROR = None
+    
+    # Check for model directory (configurable via settings or environment)
+    model_dir = getattr(settings, 'MODEL_DIR', os.environ.get('MODEL_DIR', 'models'))
+    
+    # Fallback to static directory if models directory doesn't exist
+    if not Path(model_dir).exists():
+        model_dir = 'static'
+        logger.warning(f"Model directory not found, using static directory")
+    
+    try:
+        def progress_callback(progress):
+            global _MODEL_LOAD_PROGRESS
+            _MODEL_LOAD_PROGRESS = progress
+            logger.info(f"Model loading progress: {progress}%")
+        
+        _RECOMMENDER = MovieRecommender(model_dir, progress_callback)
+        _MODEL_LOADING = False
+        _MODEL_LOAD_PROGRESS = 100
+        logger.info("Model loaded successfully")
+    except Exception as e:
+        _MODEL_LOADING = False
+        _LOAD_ERROR = str(e)
+        logger.error(f"Failed to load recommender: {e}")
+
+
+def _start_model_loading():
+    """Start model loading in background if not already started"""
+    global _LOADING_THREAD, _RECOMMENDER, _MODEL_LOADING
+    
+    if _RECOMMENDER is None and not _MODEL_LOADING:
+        if _LOADING_THREAD is None or not _LOADING_THREAD.is_alive():
+            logger.info("Starting model loading in background...")
+            _LOADING_THREAD = threading.Thread(target=_load_model_in_background, daemon=True)
+            _LOADING_THREAD.start()
+
+
 def _get_recommender():
     """Get or initialize the recommender singleton"""
-    global _RECOMMENDER
+    global _RECOMMENDER, _LOAD_ERROR
     
     if _RECOMMENDER is None:
-        # Check for model directory (configurable via settings or environment)
-        model_dir = getattr(settings, 'MODEL_DIR', os.environ.get('MODEL_DIR', 'models'))
-        
-        # Fallback to static directory if models directory doesn't exist
-        if not Path(model_dir).exists():
-            model_dir = 'static'
-            logger.warning(f"Model directory not found, using static directory")
-        
-        try:
-            _RECOMMENDER = MovieRecommender(model_dir)
-        except Exception as e:
-            logger.error(f"Failed to load recommender: {e}")
-            raise
+        _start_model_loading()
+        if _LOAD_ERROR:
+            raise Exception(_LOAD_ERROR)
+        return None
     
     return _RECOMMENDER
 
@@ -152,14 +204,28 @@ def main(request):
     GET: Display search interface
     POST: Process search and display recommendations
     """
-    try:
-        recommender = _get_recommender()
-        titles_list = list(recommender.title_to_idx.keys())
-    except Exception as e:
-        logger.error(f"Failed to load recommender: {e}")
-        return render(request, 'recommender/error.html', {
-            'error_message': 'Failed to load movie database. Please ensure models are trained and available.'
-        })
+    # Start loading model if not already loading/loaded
+    _start_model_loading()
+    
+    recommender = _get_recommender()
+    
+    # If model is still loading, show the page with loading state
+    if recommender is None:
+        if request.method == 'GET':
+            return render(request, 'recommender/index.html', {
+                'all_movie_names': [],
+                'total_movies': 0,
+            })
+        else:
+            # For POST requests, return error if model not ready
+            return render(request, 'recommender/index.html', {
+                'all_movie_names': [],
+                'total_movies': 0,
+                'error_message': 'Model is still loading. Please wait a moment and try again.',
+            })
+    
+    # Model is loaded, proceed normally
+    titles_list = list(recommender.title_to_idx.keys())
     
     if request.method == 'GET':
         return render(
@@ -224,6 +290,10 @@ def search_movies(request):
     
     try:
         recommender = _get_recommender()
+        
+        if recommender is None:
+            return JsonResponse({'movies': [], 'count': 0, 'loading': True})
+        
         matching_movies = recommender.search_movies(query, n=20)
         
         return JsonResponse({
@@ -234,6 +304,41 @@ def search_movies(request):
     except Exception as e:
         logger.error(f"Error in search: {e}")
         return JsonResponse({'error': 'Search failed'}, status=500)
+
+
+@require_http_methods(["GET"])
+def model_status(request):
+    """API endpoint to check model loading status"""
+    global _RECOMMENDER, _MODEL_LOADING, _MODEL_LOAD_PROGRESS, _LOAD_ERROR
+    
+    # Start loading if not already started
+    _start_model_loading()
+    
+    if _LOAD_ERROR:
+        return JsonResponse({
+            'loaded': False,
+            'progress': 0,
+            'status': 'error',
+            'error': _LOAD_ERROR
+        })
+    elif _RECOMMENDER is not None:
+        return JsonResponse({
+            'loaded': True,
+            'progress': 100,
+            'status': 'ready'
+        })
+    elif _MODEL_LOADING:
+        return JsonResponse({
+            'loaded': False,
+            'progress': _MODEL_LOAD_PROGRESS,
+            'status': 'loading'
+        })
+    else:
+        return JsonResponse({
+            'loaded': False,
+            'progress': 0,
+            'status': 'initializing'
+        })
 
 
 @require_http_methods(["GET"])
