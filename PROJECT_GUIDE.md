@@ -1,119 +1,328 @@
 # 📘 Movie Recommendation System - Complete Project Guide
 
-This guide contains everything you need to set up, develop, deploy, and maintain the Movie Recommendation System.
+> **Comprehensive technical documentation** for developers, covering installation, configuration, development, deployment, and troubleshooting.
 
 ---
 
 ## 📑 Table of Contents
 
-1. [Getting Started](#-getting-started)
-2. [Installation](#-installation)
-3. [Model Training](#-model-training)
-4. [Configuration](#-configuration)
-5. [Development](#-development)
-6. [Deployment](#-deployment)
-7. [API Reference](#-api-reference)
-8. [Troubleshooting](#-troubleshooting)
-9. [Best Practices](#-best-practices)
+### Getting Started
+- [Overview](#-overview)
+- [Prerequisites](#-prerequisites)
+- [Installation](#-installation)
+- [Quick Verification](#-quick-verification)
+
+### Core Functionality
+- [Project Architecture](#-project-architecture)
+- [How It Works](#-how-it-works)
+- [Model Training](#-model-training)
+- [Using Different Models](#-using-different-models)
+
+### Configuration & Development
+- [Configuration](#-configuration)
+- [Development Guide](#-development-guide)
+- [Testing](#-testing)
+
+### Deployment
+- [Deployment](#-deployment)
+  - [Render](#deploy-to-render)
+  - [Heroku](#deploy-to-heroku)
+  - [Docker](#deploy-with-docker)
+  - [AWS](#deploy-to-aws)
+
+### Reference
+- [API Reference](#-api-reference)
+- [Command Reference](#-command-reference)
+- [Troubleshooting](#-troubleshooting)
+- [Best Practices](#-best-practices)
+- [FAQ](#-faq)
 
 ---
 
-## 🚀 Getting Started
+## 🎯 Overview
 
-### Prerequisites
+This guide provides comprehensive documentation for the Movie Recommendation System, a production-ready Django application that delivers intelligent movie recommendations using advanced machine learning algorithms.
 
-Before you begin, ensure you have:
-- **Python 3.10+** installed
-- **pip** (Python package manager)
-- **Git** for version control
-- **8GB RAM** (minimum) for training medium-sized models
-- **Virtual environment** tool (venv, conda, or virtualenv)
+### What This Guide Covers
+
+- ✅ **Installation**: Step-by-step setup instructions
+- ✅ **Configuration**: Environment variables and settings
+- ✅ **Model Training**: Creating custom recommendation models
+- ✅ **Development**: Working with the codebase
+- ✅ **Deployment**: Production deployment guides
+- ✅ **API Reference**: Complete endpoint documentation
+- ✅ **Troubleshooting**: Common issues and solutions
+
+### Related Documentation
+
+- **[README.md](README.md)** - Project overview and quick start
+- **[training/guide.md](training/guide.md)** - Detailed model training documentation
+- **[CHANGELOG.md](CHANGELOG.md)** - Version history
+
+---
+
+## ✅ Prerequisites
 
 ### System Requirements
 
 | Component | Minimum | Recommended |
 |-----------|---------|-------------|
-| Python | 3.10+ | 3.10+ |
-| RAM | 4GB | 8GB+ |
-| Storage | 2GB | 5GB+ |
-| OS | Windows/macOS/Linux | Any |
+| **Python** | 3.10+ | 3.10+ |
+| **RAM** | 4GB | 8GB+ |
+| **Storage** | 2GB | 5GB+ |
+| **OS** | Windows/macOS/Linux | Any |
+
+### Required Software
+
+- **Python 3.10 or higher** - [Download here](https://www.python.org/downloads/)
+- **pip** - Python package manager (included with Python)
+- **Git** - Version control [Download here](https://git-scm.com/)
+- **Virtual environment tool** - venv (included with Python)
+
+### Optional Software
+
+- **PostgreSQL** - For production database
+- **Redis** - For caching (production)
+- **Docker** - For containerized deployment
 
 ---
 
 ## 💻 Installation
 
-### Installation Steps
+### Step 1: Clone the Repository
 
-**Step 1: Clone Repository**
 ```bash
 git clone https://github.com/yourusername/movie-recommendation-system.git
 cd movie-recommendation-system
 ```
 
-**Step 2: Create Virtual Environment**
+### Step 2: Create Virtual Environment
+
 ```bash
-# Create venv
+# Create virtual environment
 python -m venv venv
 
-# Activate
+# Activate virtual environment
 # Windows:
 venv\Scripts\activate
+
 # macOS/Linux:
 source venv/bin/activate
 ```
 
-**Step 3: Install Dependencies**
+**Verification**: Your terminal should show `(venv)` prefix.
+
+### Step 3: Install Dependencies
+
 ```bash
 # Upgrade pip
 pip install --upgrade pip
 
-# Install requirements
+# Install project dependencies
 pip install -r requirements.txt
 ```
 
-**Step 4: Setup Environment (Optional)**
-```bash
-# Create .env file for custom configuration if needed
-# Default settings work fine for local development
-```
+**Expected output**: All packages installed successfully without errors.
 
-**Step 5: Initialize Database**
+### Step 4: Database Setup
+
 ```bash
+# Run database migrations
 python manage.py migrate
 ```
 
-**Step 6: Run Application**
+**Output**: Should show migrations applied successfully.
+
+### Step 5: Start Development Server
+
 ```bash
 python manage.py runserver
 ```
 
-**Step 7: Access Application**
+**Output**: 
+```
+Starting development server at http://127.0.0.1:8000/
+```
 
-Open browser: http://localhost:8000
+### Step 6: Verify Installation
+
+Open your browser and navigate to:
+```
+http://localhost:8000
+```
+
+You should see the Movie Recommendation System home page. ✅
+
+---
+
+## ✓ Quick Verification
+
+Run these commands to verify everything is working:
+
+```bash
+# 1. Check Python version
+python --version
+# Expected: Python 3.10.x or higher
+
+# 2. Check Django installation
+python manage.py --version
+# Expected: Django version number
+
+# 3. Test health endpoint
+curl http://localhost:8000/api/health/
+# Expected: {"status": "healthy", ...}
+
+# 4. Test search API
+curl "http://localhost:8000/api/search/?q=matrix"
+# Expected: {"movies": [...], "count": ...}
+```
+
+---
+
+## 🏗️ Project Architecture
+
+### High-Level Architecture
+
+```
+┌─────────────────┐
+│   Web Browser   │
+└────────┬────────┘
+         │ HTTP
+         ↓
+┌─────────────────────────────────┐
+│     Django Application          │
+│  ┌──────────────────────────┐  │
+│  │  Views (recommender)     │  │
+│  │  - Search               │  │
+│  │  - Recommendations      │  │
+│  │  - API Endpoints        │  │
+│  └──────────┬───────────────┘  │
+│             │                    │
+│             ↓                    │
+│  ┌──────────────────────────┐  │
+│  │  MovieRecommender Class  │  │
+│  │  - Model Loading         │  │
+│  │  - Fuzzy Search         │  │
+│  │  - Similarity Calc      │  │
+│  └──────────┬───────────────┘  │
+│             │                    │
+└─────────────┼────────────────────┘
+              │
+              ↓
+    ┌─────────────────┐
+    │  Model Files    │
+    │  - Metadata     │
+    │  - Similarity   │
+    │  - Mappings     │
+    └─────────────────┘
+```
+
+### Component Breakdown
+
+#### Django Application (`movie_recommendation/`)
+- **settings.py**: Configuration and environment settings
+- **urls.py**: URL routing to apps
+- **wsgi.py**: WSGI application entry point
+
+#### Recommender App (`recommender/`)
+- **views.py**: Core recommendation logic
+  - `MovieRecommender` class (model loading, recommendations)
+  - View functions (main, search_movies, health_check)
+- **urls.py**: URL patterns for the app
+- **templates/**: HTML templates with inline CSS
+
+#### Model Files (`models/` or `static/`)
+- **movie_metadata.parquet**: Movie information (title, rating, genres, etc.)
+- **similarity_matrix.npz**: Precomputed similarity scores (sparse format)
+- **title_to_idx.json**: Mapping from titles to indices
+- **tfidf_vectorizer.pkl**: TF-IDF model (for future retraining)
+- **svd_model.pkl**: SVD dimensionality reduction model
+
+#### Training Scripts (`training/`)
+- **train.py**: Complete training pipeline
+- **infer.py**: Inference examples and usage
+- **guide.md**: Training documentation
+
+---
+
+## 🔍 How It Works
+
+### Recommendation Pipeline
+
+```
+1. User Input
+   └─> "Inception"
+
+2. Fuzzy Matching
+   └─> Find closest title in database
+       └─> "Inception" (exact match) ✓
+
+3. Get Movie Index
+   └─> title_to_idx["Inception"] = 42
+
+4. Fetch Similarity Scores
+   └─> similarity_matrix[42] = [0.95, 0.87, 0.82, ...]
+
+5. Sort & Filter
+   └─> Top 15 similar movies (excluding input)
+   └─> Apply filters (rating, year, genre)
+
+6. Format Response
+   └─> Return movie details with metadata
+
+7. Display Results
+   └─> Render cards with ratings, genres, links
+```
+
+### Content-Based Filtering
+
+The system uses **content-based filtering** with these features:
+
+1. **TF-IDF Vectorization**
+   - Converts movie features (genres, keywords, plot) into numerical vectors
+   - Captures importance of terms relative to corpus
+
+2. **SVD Dimensionality Reduction** (optional)
+   - Reduces feature space from thousands to 300-600 dimensions
+   - Captures latent patterns and reduces noise
+   - Makes computation more efficient
+
+3. **Cosine Similarity**
+   - Measures similarity between movie vectors
+   - Ranges from 0 (completely different) to 1 (identical)
+
+4. **Ranking & Filtering**
+   - Ranks movies by similarity score
+   - Applies user-defined filters (year, rating, genre)
+
+For more details, see [training/guide.md - How It Works](training/guide.md)
 
 ---
 
 ## 🎓 Model Training
 
-### Quick Start Training
+### Overview
 
-The system works with pre-trained models or you can train your own.
+The system supports two model sources:
 
-#### Option 1: Use Demo Model (Included)
+1. **Demo Model** (included) - 2,000 popular movies, ready to use
+2. **Custom Model** (train your own) - 10K to 1M+ movies
 
-The repository includes a demo model with 2,000+ movies in the `static/` directory. It works out of the box - no training needed!
+### Using Demo Model
 
-#### Option 2: Train Your Own Model
+```bash
+# Demo model is in static/ directory
+export MODEL_DIR=./static
+python manage.py runserver
+```
 
-**Prerequisites for Training:**
-- Movie dataset (CSV format)
-- Additional Python packages:
-  ```bash
-  pip install nltk kagglehub
-  python -m nltk.downloader stopwords
-  ```
+No training needed! Works out of the box.
 
-**Basic Training Script:**
+### Training Your Own Model
+
+For complete training documentation, see **[training/guide.md](training/guide.md)**
+
+**Quick Training Example:**
 
 ```python
 from training.train import MovieRecommenderTrainer
@@ -125,116 +334,80 @@ trainer = MovieRecommenderTrainer(
     n_components=500
 )
 
-# Train model
-df, similarity_matrix = trainer.train(
-    data_path='path/to/your/dataset.csv',
-    quality_threshold='medium',  # Options: low, medium, high
-    max_movies=100000            # Limit dataset size (None = all)
-)
-
-print(f"✅ Training complete! Trained on {len(df):,} movies")
-```
-
-### Dataset Requirements
-
-Your CSV dataset should have these columns:
-- `title` - Movie title (required)
-- `genres` - Movie genres (required)
-- `keywords` - Descriptive keywords (required)
-- `production_companies` - Production companies (recommended)
-- `overview` - Plot summary (recommended)
-- `vote_average` - Rating 0-10 (recommended)
-- `vote_count` - Number of votes (recommended)
-- `release_date` - Release date (optional)
-- `imdb_id` - IMDb ID (optional)
-- `poster_path` - Poster image path (optional)
-
-### Training Configurations
-
-**Configuration 1: Quick Test (10K movies)**
-```python
-trainer = MovieRecommenderTrainer(
-    output_dir='./models_test',
-    use_dimensionality_reduction=False
-)
-df, sim = trainer.train(
-    data_path,
-    quality_threshold='high',  # 500+ votes only
-    max_movies=10000
-)
-```
-- **Time**: 2-3 minutes
-- **Memory**: 500MB
-- **Model Size**: 40MB
-- **Use Case**: Testing, development
-
-**Configuration 2: Production (100K movies)** ⭐ Recommended
-```python
-trainer = MovieRecommenderTrainer(
-    output_dir='./models',
-    use_dimensionality_reduction=True,
-    n_components=500
-)
-df, sim = trainer.train(
-    data_path,
-    quality_threshold='medium',  # 50+ votes
+# Train on your dataset
+df, sim_matrix = trainer.train(
+    'path/to/your/dataset.csv',
+    quality_threshold='medium',  # low/medium/high
     max_movies=100000
 )
 ```
-- **Time**: 15-20 minutes
-- **Memory**: 2GB
-- **Model Size**: 180MB
-- **Use Case**: Production deployment
 
-**Configuration 3: Full Dataset (1M+ movies)**
-```python
-trainer = MovieRecommenderTrainer(
-    output_dir='./models_full',
-    use_dimensionality_reduction=True,
-    n_components=400
-)
-df, sim = trainer.train(
-    data_path,
-    quality_threshold='low',  # 5+ votes
-    max_movies=None  # All movies
-)
-```
-- **Time**: 45-60 minutes
-- **Memory**: 6GB
-- **Model Size**: 800MB
-- **Use Case**: Comprehensive movie database
+### Training Configurations
 
-### Using Trained Models
+| Configuration | Movies | Time | Memory | Model Size | Use Case |
+|--------------|--------|------|--------|------------|----------|
+| **Small** | 10K | 2 min | 500MB | 40MB | Testing |
+| **Medium** ⭐ | 100K | 15 min | 2GB | 180MB | Production |
+| **Large** | 1M+ | 60 min | 6GB | 800MB | Full dataset |
 
-After training, your models are saved to the specified `output_dir`:
+### Dataset Requirements
 
-```
-models/
-├── movie_metadata.parquet    # Movie details
-├── similarity_matrix.npy     # Similarity scores
-├── title_to_idx.json         # Title to index mapping
-├── tfidf_vectorizer.pkl      # TF-IDF vectorizer
-├── svd_model.pkl            # SVD model (if used)
-└── config.json              # Model configuration
-```
+Your CSV must have these columns:
+- `title` (required)
+- `genres` (required)
+- `keywords` (required)
+- `vote_average`, `vote_count` (recommended)
+- `release_date`, `imdb_id`, `poster_path` (optional)
 
-**Configure Django to use your models:**
+For detailed requirements and training guide, see **[training/guide.md](training/guide.md)**
 
-Method 1: Environment Variable
+---
+
+## 🔧 Using Different Models
+
+### Switching Models
+
+The system uses the `MODEL_DIR` environment variable to locate models:
+
 ```bash
+# Method 1: Environment variable
 export MODEL_DIR=./models
 python manage.py runserver
+
+# Method 2: .env file
+echo "MODEL_DIR=./models" >> .env
+python manage.py runserver
+
+# Method 3: Modify settings.py
+# MODEL_DIR = os.path.join(BASE_DIR, 'models')
 ```
 
-Method 2: .env File
-```env
-MODEL_DIR=./models
+### Model Directory Structure
+
+Your model directory must contain:
+```
+models/
+├── movie_metadata.parquet    # Required
+├── similarity_matrix.npy     # Required (or .npz)
+├── title_to_idx.json         # Required
+├── config.json               # Optional (for metadata)
+├── tfidf_vectorizer.pkl      # Optional (for retraining)
+└── svd_model.pkl            # Optional (for retraining)
 ```
 
-Method 3: Settings.py
-```python
-# In movie_recommendation/settings.py
-MODEL_DIR = os.path.join(BASE_DIR, 'models')
+### Verifying Model
+
+```bash
+# Check health endpoint
+curl http://localhost:8000/api/health/
+
+# Response shows model information
+{
+  "status": "healthy",
+  "movies_loaded": 100000,
+  "model_dir": "./models",
+  "model_loaded": true
+}
 ```
 
 ---
@@ -246,16 +419,16 @@ MODEL_DIR = os.path.join(BASE_DIR, 'models')
 Create a `.env` file in the project root:
 
 ```env
-# Django Core Settings
-SECRET_KEY=your-very-secure-secret-key-here-minimum-50-characters
+# Django Core
+SECRET_KEY=your-secret-key-here-minimum-50-characters
 DEBUG=True
 ALLOWED_HOSTS=localhost,127.0.0.1
 
 # Model Configuration
 MODEL_DIR=./models
 
-# Database (SQLite by default, PostgreSQL for production)
-# DATABASE_URL=postgresql://user:password@localhost:5432/dbname
+# Database (optional - defaults to SQLite)
+DATABASE_URL=postgresql://user:password@localhost:5432/dbname
 
 # CORS (if using separate frontend)
 CORS_ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
@@ -263,18 +436,12 @@ CORS_ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
 # Admin Panel
 ADMIN_ENABLED=False
 
-# Deployment (for Render/Heroku)
+# Deployment
 RENDER_EXTERNAL_HOSTNAME=your-app.onrender.com
 ```
 
 ### Generating SECRET_KEY
 
-```python
-from django.core.management.utils import get_random_secret_key
-print(get_random_secret_key())
-```
-
-Or use:
 ```bash
 python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
 ```
@@ -294,6 +461,7 @@ DATABASES = {
 
 **Production (PostgreSQL - recommended):**
 ```python
+# Install: pip install dj-database-url psycopg2-binary
 import dj_database_url
 
 DATABASES = {
@@ -306,65 +474,79 @@ DATABASES = {
 
 ---
 
-## 🔧 Development
+## 🔨 Development Guide
 
 ### Project Structure
 
 ```
-movie-recommendation-system/
-├── movie_recommendation/       # Django project settings
-│   ├── settings.py            # Main configuration
-│   ├── urls.py                # Root URL routing
-│   └── wsgi.py               # WSGI application
-│
-├── recommender/               # Main application
-│   ├── views.py              # Recommender logic
-│   ├── urls.py               # App URL routing
-│   └── templates/            # HTML templates
-│       └── recommender/
-│           ├── index.html    # Home/search page
-│           ├── result.html   # Results page
-│           └── error.html    # Error page
-│
-├── training/                  # Model training scripts
-│   ├── train.py              # Training pipeline
-│   ├── infer.py              # Inference examples
-│   └── guide.md              # Training documentation
-│
-├── models/                    # Trained models (created after training)
-│   ├── movie_metadata.parquet
-│   ├── similarity_matrix.npy
-│   └── title_to_idx.json
-│
-├── static/                    # Static files & demo model
-│   ├── logo.png
-│   ├── demo_model.parquet
-│   └── top_2k_movie_data.parquet
-│
-├── logs/                      # Application logs (auto-created)
-│
-├── requirements.txt           # Python dependencies
-├── README.md                 # Project overview
-├── PROJECT_GUIDE.md          # Complete guide
-├── CHANGELOG.md              # Version history
-└── manage.py                 # Django management
+recommender/
+├── views.py          # Core logic
+├── urls.py           # URL patterns
+├── models.py         # Database models (currently empty)
+├── admin.py          # Admin configuration
+├── apps.py           # App configuration
+└── templates/        # HTML templates
+    └── recommender/
+        ├── index.html    # Home/search page
+        ├── result.html   # Recommendations page
+        └── error.html    # Error page
 ```
 
-### Running Development Server
+### Development Workflow
 
 ```bash
-# Standard server
+# 1. Activate virtual environment
+source venv/bin/activate  # or venv\Scripts\activate on Windows
+
+# 2. Run development server
 python manage.py runserver
 
-# Custom port
-python manage.py runserver 8080
+# 3. Access application
+# http://localhost:8000
 
-# Listen on all interfaces
-python manage.py runserver 0.0.0.0:8000
+# 4. Make changes to code
+# Files auto-reload on save
 
-# With specific settings
-python manage.py runserver --settings=movie_recommendation.settings
+# 5. Run tests (when available)
+python manage.py test
 ```
+
+### Django Management Commands
+
+```bash
+# Database
+python manage.py migrate                    # Apply migrations
+python manage.py makemigrations            # Create migrations
+python manage.py showmigrations            # Show migration status
+
+# Static files
+python manage.py collectstatic --noinput   # Collect static files
+
+# Development
+python manage.py runserver                 # Run dev server
+python manage.py runserver 8080           # Run on different port
+python manage.py shell                     # Django shell
+
+# Admin (if enabled)
+python manage.py createsuperuser           # Create admin user
+```
+
+### Viewing Logs
+
+```bash
+# Real-time logs (Unix/macOS)
+tail -f logs/django.log
+
+# Real-time logs (Windows PowerShell)
+Get-Content logs\django.log -Wait
+
+# Last 100 lines
+tail -n 100 logs/django.log
+```
+
+---
+
+## 🧪 Testing
 
 ### Running Tests
 
@@ -382,39 +564,27 @@ python manage.py test --verbosity=2
 python manage.py test --keepdb
 ```
 
-### Django Management Commands
+### Writing Tests
 
-```bash
-# Create superuser (if admin enabled)
-python manage.py createsuperuser
+```python
+from django.test import TestCase, Client
+from django.urls import reverse
 
-# Collect static files
-python manage.py collectstatic --noinput
-
-# Show migrations
-python manage.py showmigrations
-
-# Apply migrations
-python manage.py migrate
-
-# Create migrations
-python manage.py makemigrations
-
-# Django shell
-python manage.py shell
-```
-
-### Viewing Logs
-
-```bash
-# Real-time logs (Linux/macOS)
-tail -f logs/django.log
-
-# Windows
-Get-Content logs\django.log -Wait
-
-# Last 100 lines
-tail -n 100 logs/django.log
+class RecommenderTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+    
+    def test_home_page(self):
+        """Test home page loads"""
+        response = self.client.get(reverse('recommender:main'))
+        self.assertEqual(response.status_code, 200)
+    
+    def test_search_api(self):
+        """Test search API"""
+        response = self.client.get('/api/search/?q=matrix')
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertIn('movies', data)
 ```
 
 ---
@@ -425,38 +595,35 @@ tail -n 100 logs/django.log
 
 Before deploying to production:
 
-- [ ] Set `DEBUG=False` in `.env`
+- [ ] Set `DEBUG=False`
 - [ ] Generate secure `SECRET_KEY`
 - [ ] Configure `ALLOWED_HOSTS`
 - [ ] Set up PostgreSQL database
 - [ ] Configure static files
 - [ ] Set up logging
 - [ ] Enable HTTPS
-- [ ] Test application thoroughly
-- [ ] Set up monitoring
 - [ ] Configure backup strategy
+- [ ] Set up monitoring
 
-### Deploy to Render (Recommended)
+### Deploy to Render
 
 **Step 1: Prepare Repository**
 ```bash
-# Ensure all files are committed
 git add .
 git commit -m "Prepare for deployment"
 git push origin main
 ```
 
 **Step 2: Create Render Account**
-- Go to https://render.com
+- Go to [render.com](https://render.com)
 - Sign up (free tier available)
 
 **Step 3: Create New Web Service**
 - Click "New +" → "Web Service"
 - Connect your GitHub repository
-- Render will auto-detect `render.yaml`
+- Render auto-detects `render.yaml`
 
 **Step 4: Configure Environment Variables**
-In Render dashboard, add:
 ```
 SECRET_KEY=<auto-generated>
 DEBUG=False
@@ -467,22 +634,22 @@ MODEL_DIR=./models
 **Step 5: Deploy**
 - Click "Create Web Service"
 - Wait for build to complete
-- Access your app at `https://your-app.onrender.com`
+- Access at `https://your-app.onrender.com`
 
 ### Deploy to Heroku
 
 **Prerequisites:**
 ```bash
 # Install Heroku CLI
-# Visit: https://devcenter.heroku.com/articles/heroku-cli
+# https://devcenter.heroku.com/articles/heroku-cli
 
 # Login
 heroku login
 ```
 
-**Deployment Steps:**
+**Deployment:**
 ```bash
-# Create Heroku app
+# Create app
 heroku create your-app-name
 
 # Add PostgreSQL
@@ -505,7 +672,7 @@ heroku open
 
 ### Deploy with Docker
 
-**Dockerfile (create if needed):**
+**Dockerfile:**
 ```dockerfile
 FROM python:3.10-slim
 
@@ -526,17 +693,17 @@ CMD ["gunicorn", "movie_recommendation.wsgi:application", "--bind", "0.0.0.0:800
 
 **Build and Run:**
 ```bash
-# Build image
+# Build
 docker build -t movie-recommender .
 
-# Run container
+# Run
 docker run -p 8000:8000 -e DEBUG=False movie-recommender
 
-# Access app
-# http://localhost:8000
+# Access
+http://localhost:8000
 ```
 
-### Deploy to AWS Elastic Beanstalk
+### Deploy to AWS
 
 ```bash
 # Install EB CLI
@@ -551,7 +718,7 @@ eb create movie-recommender-env
 # Deploy
 eb deploy
 
-# Open app
+# Open
 eb open
 ```
 
@@ -561,7 +728,17 @@ eb open
 
 ### Endpoints
 
-#### 1. Main Page / Get Recommendations
+#### 1. Home Page / Search
+
+**Endpoint:** `GET /`
+
+**Description:** Display search interface
+
+**Response:** HTML page
+
+---
+
+#### 2. Submit Search
 
 **Endpoint:** `POST /`
 
@@ -570,14 +747,14 @@ eb open
 **Parameters:**
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| movie_name | string | Yes | Movie title to get recommendations for |
+| movie_name | string | Yes | Movie title to search |
 | csrfmiddlewaretoken | string | Yes | CSRF token |
 
-**Response:** HTML page with recommendations
+**Response:** HTML page with recommendations or error
 
 ---
 
-#### 2. Search Movies (Autocomplete)
+#### 3. Search Movies (Autocomplete)
 
 **Endpoint:** `GET /api/search/`
 
@@ -605,9 +782,11 @@ curl "http://localhost:8000/api/search/?q=matrix"
 
 ---
 
-#### 3. Health Check
+#### 4. Health Check
 
 **Endpoint:** `GET /api/health/`
+
+**Description:** Check service health and model status
 
 **Example Request:**
 ```bash
@@ -624,20 +803,88 @@ curl "http://localhost:8000/api/health/"
 }
 ```
 
+**Status Codes:**
+- `200 OK` - Service healthy
+- `503 Service Unavailable` - Service unhealthy
+
+---
+
+## 💻 Command Reference
+
+### Virtual Environment
+
+```bash
+# Create
+python -m venv venv
+
+# Activate (Windows)
+venv\Scripts\activate
+
+# Activate (Unix/macOS)
+source venv/bin/activate
+
+# Deactivate
+deactivate
+```
+
+### Django Commands
+
+```bash
+# Server
+python manage.py runserver              # Start dev server
+python manage.py runserver 8080        # Custom port
+
+# Database
+python manage.py migrate                # Apply migrations
+python manage.py makemigrations        # Create migrations
+python manage.py showmigrations        # Show status
+
+# Static files
+python manage.py collectstatic         # Collect static files
+
+# Shell
+python manage.py shell                 # Django shell
+
+# Testing
+python manage.py test                  # Run tests
+```
+
+### Git Commands
+
+```bash
+# Clone
+git clone <url>
+
+# Status
+git status
+
+# Stage changes
+git add .
+
+# Commit
+git commit -m "message"
+
+# Push
+git push origin main
+
+# Pull
+git pull origin main
+```
+
 ---
 
 ## 🐛 Troubleshooting
 
 ### Common Issues
 
-#### Issue 1: Module Not Found Error
+#### Issue 1: Module Not Found
 
-**Problem:** `ModuleNotFoundError: No module named 'package_name'`
+**Problem:** `ModuleNotFoundError: No module named 'package'`
 
 **Solution:**
 ```bash
 # Ensure virtual environment is activated
-source venv/bin/activate  # or venv\Scripts\activate on Windows
+source venv/bin/activate  # or venv\Scripts\activate
 
 # Reinstall dependencies
 pip install -r requirements.txt --upgrade
@@ -651,15 +898,17 @@ pip install -r requirements.txt --upgrade
 
 **Solution:**
 ```bash
-# Check MODEL_DIR setting
+# Check MODEL_DIR
 echo $MODEL_DIR
 
-# Verify model files exist
-ls -la models/
+# Verify files exist
+ls -la models/  # or dir models\ on Windows
 
-# If missing, train a model or use demo model
-# Demo model is in static/ directory
+# Use demo model
 export MODEL_DIR=./static
+
+# Or train new model
+python training/train.py
 ```
 
 ---
@@ -673,7 +922,7 @@ export MODEL_DIR=./static
 # Use different port
 python manage.py runserver 8080
 
-# Or kill process using port (Linux/macOS)
+# Or kill process (Unix/macOS)
 lsof -ti:8000 | xargs kill -9
 
 # Windows
@@ -685,15 +934,16 @@ taskkill /PID <PID> /F
 
 #### Issue 4: Static Files Not Loading
 
-**Problem:** CSS/JS files not loading in production
+**Problem:** CSS/images not displaying in production
 
 **Solution:**
 ```bash
 # Collect static files
 python manage.py collectstatic --noinput
 
-# Verify STATIC_ROOT in settings
-# Check WhiteNoise is in MIDDLEWARE
+# Verify settings
+# STATIC_ROOT should be set
+# WhiteNoise should be in MIDDLEWARE
 ```
 
 ---
@@ -707,7 +957,7 @@ python manage.py collectstatic --noinput
 # Run migrations
 python manage.py migrate
 
-# If still issues, reset database
+# If still failing, reset database
 rm db.sqlite3
 python manage.py migrate
 ```
@@ -716,7 +966,7 @@ python manage.py migrate
 
 #### Issue 6: Memory Error During Training
 
-**Problem:** `MemoryError` or system crashes during training
+**Problem:** System crashes or `MemoryError` during training
 
 **Solution:**
 ```python
@@ -726,15 +976,17 @@ trainer.train(data_path, max_movies=50000)
 # Or reduce SVD components
 trainer = MovieRecommenderTrainer(n_components=300)
 
-# Or increase quality threshold
+# Or use higher quality threshold
 trainer.train(data_path, quality_threshold='high')
 ```
+
+See [training/guide.md - Troubleshooting](training/guide.md) for training-specific issues.
 
 ---
 
 ## ⚡ Best Practices
 
-### Performance Optimization
+### Performance
 
 1. **Use Production Server**
    ```bash
@@ -744,7 +996,7 @@ trainer.train(data_path, quality_threshold='high')
 
 2. **Enable Caching**
    ```python
-   # Use Redis for caching
+   # Use Redis for production
    CACHES = {
        'default': {
            'BACKEND': 'django_redis.cache.RedisCache',
@@ -753,96 +1005,149 @@ trainer.train(data_path, quality_threshold='high')
    }
    ```
 
-3. **Optimize Database Queries**
-   - Use select_related and prefetch_related
+3. **Optimize Database**
+   - Use PostgreSQL in production
    - Add database indexes
    - Use connection pooling
 
 4. **Enable Compression**
    - Enable gzip compression
    - Use CDN for static files
-   - Optimize images
+   - Optimize model files
 
-### Security Best Practices
+### Security
 
-1. **Never commit secrets**
+1. **Environment Variables**
+   - Never commit secrets
    - Use `.env` files
-   - Add `.env` to `.gitignore`
-   - Use environment variables
+   - Rotate keys regularly
 
-2. **Keep dependencies updated**
+2. **Dependencies**
    ```bash
+   # Check for outdated packages
    pip list --outdated
+   
+   # Update dependencies
    pip install --upgrade package_name
    ```
 
-3. **Enable security headers**
+3. **Security Headers**
    ```python
-   # Already configured in settings.py
+   # Already in settings.py for production
    SECURE_SSL_REDIRECT = True
    SESSION_COOKIE_SECURE = True
    CSRF_COOKIE_SECURE = True
    ```
 
-4. **Regular backups**
-   - Backup database regularly
-   - Backup model files
-   - Version control everything
+### Development
 
-### Code Quality
-
-1. **Follow PEP 8**
+1. **Code Quality**
    ```bash
-   pip install flake8
+   # Use linting
+   pip install flake8 black
+   
+   # Check code
    flake8 recommender/
+   
+   # Format code
+   black recommender/
    ```
 
-2. **Use type hints**
-   ```python
-   def get_recommendations(movie_id: int, n: int = 10) -> List[Dict]:
-       pass
-   ```
+2. **Version Control**
+   - Commit frequently
+   - Write descriptive messages
+   - Use feature branches
+   - Review before merging
 
-3. **Write tests**
-   ```python
-   from django.test import TestCase
-
-   class RecommenderTests(TestCase):
-       def test_recommendations(self):
-           # Test logic
-           pass
-   ```
-
-4. **Document code**
+3. **Documentation**
    - Add docstrings to functions
    - Comment complex logic
    - Update README when needed
+   - Keep documentation current
 
 ---
 
-## 📞 Support
+## ❓ FAQ
 
-### Resources
+### General
 
-- **GitHub Issues**: Report bugs or request features
-- **README.md**: Quick overview and setup
-- **training/guide.md**: Model training details
-- **CHANGELOG.md**: Version history
+**Q: Do I need to train a model to use the system?**  
+A: No! The project includes a pre-trained demo model with 2,000 movies. Just run and use.
+
+**Q: What's the difference between `models/` and `static/`?**  
+A: `static/` contains the demo model (2K movies). `models/` is for your custom trained models (created after training).
+
+**Q: How do I switch between models?**  
+A: Set the `MODEL_DIR` environment variable:
+```bash
+export MODEL_DIR=./static     # Demo model
+export MODEL_DIR=./models     # Your trained model
+```
+
+### Training
+
+**Q: How long does training take?**  
+A: Depends on dataset size:
+- 10K movies: ~2 minutes
+- 100K movies: ~15 minutes
+- 1M+ movies: ~60 minutes
+
+**Q: How much memory do I need for training?**  
+A: 
+- 10K movies: 500MB RAM
+- 100K movies: 2GB RAM
+- 1M+ movies: 6-8GB RAM
+
+For detailed training FAQ, see [training/guide.md - FAQ](training/guide.md)
+
+### Deployment
+
+**Q: Can I deploy for free?**  
+A: Yes! Render and Heroku offer free tiers suitable for this project.
+
+**Q: Do I need a database for deployment?**  
+A: SQLite works for development. Use PostgreSQL for production (most platforms provide it).
+
+**Q: How do I configure HTTPS?**  
+A: Most cloud platforms (Render, Heroku) provide HTTPS automatically.
+
+### Development
+
+**Q: Can I modify the UI?**  
+A: Yes! Edit the templates in `recommender/templates/recommender/`. All CSS is inline for easy modification.
+
+**Q: How do I add new features?**  
+A: 
+1. Create a feature branch
+2. Make changes in `recommender/views.py` or templates
+3. Test locally
+4. Update documentation
+5. Submit pull request
+
+---
+
+## 📚 Additional Resources
+
+### Documentation
+- [README.md](README.md) - Quick start and overview
+- [training/guide.md](training/guide.md) - Model training guide
+- [CHANGELOG.md](CHANGELOG.md) - Version history
+
+### External Resources
+- [Django Documentation](https://docs.djangoproject.com/)
+- [scikit-learn Documentation](https://scikit-learn.org/)
+- [pandas Documentation](https://pandas.pydata.org/)
 
 ### Community
-
-- Star the repository to show support
-- Share with other developers
-- Contribute improvements
-- Report issues
+- GitHub Issues - Bug reports and feature requests
+- GitHub Discussions - Questions and community support
 
 ---
 
 <div align="center">
 
-**Made with ❤️ for developers and movie lovers**
+**Need more help?** Check [training/guide.md](training/guide.md) for training help or open an issue on GitHub.
 
-[⭐ Star on GitHub](https://github.com/yourusername/movie-recommendation-system)
+[⬆ Back to Top](#-table-of-contents)
 
 </div>
-

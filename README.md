@@ -1,32 +1,107 @@
 # 🎬 Movie Recommendation System
 
-A professional, production-ready movie recommendation system powered by advanced machine learning. Built with Django and optimized for datasets ranging from thousands to millions of movies.
+> A production-ready, AI-powered movie recommendation system built with Django and advanced machine learning. Scalable from thousands to millions of movies.
 
 [![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/)
-[![Django](https://img.shields.io/badge/Django-5.0-green.svg)](https://djangoproject.com/)
+[![Django](https://img.shields.io/badge/Django-6.0-green.svg)](https://djangoproject.com/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ---
 
-## ✨ Key Features
+## 📑 Table of Contents
 
-- **🤖 Advanced AI Recommendations** - Content-based filtering with TF-IDF and SVD
-- **⚡ Lightning Fast** - Sub-100ms recommendation generation
-- **📊 Scalable** - Handles 2K to 1M+ movies efficiently
-- **🎨 Beautiful UI** - Modern, fully responsive design
-- **🔍 Smart Search** - Real-time autocomplete with fuzzy matching
-- **🎯 Flexible Filtering** - Filter by year, rating, genre, and more
-- **📡 REST API** - Clean JSON API for integration
-- **🔒 Production Ready** - Security hardened, optimized, and well-documented
+- [Overview](#-overview)
+- [Screenshots](#-screenshots)
+- [Features](#-features)
+- [Quick Start](#-quick-start)
+- [Project Structure](#-project-structure)
+- [Usage](#-usage)
+- [Model Training](#-model-training)
+- [API Reference](#-api-reference)
+- [Configuration](#-configuration)
+- [Documentation](#-documentation)
+- [Contributing](#-contributing)
+- [License](#-license)
+
+---
+
+## 🎯 Overview
+
+The Movie Recommendation System provides intelligent movie suggestions using **content-based filtering** with TF-IDF and SVD dimensionality reduction. It features a modern web interface, RESTful API, and supports datasets from 2K to 1M+ movies.
+
+### Why This Project?
+
+- ✅ **Production Ready** - Security hardened, optimized, well-documented
+- ✅ **Scalable Architecture** - Handles millions of movies efficiently
+- ✅ **Modern Tech Stack** - Django 5.0, Python 3.10+, advanced ML
+- ✅ **Easy to Use** - Simple installation, clear documentation
+- ✅ **Flexible** - Train your own models or use demo models
+
+### Key Technologies
+
+- **Backend**: Django 6.0, Python 3.10+
+- **ML/Data**: scikit-learn, pandas, numpy, scipy
+- **Storage**: Parquet (efficient data format)
+- **Deployment**: Render, Heroku, Docker compatible
+
+---
+
+## 📸 Screenshots
+
+### Home Page - Search Interface
+
+<!-- ![Home Page](docs/screenshots/home.png) -->
+_TODO: Add screenshot of the main search page with autocomplete feature_
+
+### Recommendations Page
+
+<!-- ![Recommendations](docs/screenshots/recommendations.png) -->
+_TODO: Add screenshot of the recommendations results with movie cards_
+
+### Movie Details
+
+<!-- ![Movie Details](docs/screenshots/movie-details.png) -->
+_TODO: Add screenshot showing detailed movie information with ratings and links_
+
+> **Note**: Run the application locally and capture screenshots to add here.
+
+---
+
+## ✨ Features
+
+### User Features
+- 🔍 **Smart Search** - Real-time autocomplete with fuzzy matching
+- 🎬 **AI Recommendations** - Content-based filtering with 15+ suggestions
+- ⭐ **Rich Metadata** - Ratings, votes, genres, production companies
+- 🔗 **External Links** - Google Search and IMDb integration
+- 📱 **Responsive Design** - Works seamlessly on all devices
+- ⚡ **Fast Performance** - Sub-50ms recommendation generation
+
+### Technical Features
+- 🤖 **Advanced ML** - TF-IDF + SVD dimensionality reduction
+- 📊 **Scalable** - Handles 2K to 1M+ movies
+- 💾 **Efficient Storage** - Parquet format with compression
+- 🔧 **Configurable** - Easy model switching via `MODEL_DIR`
+- 📡 **REST API** - JSON endpoints for integration
+- 🔒 **Secure** - Production-ready security settings
+- 📝 **Logging** - Comprehensive error tracking
+- 🚀 **Deployment Ready** - Render, Heroku, Docker configs included
 
 ---
 
 ## 🚀 Quick Start
 
+### Prerequisites
+
+- Python 3.10 or higher
+- pip package manager
+- 8GB RAM (recommended for training)
+- Git
+
 ### Installation
 
 ```bash
-# 1. Clone repository
+# 1. Clone the repository
 git clone https://github.com/yourusername/movie-recommendation-system.git
 cd movie-recommendation-system
 
@@ -41,95 +116,117 @@ source venv/bin/activate
 
 # 4. Install dependencies
 pip install -r requirements.txt
-```
 
-**2. Set Up Environment (Optional)**
-```bash
-# Edit .env if needed for custom configuration
-# Default settings work fine for local development
-```
-
-**3. Use Pre-trained Model or Train Your Own**
-
-**Option A: Use Demo Model** (2K movies - included)
-```bash
-# Demo model is in static/ directory - works out of the box
-python manage.py runserver
-```
-
-**Option B: Train New Model** (10K-1M movies)
-```python
-# See training/train.py for full training script
-from training.train import MovieRecommenderTrainer
-
-trainer = MovieRecommenderTrainer(
-    output_dir='./models',
-    use_dimensionality_reduction=True,
-    n_components=500
-)
-
-# Train on your dataset
-df, sim_matrix = trainer.train(
-    'path/to/your/dataset.csv',
-    quality_threshold='medium',  # low/medium/high
-    max_movies=100000
-)
-```
-
-**4. Run the Application**
-```bash
-# Run migrations
+# 5. Run database migrations
 python manage.py migrate
 
-# Start server
+# 6. Start the development server
 python manage.py runserver
-
-# Open browser
-# http://localhost:8000
 ```
 
-Done! 🎉
+### Access the Application
+
+Open your browser and navigate to:
+```
+http://localhost:8000
+```
+
+That's it! The demo model (2K movies) is included and works out of the box. 🎉
 
 ---
 
-## 📖 Usage
+## 📁 Project Structure
+
+```
+movie-recommendation-system/
+│
+├── 📚 Documentation
+│   ├── README.md                  # This file - overview and quick start
+│   ├── PROJECT_GUIDE.md           # Complete technical guide
+│   └── CHANGELOG.md               # Version history and changes
+│
+├── ⚙️ Django Application
+│   ├── movie_recommendation/      # Django project settings
+│   │   ├── settings.py           # Configuration
+│   │   ├── urls.py               # URL routing
+│   │   └── wsgi.py               # WSGI entry point
+│   │
+│   ├── recommender/              # Main application
+│   │   ├── views.py              # Recommendation logic
+│   │   ├── urls.py               # App URLs
+│   │   └── templates/            # HTML templates
+│   │       └── recommender/
+│   │           ├── index.html    # Search page
+│   │           ├── result.html   # Results page
+│   │           └── error.html    # Error page
+│   │
+│   ├── manage.py                 # Django management script
+│   └── requirements.txt          # Python dependencies
+│
+├── 🎓 Model Training
+│   └── training/
+│       ├── train.py              # Training pipeline
+│       ├── infer.py              # Inference examples
+│       └── guide.md              # Training documentation
+│
+├── 🎯 Models (Created after training)
+│   └── models/
+│       ├── movie_metadata.parquet    # Movie information
+│       ├── similarity_matrix.npz     # Similarity scores
+│       ├── title_to_idx.json         # Title mappings
+│       ├── tfidf_vectorizer.pkl      # TF-IDF model
+│       └── svd_model.pkl             # SVD reduction model
+│
+├── 📦 Static Files
+│   └── static/
+│       ├── logo.png                  # Application logo
+│       ├── demo_model.parquet        # Demo similarity model (2K)
+│       └── top_2k_movie_data.parquet # Demo movie data (2K)
+│
+└── 🚀 Deployment
+    ├── Procfile                  # Heroku configuration
+    ├── render.yaml               # Render configuration
+    └── .gitignore                # Git ignore rules
+```
+
+---
+
+## 💡 Usage
 
 ### Web Interface
 
-1. Open http://localhost:8000
-2. Type a movie name (e.g., "Inception")
-3. Select from autocomplete suggestions
-4. Click "Get Recommendations"
-5. Browse personalized movie suggestions with ratings, genres, and links
+1. **Search for a Movie**
+   - Go to `http://localhost:8000`
+   - Start typing a movie name in the search box
+   - Select from autocomplete suggestions or type the full name
 
-### API Endpoints
+2. **View Recommendations**
+   - Click "Get Recommendations"
+   - Browse 15 similar movie suggestions
+   - Each card shows: rating, release date, genres, production company
 
-**Get Recommendations (Web)**
-```http
-POST /
-Content-Type: application/x-www-form-urlencoded
+3. **Explore Movies**
+   - Click "Google" to search for the movie
+   - Click "IMDb" to view on IMDb (if available)
 
-movie_name=Inception
-```
+### API Usage
 
-**Search Movies (Autocomplete)**
-```http
+#### Search Movies (Autocomplete)
+```bash
 GET /api/search/?q=matrix
-```
+
 Response:
-```json
 {
   "movies": ["The Matrix", "The Matrix Reloaded", "The Matrix Revolutions"],
   "count": 3
 }
 ```
 
-**Health Check**
-```http
+#### Health Check
+```bash
 GET /api/health/
-```
+
 Response:
-```json
 {
   "status": "healthy",
   "movies_loaded": 100000,
@@ -140,57 +237,29 @@ Response:
 
 ---
 
-## 🏗️ Architecture
+## 🎓 Model Training
 
-### Project Structure
-```
-movie-recommendation-system/
-├── recommender/              # Main Django app
-│   ├── views.py             # Integrated recommender system
-│   ├── urls.py              # URL routing
-│   └── templates/           # HTML templates
-│
-├── training/                # Model training scripts
-│   ├── train.py            # Training pipeline
-│   ├── infer.py            # Inference examples
-│   └── guide.md            # Training documentation
-│
-├── models/                  # Trained models (created after training)
-│   ├── movie_metadata.parquet
-│   ├── similarity_matrix.npy
-│   └── title_to_idx.json
-│
-├── static/                  # Static files & demo model
-│   ├── logo.png
-│   ├── demo_model.parquet
-│   └── top_2k_movie_data.parquet
-│
-├── requirements.txt         # Python dependencies
-└── manage.py               # Django management
+### Using Demo Model
+
+The project includes a pre-trained demo model with 2,000 popular movies. No training needed!
+
+```bash
+# Demo model is in static/ directory
+export MODEL_DIR=./static
+python manage.py runserver
 ```
 
-### How It Works
+### Training Your Own Model
 
-1. **Training Phase** (one-time)
-   - Load movie dataset (CSV)
-   - Extract features (genres, keywords, production, plot, etc.)
-   - Build TF-IDF matrix
-   - Apply SVD dimensionality reduction (optional)
-   - Compute cosine similarity
-   - Save models
+Want to train on more movies or your own dataset? See the [**Training Guide**](training/guide.md) for:
 
-2. **Inference Phase** (runtime)
-   - Load pre-trained models
-   - Fuzzy match user input
-   - Fetch similarity scores
-   - Apply filters (rating, year, genre)
-   - Return top-N recommendations
+- 📖 Complete training documentation
+- 🎯 Configuration options (10K to 1M+ movies)
+- ⚙️ Performance tuning guidelines
+- 📊 Dataset requirements
+- 🔧 Advanced features
 
----
-
-## 🎓 Training Your Own Model
-
-### Quick Training
+**Quick Training Example:**
 
 ```python
 from training.train import MovieRecommenderTrainer
@@ -204,112 +273,62 @@ trainer = MovieRecommenderTrainer(
 
 # Train on your dataset
 df, sim_matrix = trainer.train(
-    'path/to/dataset.csv',
-    quality_threshold='medium',  # Filters movies with 50+ votes
-    max_movies=100000            # Limit to top 100K movies
+    'path/to/your/dataset.csv',
+    quality_threshold='medium',  # low/medium/high
+    max_movies=100000            # Limit dataset size
 )
 ```
 
-### Configuration Options
-
-| Parameter | Options | Description |
-|-----------|---------|-------------|
-| `output_dir` | Any path | Where to save models |
-| `use_dimensionality_reduction` | True/False | Use SVD (recommended for large datasets) |
-| `n_components` | 100-600 | SVD components (higher = more accurate) |
-| `quality_threshold` | low/medium/high | Filter by vote count (5/50/500+) |
-| `max_movies` | Integer/None | Limit dataset size |
-
-### Recommended Configurations
-
-**Small (10K movies) - Fast Training**
-```python
-trainer = MovieRecommenderTrainer(
-    output_dir='./models',
-    use_dimensionality_reduction=False
-)
-df, sim = trainer.train(data_path, quality_threshold='high', max_movies=10000)
-```
-- Training time: ~2 minutes
-- Memory: 500MB
-- Model size: 40MB
-
-**Medium (100K movies) - Production Ready** ⭐
-```python
-trainer = MovieRecommenderTrainer(
-    output_dir='./models',
-    use_dimensionality_reduction=True,
-    n_components=500
-)
-df, sim = trainer.train(data_path, quality_threshold='medium', max_movies=100000)
-```
-- Training time: ~15 minutes
-- Memory: 2GB
-- Model size: 180MB
-
-**Large (1M+ movies) - Full Dataset**
-```python
-trainer = MovieRecommenderTrainer(
-    output_dir='./models',
-    use_dimensionality_reduction=True,
-    n_components=400
-)
-df, sim = trainer.train(data_path, quality_threshold='low')
-```
-- Training time: ~60 minutes
-- Memory: 6GB
-- Model size: 800MB
-
-### Using Different Model
-
-To use a different trained model:
-
-**Method 1: Environment Variable**
-```bash
-export MODEL_DIR=/path/to/your/models
-python manage.py runserver
-```
-
-**Method 2: Settings**
-```python
-# In movie_recommendation/settings.py
-MODEL_DIR = '/path/to/your/models'
-```
-
-**Method 3: .env File**
-```env
-MODEL_DIR=./models
-```
+**For detailed training instructions**, see:
+- 📘 [Training Guide](training/guide.md) - Complete training documentation
+- 📘 [PROJECT_GUIDE.md](PROJECT_GUIDE.md#-model-training) - Training setup and configurations
 
 ---
 
-## 🎨 Features in Detail
+## 📡 API Reference
 
-### Advanced Filtering
+### Endpoints
 
-```python
-# Filter by year range
-GET /?movie_name=Inception&min_year=2015&max_year=2023
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/` | GET | Home page with search interface |
+| `/` | POST | Submit movie search and get recommendations |
+| `/api/search/` | GET | Search movies (autocomplete) |
+| `/api/health/` | GET | Health check endpoint |
 
-# Filter by rating
-GET /?movie_name=The Matrix&min_rating=7.5
+### Search Movies
 
-# Filter by genre
-GET /?movie_name=Interstellar&genres=Science Fiction,Drama
+**Request:**
+```http
+GET /api/search/?q=inception
 ```
 
-### Movie Metadata
+**Response:**
+```json
+{
+  "movies": ["Inception", "Inception: The Cobol Job"],
+  "count": 2
+}
+```
 
-Each recommendation includes:
-- **Title** - Movie name
-- **Rating** - IMDb rating (0-10)
-- **Votes** - Number of votes
-- **Release Date** - When it was released
-- **Genres** - Multiple genres
-- **Production** - Production company
-- **Similarity Score** - How similar (0-1)
-- **Links** - Google Search & IMDb links
-- **Poster** - Movie poster URL (if available)
+### Health Check
+
+**Request:**
+```http
+GET /api/health/
+```
+
+**Response:**
+```json
+{
+  "status": "healthy",
+  "movies_loaded": 100000,
+  "model_dir": "./models",
+  "model_loaded": true
+}
+```
+
+For complete API documentation, see [PROJECT_GUIDE.md - API Reference](PROJECT_GUIDE.md#-api-reference)
 
 ---
 
@@ -317,7 +336,8 @@ Each recommendation includes:
 
 ### Environment Variables
 
-Create `.env` file:
+Create a `.env` file (optional for development):
+
 ```env
 # Django Settings
 SECRET_KEY=your-secret-key-here
@@ -327,26 +347,145 @@ ALLOWED_HOSTS=localhost,127.0.0.1
 # Model Configuration
 MODEL_DIR=./models
 
-# Database (optional)
-DATABASE_URL=postgresql://user:pass@localhost/dbname
+# Database (optional - defaults to SQLite)
+# DATABASE_URL=postgresql://user:password@localhost/dbname
 
 # Deployment
-RENDER_EXTERNAL_HOSTNAME=your-app.onrender.com
+# RENDER_EXTERNAL_HOSTNAME=your-app.onrender.com
 ```
 
-### Performance Tuning
+### Using Different Models
 
-**For Large Datasets:**
-- Use SVD dimensionality reduction
-- Enable caching in production
-- Use PostgreSQL instead of SQLite
-- Deploy with Gunicorn + Nginx
+To switch between models, set the `MODEL_DIR` environment variable:
 
-**For Fast Response:**
-- Pre-load models at startup
-- Use Redis caching
-- Enable gzip compression
-- Use CDN for static files
+```bash
+# Use demo model (2K movies)
+export MODEL_DIR=./static
+
+# Use your trained model (custom)
+export MODEL_DIR=./models
+
+# Use absolute path
+export MODEL_DIR=/path/to/your/models
+```
+
+For detailed configuration options, see [PROJECT_GUIDE.md - Configuration](PROJECT_GUIDE.md#-configuration)
+
+---
+
+## 📚 Documentation
+
+### Main Documentation
+
+- **[README.md](README.md)** (this file) - Overview, quick start, basic usage
+- **[PROJECT_GUIDE.md](PROJECT_GUIDE.md)** - Complete technical guide
+  - Installation
+  - Model training
+  - Configuration
+  - Development
+  - Deployment
+  - API reference
+  - Troubleshooting
+- **[CHANGELOG.md](CHANGELOG.md)** - Version history and changes
+
+### Training Documentation
+
+- **[training/guide.md](training/guide.md)** - Complete model training guide
+  - Dataset requirements
+  - Training configurations
+  - Performance tuning
+  - Advanced features
+
+### Quick Links
+
+| Topic | Documentation |
+|-------|---------------|
+| Installation | [Quick Start](#-quick-start) or [PROJECT_GUIDE.md](PROJECT_GUIDE.md#-installation) |
+| Model Training | [training/guide.md](training/guide.md) |
+| Deployment | [PROJECT_GUIDE.md - Deployment](PROJECT_GUIDE.md#-deployment) |
+| API Reference | [API Reference](#-api-reference) or [PROJECT_GUIDE.md](PROJECT_GUIDE.md#-api-reference) |
+| Troubleshooting | [PROJECT_GUIDE.md - Troubleshooting](PROJECT_GUIDE.md#-troubleshooting) |
+| Configuration | [Configuration](#-configuration) or [PROJECT_GUIDE.md](PROJECT_GUIDE.md#-configuration) |
+
+---
+
+## 🚀 Deployment
+
+### Quick Deploy to Render
+
+1. Push your code to GitHub
+2. Connect repository to [Render](https://render.com)
+3. Render auto-detects `render.yaml`
+4. Set environment variables
+5. Deploy!
+
+### Other Platforms
+
+- **Heroku**: Uses `Procfile`
+- **Docker**: Create Dockerfile from PROJECT_GUIDE
+- **AWS**: Elastic Beanstalk compatible
+- **Digital Ocean**: App Platform ready
+
+For detailed deployment instructions, see [PROJECT_GUIDE.md - Deployment](PROJECT_GUIDE.md#-deployment)
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Here's how:
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+### Guidelines
+
+- Follow PEP 8 style guide
+- Add tests for new features
+- Update documentation
+- Keep commits focused and descriptive
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🆘 Support
+
+Need help? Here are your options:
+
+- 📖 **Documentation**: Check [PROJECT_GUIDE.md](PROJECT_GUIDE.md) for detailed guides
+- 🎓 **Training Help**: See [training/guide.md](training/guide.md) for model training
+- 🐛 **Issues**: [Open an issue](https://github.com/yourusername/movie-recommendation-system/issues) on GitHub
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/yourusername/movie-recommendation-system/discussions)
+
+---
+
+## 🎯 Roadmap
+
+### Version 2.1 (Planned)
+- [ ] User authentication system
+- [ ] Personal watchlists
+- [ ] Movie rating system
+- [ ] Advanced filtering (multiple genres, year ranges)
+- [ ] Recommendation history
+
+### Version 2.2 (Planned)
+- [ ] Collaborative filtering
+- [ ] Social features (sharing, comments)
+- [ ] Movie reviews
+- [ ] Advanced analytics dashboard
+
+### Version 3.0 (Long-term)
+- [ ] Mobile applications (iOS/Android)
+- [ ] Real-time recommendations
+- [ ] Streaming service integration
+- [ ] Enhanced ML models (hybrid recommendations)
 
 ---
 
@@ -354,120 +493,30 @@ RENDER_EXTERNAL_HOSTNAME=your-app.onrender.com
 
 | Metric | Value |
 |--------|-------|
-| Page Load | < 200ms |
 | Recommendation Time | < 50ms |
 | Search Response | < 100ms |
+| Page Load | < 200ms |
 | Memory Usage | ~200MB (100K movies) |
 | Concurrent Users | 1000+ |
+| Model Size | 180MB (100K movies) |
 
 ---
 
-## 🚢 Deployment
+## 🙏 Acknowledgments
 
-See `PROJECT_GUIDE.md` for detailed deployment instructions.
-
-### Quick Deploy to Render
-
-```bash
-# 1. Push to GitHub
-git push origin main
-
-# 2. Connect to Render
-# - Go to render.com
-# - New Blueprint
-# - Connect repository
-# - Auto-deploys!
-
-# 3. Set environment variables in Render dashboard
-SECRET_KEY=<generate>
-DEBUG=False
-```
-
-### Other Platforms
-
-- **Heroku**: Uses `Procfile`
-- **AWS**: Uses Elastic Beanstalk
-- **Docker**: Uses `Dockerfile`
-- **Digital Ocean**: App Platform
-
----
-
-## 🔧 Development
-
-### Run Tests
-```bash
-python manage.py test
-```
-
-### Check Health
-```bash
-curl http://localhost:8000/api/health/
-```
-
-### View Logs
-```bash
-tail -f logs/django.log
-```
-
----
-
-## 📚 Documentation
-
-- **README.md** (this file) - Overview and quick start
-- **PROJECT_GUIDE.md** - Detailed guide, deployment, troubleshooting
-- **CHANGELOG.md** - Version history and changes
-- **training/guide.md** - Model training documentation
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Please:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
----
-
-## 📝 License
-
-This project is licensed under the MIT License - see [LICENSE](LICENSE) file.
-
----
-
-## 🆘 Support
-
-- **Issues**: [GitHub Issues](https://github.com/yourusername/movie-recommendation-system/issues)
-- **Documentation**: See PROJECT_GUIDE.md
-- **Training Help**: See training/guide.md
-
----
-
-## 🎯 Roadmap
-
-- [ ] User authentication
-- [ ] Personal watchlists
-- [ ] Rating system
-- [ ] Collaborative filtering
-- [ ] Mobile app
-- [ ] Advanced analytics
-- [ ] Integration with streaming services
-
----
-
-## 📸 Screenshots
-
-See the application in action at http://localhost:8000 after installation.
+- Movie data from TMDB and IMDb
+- Built with Django, scikit-learn, pandas
+- UI inspired by modern design principles
+- Community contributions and feedback
 
 ---
 
 <div align="center">
 
-**Made with ❤️ for movie lovers**
+**Made with ❤️ for movie lovers and developers**
 
-[⭐ Star](https://github.com/yourusername/movie-recommendation-system) • [🐛 Report Bug](https://github.com/yourusername/movie-recommendation-system/issues) • [💡 Request Feature](https://github.com/yourusername/movie-recommendation-system/issues)
+[⭐ Star this repo](https://github.com/yourusername/movie-recommendation-system) •
+[🐛 Report Bug](https://github.com/yourusername/movie-recommendation-system/issues) •
+[💡 Request Feature](https://github.com/yourusername/movie-recommendation-system/issues)
 
 </div>
