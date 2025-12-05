@@ -58,11 +58,9 @@ The Movie Recommendation System provides intelligent movie suggestions using **c
 
 ### Demo Video
 
-<video controls width="700">
-  <source src="./assets/demo-video/Application-Demo.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+[![Watch Demo Video](./assets/images-for-readme/Header.png)](./assets/demo-video/Application-Demo.mp4)
 
+*Click the image above to view the demo video*
 
 
 ### Model Loading
