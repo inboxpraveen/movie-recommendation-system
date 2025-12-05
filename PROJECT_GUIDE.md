@@ -183,39 +183,7 @@ curl "http://localhost:8000/api/search/?q=matrix"
 
 ### High-Level Architecture
 
-```
-┌─────────────────┐
-│   Web Browser   │
-└────────┬────────┘
-         │ HTTP
-         ↓
-┌─────────────────────────────────┐
-│     Django Application          │
-│  ┌──────────────────────────┐  │
-│  │  Views (recommender)     │  │
-│  │  - Search               │  │
-│  │  - Recommendations      │  │
-│  │  - API Endpoints        │  │
-│  └──────────┬───────────────┘  │
-│             │                    │
-│             ↓                    │
-│  ┌──────────────────────────┐  │
-│  │  MovieRecommender Class  │  │
-│  │  - Model Loading         │  │
-│  │  - Fuzzy Search         │  │
-│  │  - Similarity Calc      │  │
-│  └──────────┬───────────────┘  │
-│             │                    │
-└─────────────┼────────────────────┘
-              │
-              ↓
-    ┌─────────────────┐
-    │  Model Files    │
-    │  - Metadata     │
-    │  - Similarity   │
-    │  - Mappings     │
-    └─────────────────┘
-```
+![Project Architecture](./assets/images-for-readme/Architecture.png)
 
 ### Component Breakdown
 
