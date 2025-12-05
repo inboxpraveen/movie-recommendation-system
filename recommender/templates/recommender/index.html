@@ -13,7 +13,7 @@
     <meta property="og:description" content="Discover your next favorite movie with our AI-powered recommendation system">
     <meta property="og:type" content="website">
     
-    <link rel="shortcut icon" href="{% static 'logo.png' %}">
+    <link rel="shortcut icon" href="{% static 'logo.ico' %}">
     <title>Movie Recommendation System - Find Your Next Favorite Film</title>
     
     <!-- Fonts -->
@@ -384,6 +384,102 @@
             to { transform: rotate(360deg); }
         }
 
+        /* Model Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.98);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-content {
+            text-align: center;
+            padding: 2rem;
+            max-width: 400px;
+        }
+
+        .loading-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            animation: bounce 1s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .loading-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .loading-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background: var(--surface);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 10px;
+            transition: width 0.3s ease-out;
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+        }
+
+        .progress-text {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(99, 102, 241, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 0.8s linear infinite;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+
+        /* Main content hidden during loading */
+        .main-content {
+            opacity: 0;
+            transition: opacity 0.5s ease-in;
+        }
+
+        .main-content.visible {
+            opacity: 1;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .search-card {
@@ -393,16 +489,42 @@
             .features {
                 grid-template-columns: 1fr;
             }
+
+            .loading-content {
+                padding: 1.5rem;
+            }
+
+            .loading-icon {
+                font-size: 3rem;
+            }
+
+            .loading-title {
+                font-size: 1.25rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="loading-icon">🎬</div>
+            <h2 class="loading-title">Loading Movie Database</h2>
+            <p class="loading-subtitle">Please wait while we prepare your recommendations</p>
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+            </div>
+            <p class="progress-text">
+                <span id="progressText">0%</span>
+                <span class="loading-spinner"></span>
+            </p>
+        </div>
+    </div>
+
     <div class="background-animation"></div>
 
+    <div class="main-content" id="mainContent">
     <header class="header">
-        <div class="logo-container">
-            <img src="{% static 'logo.png' %}" alt="Movie Recommendation Logo" class="logo">
-        </div>
         <h1>Movie Recommendation System</h1>
         <p class="subtitle">Discover your next favorite movie powered by AI</p>
         <div class="stats">
@@ -465,8 +587,78 @@
     </main>
 
     <footer class="footer">
-        <p>Made with ❤️ for movie lovers | © 2024 Movie Recommendation System</p>
+        <p>
+            Made with ❤️ for movie lovers | © <span id="currentYear"></span> Movie Recommendation System
+        </p>
     </footer>
+    </div>
+    <script>
+        // Model Loading Progress
+        let loadingInterval;
+        let checkCount = 0;
+        
+        function checkModelStatus() {
+            fetch('/api/model-status/')
+                .then(response => response.json())
+                .then(data => {
+                    const progressBar = document.getElementById('progressBar');
+                    const progressText = document.getElementById('progressText');
+                    const overlay = document.getElementById('loadingOverlay');
+                    const mainContent = document.getElementById('mainContent');
+                    
+                    checkCount++;
+                    
+                    if (data.loaded) {
+                        // Model is loaded
+                        progressBar.style.width = '100%';
+                        progressText.textContent = '100%';
+                        
+                        setTimeout(() => {
+                            overlay.classList.add('hidden');
+                            mainContent.classList.add('visible');
+                            clearInterval(loadingInterval);
+                        }, 500);
+                    } else if (data.status === 'error') {
+                        // Error loading model
+                        progressText.textContent = 'Error: ' + (data.error || 'Failed to load');
+                        clearInterval(loadingInterval);
+                    } else {
+                        // Update progress
+                        progressBar.style.width = data.progress + '%';
+                        progressText.textContent = data.progress + '%';
+                        
+                        // Adjust polling frequency based on progress
+                        if (data.progress > 0 && checkCount > 5) {
+                            // Once we see progress, check more frequently
+                            clearInterval(loadingInterval);
+                            loadingInterval = setInterval(checkModelStatus, 200);
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error checking model status:', error);
+                    checkCount++;
+                    // Only give up after multiple failures
+                    if (checkCount > 20) {
+                        const overlay = document.getElementById('loadingOverlay');
+                        const mainContent = document.getElementById('mainContent');
+                        overlay.classList.add('hidden');
+                        mainContent.classList.add('visible');
+                        clearInterval(loadingInterval);
+                    }
+                });
+        }
+
+        // Start checking model status immediately
+        checkModelStatus();
+        loadingInterval = setInterval(checkModelStatus, 300);
+        
+        // Set dynamic year in footer
+        document.addEventListener('DOMContentLoaded', function() {
+            var currentYear = new Date().getFullYear();
+            document.getElementById("currentYear").textContent = currentYear;
+        });
+    </script>
 
     <script>
         $(function() {
