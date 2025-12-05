@@ -58,10 +58,7 @@ The Movie Recommendation System provides intelligent movie suggestions using **c
 
 ### Demo Video
 
-[![Watch Demo Video](./assets/images-for-readme/Header.png)](./assets/demo-video/Application-Demo.mp4)
-
-*Click the image above to view the demo video*
-
+![Application Demo](./assets/demo-video/Application-Demo.gif)
 
 ### Model Loading
 
