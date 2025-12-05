@@ -56,3 +56,9 @@ htmlcov/
 
 # Deployment
 *.pyc
+*.csv
+*.pkl
+*.json
+*.npy
+*.parquet
+*.npz

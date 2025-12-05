@@ -427,6 +427,11 @@
         <h1 class="results-title">
             Movies like <span class="searched-movie">{{ input_movie_name }}</span>
         </h1>
+        {% if source_movie %}
+        <p class="results-subtitle">
+            {{ source_movie.production }} | {{ source_movie.rating }} | {{ source_movie.genres }}
+        </p>
+        {% endif %}
         <p class="results-subtitle">
             We found {{ total_recommendations|default:"15" }} amazing recommendations for you
         </p>
@@ -441,26 +446,36 @@
                 <div class="movie-rank">{{ forloop.counter }}</div>
                 <span class="movie-icon">🎬</span>
                 
-                <h2 class="movie-title">{{ movie.movie_title }}</h2>
+                <h2 class="movie-title">{{ movie.title }}</h2>
                 
                 <div class="movie-details">
                     <div class="movie-detail">
+                        <span class="detail-icon">⭐</span>
+                        <span>{{ movie.rating }} ({{ movie.votes }} votes)</span>
+                    </div>
+                    <div class="movie-detail">
                         <span class="detail-icon">📅</span>
-                        <span>{{ movie.movie_release_date }}</span>
+                        <span>{{ movie.release_date }}</span>
                     </div>
                     <div class="movie-detail">
                         <span class="detail-icon">🎭</span>
-                        <span>{{ movie.movie_director }}</span>
+                        <span>{{ movie.genres }}</span>
+                    </div>
+                    <div class="movie-detail">
+                        <span class="detail-icon">🏢</span>
+                        <span>{{ movie.production }}</span>
                     </div>
                 </div>
 
                 <div class="movie-actions">
                     <a href="{{ movie.google_link }}" target="_blank" rel="noopener noreferrer" class="movie-link link-primary">
-                        🔍 Google Search
+                        🔍 Google
                     </a>
+                    {% if movie.imdb_link %}
                     <a href="{{ movie.imdb_link }}" target="_blank" rel="noopener noreferrer" class="movie-link link-secondary">
                         ⭐ IMDb
                     </a>
+                    {% endif %}
                 </div>
             </article>
             {% endfor %}

@@ -1,119 +1,148 @@
 """
 Movie Recommendation System Views
-Handles movie search and recommendation logic with efficient caching
+Integrates with advanced TMDB model training system
 """
 import logging
-from functools import lru_cache
+import os
+from pathlib import Path
 from typing import Dict, List, Optional
+from difflib import get_close_matches
 
 import pandas as pd
-import pyarrow.parquet as pq
+import numpy as np
+from scipy.sparse import load_npz
+import json
 from django.conf import settings
-from django.core.cache import cache
 from django.http import JsonResponse
 from django.shortcuts import render
-from django.views.decorators.cache import cache_page
 from django.views.decorators.http import require_http_methods
 
 logger = logging.getLogger(__name__)
 
-# Global cache for movie data (loaded once)
-_MOVIES_DATA: Optional[pd.DataFrame] = None
-_TITLES_LIST: Optional[List[str]] = None
-_SIMILARITY_MODEL: Optional[pd.DataFrame] = None
+# Global cache for recommender system
+_RECOMMENDER = None
 
 
-def _load_movie_data() -> tuple[pd.DataFrame, List[str]]:
-    """
-    Load movie data from parquet file with caching.
-    Returns: tuple of (movies_dataframe, titles_list)
-    """
-    global _MOVIES_DATA, _TITLES_LIST
+class MovieRecommender:
+    """Integrated recommender system matching training/infer.py logic"""
     
-    if _MOVIES_DATA is None or _TITLES_LIST is None:
-        try:
-            logger.info("Loading movie data from parquet file...")
-            _MOVIES_DATA = pd.read_parquet("static/top_2k_movie_data.parquet")
-            _TITLES_LIST = _MOVIES_DATA['title'].tolist()
-            logger.info(f"Successfully loaded {len(_TITLES_LIST)} movies")
-        except Exception as e:
-            logger.error(f"Error loading movie data: {e}")
-            raise
+    def __init__(self, model_dir='models'):
+        """Initialize with trained model directory"""
+        self.model_dir = Path(model_dir)
+        self.metadata = None
+        self.similarity_matrix = None
+        self.title_to_idx = None
+        self.config = None
+        self._load_models()
     
-    return _MOVIES_DATA, _TITLES_LIST
-
-
-def _load_similarity_model() -> pd.DataFrame:
-    """
-    Load similarity model from parquet file with lazy loading.
-    This is loaded only when needed (when getting recommendations).
-    """
-    global _SIMILARITY_MODEL
+    def _load_models(self):
+        """Load all model artifacts"""
+        logger.info(f"Loading models from {self.model_dir}...")
+        
+        # Load metadata
+        self.metadata = pd.read_parquet(self.model_dir / 'movie_metadata.parquet')
+        
+        # Load similarity matrix (sparse or dense)
+        if (self.model_dir / 'similarity_matrix.npz').exists():
+            self.similarity_matrix = load_npz(self.model_dir / 'similarity_matrix.npz').toarray()
+        else:
+            self.similarity_matrix = np.load(self.model_dir / 'similarity_matrix.npy')
+        
+        # Load title mapping
+        with open(self.model_dir / 'title_to_idx.json', 'r') as f:
+            self.title_to_idx = json.load(f)
+        
+        # Load config
+        with open(self.model_dir / 'config.json', 'r') as f:
+            self.config = json.load(f)
+        
+        logger.info(f"Loaded {self.config['n_movies']:,} movies successfully")
     
-    if _SIMILARITY_MODEL is None:
-        try:
-            logger.info("Loading similarity model...")
-            _SIMILARITY_MODEL = pq.read_table('static/demo_model.parquet').to_pandas()
-            logger.info("Successfully loaded similarity model")
-        except Exception as e:
-            logger.error(f"Error loading similarity model: {e}")
-            raise
+    def find_movie(self, title: str) -> Optional[str]:
+        """Find closest matching movie title"""
+        matches = get_close_matches(title, self.title_to_idx.keys(), n=1, cutoff=0.6)
+        return matches[0] if matches else None
     
-    return _SIMILARITY_MODEL
-
-
-def get_recommendations(movie_id: int, top_n: int = 15) -> List[Dict[str, str]]:
-    """
-    Get movie recommendations based on similarity scores.
+    def search_movies(self, query: str, n: int = 20) -> List[str]:
+        """Search movies by partial title"""
+        query_lower = query.lower()
+        return [title for title in self.title_to_idx.keys() 
+                if query_lower in title.lower()][:n]
     
-    Args:
-        movie_id: Index of the movie in the dataset
-        top_n: Number of recommendations to return (default: 15)
-    
-    Returns:
-        List of dictionaries containing movie details
-    """
-    try:
-        movies_data, _ = _load_movie_data()
-        similarity_model = _load_similarity_model()
+    def get_recommendations(
+        self,
+        movie_title: str,
+        n: int = 15,
+        min_rating: float = None
+    ) -> Dict:
+        """Get movie recommendations with optional filtering"""
+        matched_title = self.find_movie(movie_title)
+        if not matched_title:
+            return {'error': f"Movie '{movie_title}' not found", 'suggestions': self.search_movies(movie_title, 5)}
         
-        # Get similarity scores for the given movie
-        sim_scores = list(enumerate(similarity_model[movie_id]))
+        movie_idx = self.title_to_idx[matched_title]
+        source_movie = self.metadata.iloc[movie_idx]
         
-        # Sort by similarity score (descending)
-        sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+        # Get similarity scores
+        sim_scores = list(enumerate(self.similarity_matrix[movie_idx]))
+        sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)[1:]  # Exclude self
         
-        # Get top N recommendations (excluding the movie itself)
-        sim_scores = sim_scores[1:top_n + 1]
-        
-        # Get movie indices
-        movie_indices = [i[0] for i in sim_scores]
-        
-        # Get movie details
-        recommended_movies = movies_data.iloc[movie_indices].copy()
-        recommended_movies['similarity_score'] = [score[1] for score in sim_scores]
-        
-        # Format response
-        response = []
-        for _, row in recommended_movies.iterrows():
-            release_year = row['release_date'].split("-")[0] if pd.notna(row['release_date']) else "Unknown"
-            movie_title = row['title']
+        recommendations = []
+        for idx, score in sim_scores:
+            if len(recommendations) >= n:
+                break
             
-            response.append({
-                'movie_title': movie_title,
-                'movie_release_date': row['release_date'] if pd.notna(row['release_date']) else "Unknown",
-                'movie_director': row['main_director'] if pd.notna(row['main_director']) else "Unknown",
-                'similarity_score': f"{row['similarity_score']:.2f}",
-                'google_link': f"https://www.google.com/search?q={'+'.join(movie_title.strip().split())}+({release_year})",
-                'imdb_link': f"https://www.imdb.com/find?q={'+'.join(movie_title.strip().split())}"
+            movie = self.metadata.iloc[idx]
+            
+            # Rating filter
+            if min_rating and movie['vote_average'] < min_rating:
+                continue
+            
+            recommendations.append({
+                'title': movie['title'],
+                'release_date': movie['release_date'] if pd.notna(movie['release_date']) else 'Unknown',
+                'production': movie['primary_company'] if pd.notna(movie['primary_company']) else 'Unknown',
+                'genres': ', '.join(movie['genres'][:3]) if isinstance(movie['genres'], list) else 'N/A',
+                'rating': f"{movie['vote_average']:.1f}/10" if pd.notna(movie['vote_average']) else 'N/A',
+                'votes': f"{movie['vote_count']:,}" if pd.notna(movie['vote_count']) else 'N/A',
+                'similarity_score': f"{score:.3f}",
+                'imdb_id': movie['imdb_id'] if pd.notna(movie['imdb_id']) else None,
+                'poster_url': f"https://image.tmdb.org/t/p/w500{movie['poster_path']}" if pd.notna(movie['poster_path']) else None,
+                'google_link': f"https://www.google.com/search?q={'+'.join(movie['title'].split())}+movie",
+                'imdb_link': f"https://www.imdb.com/title/{movie['imdb_id']}" if pd.notna(movie['imdb_id']) else None
             })
         
-        logger.info(f"Generated {len(response)} recommendations for movie_id {movie_id}")
-        return response
+        return {
+            'query_movie': matched_title,
+            'source_movie': {
+                'production': source_movie['primary_company'] if pd.notna(source_movie['primary_company']) else 'Unknown',
+                'rating': f"{source_movie['vote_average']:.1f}/10" if pd.notna(source_movie['vote_average']) else 'N/A',
+                'genres': ', '.join(source_movie['genres'][:3]) if isinstance(source_movie['genres'], list) else 'N/A'
+            },
+            'recommendations': recommendations
+        }
+
+
+def _get_recommender():
+    """Get or initialize the recommender singleton"""
+    global _RECOMMENDER
+    
+    if _RECOMMENDER is None:
+        # Check for model directory (configurable via settings or environment)
+        model_dir = getattr(settings, 'MODEL_DIR', os.environ.get('MODEL_DIR', 'models'))
         
-    except Exception as e:
-        logger.error(f"Error generating recommendations: {e}")
-        return []
+        # Fallback to static directory if models directory doesn't exist
+        if not Path(model_dir).exists():
+            model_dir = 'static'
+            logger.warning(f"Model directory not found, using static directory")
+        
+        try:
+            _RECOMMENDER = MovieRecommender(model_dir)
+        except Exception as e:
+            logger.error(f"Failed to load recommender: {e}")
+            raise
+    
+    return _RECOMMENDER
 
 
 @require_http_methods(["GET", "POST"])
@@ -124,11 +153,12 @@ def main(request):
     POST: Process search and display recommendations
     """
     try:
-        movies_data, titles_list = _load_movie_data()
+        recommender = _get_recommender()
+        titles_list = list(recommender.title_to_idx.keys())
     except Exception as e:
-        logger.error(f"Failed to load movie data: {e}")
+        logger.error(f"Failed to load recommender: {e}")
         return render(request, 'recommender/error.html', {
-            'error_message': 'Failed to load movie database. Please try again later.'
+            'error_message': 'Failed to load movie database. Please ensure models are trained and available.'
         })
     
     if request.method == 'GET':
@@ -155,8 +185,10 @@ def main(request):
             }
         )
     
-    # Check if movie exists in database
-    if movie_name not in titles_list:
+    # Get recommendations
+    result = recommender.get_recommendations(movie_name, n=15)
+    
+    if 'error' in result:
         return render(
             request,
             'recommender/index.html',
@@ -164,23 +196,8 @@ def main(request):
                 'all_movie_names': titles_list,
                 'total_movies': len(titles_list),
                 'input_movie_name': movie_name,
-                'error_message': f'Movie "{movie_name}" not found in our database.',
-            }
-        )
-    
-    # Get movie index and recommendations
-    movie_idx = titles_list.index(movie_name)
-    recommendations = get_recommendations(movie_idx, top_n=15)
-    
-    if not recommendations:
-        return render(
-            request,
-            'recommender/index.html',
-            {
-                'all_movie_names': titles_list,
-                'total_movies': len(titles_list),
-                'input_movie_name': movie_name,
-                'error_message': 'Could not generate recommendations. Please try again.',
+                'error_message': result['error'],
+                'suggestions': result.get('suggestions', [])
             }
         )
     
@@ -189,32 +206,25 @@ def main(request):
         'recommender/result.html',
         {
             'all_movie_names': titles_list,
-            'input_movie_name': movie_name,
-            'recommended_movies': recommendations,
-            'total_recommendations': len(recommendations),
+            'input_movie_name': result['query_movie'],
+            'source_movie': result['source_movie'],
+            'recommended_movies': result['recommendations'],
+            'total_recommendations': len(result['recommendations']),
         }
     )
 
 
 @require_http_methods(["GET"])
 def search_movies(request):
-    """
-    API endpoint for searching movies (autocomplete).
-    Returns JSON list of matching movie titles.
-    """
-    query = request.GET.get('q', '').strip().lower()
+    """API endpoint for searching movies (autocomplete)"""
+    query = request.GET.get('q', '').strip()
     
     if len(query) < 2:
-        return JsonResponse({'movies': []})
+        return JsonResponse({'movies': [], 'count': 0})
     
     try:
-        _, titles_list = _load_movie_data()
-        
-        # Filter movies matching the query
-        matching_movies = [
-            title for title in titles_list 
-            if query in title.lower()
-        ][:20]  # Limit to 20 results
+        recommender = _get_recommender()
+        matching_movies = recommender.search_movies(query, n=20)
         
         return JsonResponse({
             'movies': matching_movies,
@@ -228,15 +238,14 @@ def search_movies(request):
 
 @require_http_methods(["GET"])
 def health_check(request):
-    """
-    Health check endpoint for monitoring.
-    """
+    """Health check endpoint for monitoring"""
     try:
-        movies_data, titles_list = _load_movie_data()
+        recommender = _get_recommender()
         return JsonResponse({
             'status': 'healthy',
-            'movies_loaded': len(titles_list),
-            'model_loaded': _SIMILARITY_MODEL is not None
+            'movies_loaded': recommender.config['n_movies'],
+            'model_dir': str(recommender.model_dir),
+            'model_loaded': True
         })
     except Exception as e:
         logger.error(f"Health check failed: {e}")
